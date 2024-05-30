@@ -5,7 +5,6 @@
     $menuCatIds = isset($data['menu_main_cat_ids']) ? $data['menu_main_cat_ids'] : [];
 ?>
 
-
 @if(isset($menuCategories))
     <div id = "sidebar-menu" class = "main_menu_side hidden-print main_menu">
         @foreach($menuCategories as $key => $val)
@@ -22,7 +21,6 @@
                             </a>
                         </li>
                     @endif
-                
                 @endforeach
             </ul>
         

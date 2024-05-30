@@ -14,8 +14,8 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $menuMainCategories = AdminMainCategory::select('id', 'name')->get()->toArray();
-        $menuMain = AdminMenu::select('id', 'main_cat_id', 'name')->get()->toArray();
+        $menuMainCategories = AdminMainCategory::getAllMainCategories();
+        $menuMain = AdminMenu::getAllMenu();
         
         $menuMainCatIds = array_flip(array_column($menuMain, 'main_cat_id'));
 

@@ -5,22 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminMainCategory extends Model
+class AdminSubMenu extends Model
 {
     use HasFactory;
 
-    protected $table = 'admin_menu_categories';
+    protected $table = 'admin_sub_menu';
 
-    public static function getAllMainCategories(){
+    public static function getAllSubMenu() {
         $data = array();
 
-        $data = AdminMainCategory::select(
+        $data = $this::select(
             'id',
+            'menu_id',
             'name',
+            'url'
         )
         ->where('status', 1)
         ->get()
         ->toArray();
+        
         return $data;
     }
 }
