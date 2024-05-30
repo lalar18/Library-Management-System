@@ -21,6 +21,7 @@ class AdminMainCategory extends Model
         ->where('status', 1)
         ->get()
         ->toArray();
+        
         return $data;
     }
 }
