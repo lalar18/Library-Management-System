@@ -14,7 +14,7 @@ class AdminSubMenu extends Model
     public static function getAllSubMenu() {
         $data = array();
 
-        $data = $this::select(
+        $data = AdminSubMenu::select(
             'id',
             'menu_id',
             'name',
@@ -23,7 +23,7 @@ class AdminSubMenu extends Model
         ->where('status', 1)
         ->get()
         ->toArray();
-        
+
         return $data;
     }
 }
