@@ -28,13 +28,13 @@
                                         </a>
                                         <ul class="nav child_menu">
                                             @foreach($menuSub as $key => $val3)
-                                                <li><a href="{{ isset($val3['url']) ? $val3['url'] : '#' }}">{{ $val3['name'] }}</a></li>
+                                                <li><a href="{{ isset($val3['url']) ? url($val3['url']) : '#' }}">{{ $val3['name'] }}</a></li>
                                             @endforeach
                                         </ul>    
                                     </li>        
                                 @else
                                     <li>
-                                        <a href="{{ $val2['url'] ? $val2['url'] : '#' }}" class = "active">
+                                        <a href="{{ $val2['url'] ? url($val2['url']) : '#' }}" class = "active">
                                             <i class="{{ $val2['icon'] ?? '' }}"></i> {{ $val2['name'] }} 
                                             {{-- <span class="label label-success pull-right">Coming Soon</span> --}}
                                         </a>

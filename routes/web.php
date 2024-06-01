@@ -21,3 +21,5 @@ use App\Http\Controllers\HomeController;
 // });
 
 Route::get('/', array(HomeController::class, 'index'));
+
+Route::get('/admin/home/dashboard', array(HomeController::class, 'dashboard'));
