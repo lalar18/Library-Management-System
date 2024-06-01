@@ -10,16 +10,16 @@
         <title>Libary System</title>
 
         <!-- Bootstrap -->
-        <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Font Awesome -->
-        <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
         <!-- NProgress -->
-        <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+        <link href="{{ url('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
         <!-- bootstrap-wysiwyg -->
-        <link href="{{ asset('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+        <link href="{{ url('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
 
         <!-- Custom styling plus plugins -->
-        <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+        <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet">
 
     </head>
     <body class = "nav-md">
