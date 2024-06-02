@@ -19,7 +19,7 @@ class HomeController extends Controller
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
-        $data = array_merge($data, $menuDatas);
+        $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('home/index', compact('data'));
     }
@@ -28,7 +28,7 @@ class HomeController extends Controller
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
-        $data = array_merge($data, $menuDatas);
+        $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('home/dashboard', compact('data'));
     }

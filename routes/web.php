@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 //declare controllers
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', array(HomeController::class, 'index'));
 
 Route::get('/admin/home/dashboard', array(HomeController::class, 'dashboard'));
+
+Route::get('/admin/book-categories', array(BookController::class, 'bookCategories'));
+Route::get('/admin/book-categories/add', array(BookController::class, ''));
+Route::get('/admin/book-categories/edit', array(BookController::class, ''));

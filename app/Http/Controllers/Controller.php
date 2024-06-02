@@ -17,6 +17,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     public function __construct(){
+        $this->clearCaches();
         $this->cachedMenuItems();
     }
 
@@ -49,6 +50,10 @@ class Controller extends BaseController
         }
 
         return $data;
+    }
+
+    public function clearCaches(){
+        Cache::flush(config('const.cached_menu_2024'));
     }
 
 }
