@@ -11,6 +11,18 @@ class BookController extends Controller
 {
     //
 
+    public function bookEntry(){
+        $menuDatas = $this->getCachedMenus();
+
+        $data = array();
+
+        $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
+
+        return view('books/books/book_list', compact('data'));
+
+    }   
+
+
     public function bookCategories(){
         $menuDatas = $this->getCachedMenus();
 
@@ -25,5 +37,15 @@ class BookController extends Controller
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('books/category/index', compact('data'));
+    }
+
+    public function bookCategoriesAdd(){
+        $menuDatas = $this->getCachedMenus();
+
+        $data = array();
+
+        $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
+
+        return view('books/category/add', compact('data'));
     }
 }

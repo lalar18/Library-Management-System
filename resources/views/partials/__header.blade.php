@@ -29,7 +29,8 @@
               <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                   <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{  url('/') }}" class="site_title"><i class="fa fa-book"></i> <span>{{ config('const.system_title') }}</span></a>
+                    {{-- <a href="{{  url('/') }}" class="site_title"><i class="fa fa-book"></i> <span>{{ config('const.system_title') }}</span></a> --}}
+                    <a href="{{  url('/') }}" class="site_title"><i class="fa fa-book"></i> <span>Library Management System</span></a>
                   </div>
       
                   <div class="clearfix"></div>

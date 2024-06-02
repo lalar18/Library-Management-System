@@ -26,5 +26,8 @@ Route::get('/', array(HomeController::class, 'index'));
 Route::get('/admin/home/dashboard', array(HomeController::class, 'dashboard'));
 
 Route::get('/admin/book-categories', array(BookController::class, 'bookCategories'));
-Route::get('/admin/book-categories/add', array(BookController::class, ''));
+Route::get('/admin/book-categories/add', array(BookController::class, 'bookCategoriesAdd'));
 Route::get('/admin/book-categories/edit', array(BookController::class, ''));
+
+Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
+
