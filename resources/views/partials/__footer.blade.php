@@ -5,7 +5,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    {{ config('const.system_footer_title') }} <a href = "{{ config('const.system_powered_by.url') }}">{{ config('const.system_powered_by.name') }}</a>
                 </div>
                 <div class="clearfix"></div>
             </footer>
