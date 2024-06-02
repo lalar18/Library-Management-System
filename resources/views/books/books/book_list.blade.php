@@ -83,7 +83,7 @@
 
                 <!-- right container -->
                 <div class = "col-md-4 col-sm-4">
-                    <a href="#" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i> &nbsp; New</a>
+                    <a href="{{ url('admin/book-entry/add') }}" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i> &nbsp; New</a>
                 </div>
             </div>
            

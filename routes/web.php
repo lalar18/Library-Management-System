@@ -30,4 +30,5 @@ Route::get('/admin/book-categories/add', array(BookController::class, 'bookCateg
 Route::get('/admin/book-categories/edit', array(BookController::class, ''));
 
 Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
+Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd'));
 
