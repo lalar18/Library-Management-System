@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //declare controllers
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,5 @@ Route::get('/admin/book-categories/edit', array(BookController::class, ''));
 Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
 Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd'));
 
+//borrowers
+Route::get('admin/settings/borrowers-list', array(BorrowerController::class, 'index'));
