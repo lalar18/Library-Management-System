@@ -132,7 +132,7 @@
                     <td>Project Manager</td>
                     <td class = "text-center"><a href="#" class = "btn btn-secondary btn-sm"><i class = "fa fa-edit"></i></a></td>
                 </tr>
-                  
+                Hello james testing. 
             </tbody>
         </table>
     </div>
