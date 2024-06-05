@@ -1,29 +1,31 @@
 @include('partials.__header')
 
-    <!-- filter area -->
-    <div class = "card">
-        <div class = "card-body">
-            <form class = "form-inline" method = "GET">
+	<link href="{{ url('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
 
-                <label for = "txtSearch">Search:</label>
-                <input id = "txtSearch" type = "search" class = "form-control ml-2 mr-2" name = "keyword">
+	<!-- filter area -->
+	<div class = "card">
+		<div class = "card-body">
+			<form class = "form-inline" method = "GET">
 
-                <label>Borrower Type:</label>
-                <select class = "form-control ml-2 mr-2" name = "type_id">
-                    <option selected hidden disabled></option>
-                    <option value = "1">Student</option>
-                    <option value = "2">Faculty</option>
-                </select>
+				<label for = "txtSearch">Search:</label>
+				<input id = "txtSearch" type = "search" class = "form-control ml-2 mr-2" name = "keyword">
 
-                <button type = "submit" class = "btn btn-success mt-1"><i class = "fa fa-search"></i></button>
+				<label>Borrower Type:</label>
+				<select class = "form-control ml-2 mr-2" name = "type_id">
+					<option selected hidden disabled></option>
+					<option value = "1">Student</option>
+					<option value = "2">Faculty</option>
+				</select>
 
-            </form>
-        </div>
-    </div>
+				<button type = "submit" class = "btn btn-success mt-1"><i class = "fa fa-search"></i></button>
+
+			</form>
+		</div>
+	</div>
 
     <div class = "card mt-2">
         <div class = "card-body">
-            <a href="#" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i>&nbsp; New</a>
+			<button type = "button" class = "btn btn-primary float-right" data-toggle = "modal" data-target = "#modalBorrowersId"><i class = "fa fa-plus"></i> New</button>
         </div>
     </div>
 
@@ -133,7 +135,7 @@
                     <td class = "text-center"><a href="#" class = "btn btn-secondary btn-sm"><i class = "fa fa-edit"></i></a></td>
                 </tr>
                 
-            </tbody>
+          </tbody>
         </table>
     </div>
 

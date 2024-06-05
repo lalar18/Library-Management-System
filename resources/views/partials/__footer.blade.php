@@ -13,8 +13,8 @@
             </div>
         </div>
 
+        @include('elements.modals')
       
-        
         <!-- jQuery -->
         <script src="{{ url('vendors/jquery/dist/jquery.min.js') }}"></script>
         <!-- Bootstrap -->
