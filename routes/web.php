@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowerController;
+use App\Http\Controllers\BorrowBookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,7 @@ Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd')
 
 //borrowers
 Route::get('admin/settings/borrowers-list', array(BorrowerController::class, 'index'));
+
+
+//borrow book
+Route::get('admin/transaction/borrow-book', array(BorrowBookController::class, 'index'));
