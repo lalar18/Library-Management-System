@@ -82,3 +82,97 @@
     </div>
 </div>
 <!-- borrowers modal -->
+
+<!-- transaction borrow modal -->
+<div class = "modal fade" id = "modalSearchBorrower">
+    <div class = "modal-dialog modal-xl">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title"><strong>Search Borrower</strong></h5>
+            </div>
+            
+            <div class = "modal-body">
+
+                <div class = "card">
+                    <div class = "card-body">
+                        <div class = "form-inline">
+                            <label>Search:</label>
+                            <input type = "search" class = "form-control ml-2 mr-2" placeholder = "Search...">
+        
+                            <label>Borrower Type:</label>
+                            <select class = "form-control ml-2 mr-2" name = "type_id">
+                                <option selected>All</option>
+                                <option value = "1">Student</option>
+                                <option value = "2">Faculty</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+  
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class = "table-responsive">
+                            <table class = "table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width = "30"></th>
+                                        <th>ID #</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type = "radio" name = "borrowerId"></td>
+                                        <td>1001</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>Student</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type = "radio" name = "borrowerId"></td>
+                                        <td>1002</td>
+                                        <td>Jane</td>
+                                        <td>Smith</td>
+                                        <td>Faculty</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type = "radio" name = "borrowerId"></td>
+                                        <td>1003</td>
+                                        <td>Emily</td>
+                                        <td>Johnson</td>
+                                        <td>Student</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type = "radio" name = "borrowerId"></td>
+                                        <td>1004</td>
+                                        <td>Michael</td>
+                                        <td>Brown</td>
+                                        <td>Faculty</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type = "radio" name = "borrowerId"></td>
+                                        <td>1005</td>
+                                        <td>Sarah</td>
+                                        <td>Davis</td>
+                                        <td>Student</td>
+                                    </tr>
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-success"><i class = "fa fa-search"></i>&nbsp; Search</button>
+                <button type = "button" class = "btn btn-danger" data-toggle = "modal" data-target = "#modalSearchBorrower"><i class = "fa fa-times"></i> Cancel</button>
+            </div>
+        </div>
+      
+    </div>
+</div>
+<!-- transaction borrow modal -->
