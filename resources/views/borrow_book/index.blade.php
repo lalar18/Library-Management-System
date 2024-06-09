@@ -43,6 +43,10 @@
                     <!-- date return -->
                     <label>Expected Date of Return</label>
                     <input type = "date" class = "form-control">
+                    
+                    <!-- prepared by -->
+                    <label>Prepared By</label>
+                    <input type = "text" class = "form-control" value = "Arnold Schwarzenegger" readonly>
                 </div>
             </div>
         </div>
