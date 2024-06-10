@@ -32,6 +32,22 @@ class BookController extends Controller
         return view('books/books/book_list_add', compact('data'));
     }
 
+    public function bookEntryAddSubmit(Request $request){
+
+        $response = BookCategory::create(array(
+                'code' => $request['code'],
+                'name' => $request['name'],
+                'status' => $request['status']
+            )
+        );
+
+        return response()->json(
+            [
+                'success' => 'Successfully Added Category'
+            ]
+        );
+    }
+
 
     public function bookCategories(){
         $menuDatas = $this->getCachedMenus();

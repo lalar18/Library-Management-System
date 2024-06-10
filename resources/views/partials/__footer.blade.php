@@ -12,13 +12,7 @@
             <!-- /footer content -->
             </div>
         </div>
-
-        @include('elements.modals')
-      
-        <!-- jQuery -->
-        <script src="{{ url('vendors/jquery/dist/jquery.min.js') }}"></script>
-        <!-- Bootstrap -->
-        <script src="{{ url('vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        
         <!-- FastClick -->
         <script src="{{ url('vendors/fastclick/lib/fastclick.js') }}"></script>
         <!-- NProgress -->

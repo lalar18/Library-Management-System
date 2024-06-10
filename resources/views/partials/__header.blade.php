@@ -9,8 +9,15 @@
 
         <title>Libary System</title>
 
+        <!-- jQuery -->
+        <script src="{{ url('vendors/jquery/dist/jquery.min.js') }}"></script>
+
         <!-- Bootstrap -->
         <link href="{{ url('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <script src="{{ url('vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
         <!-- Font Awesome -->
         <link href="{{ url('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
         <!-- NProgress -->
@@ -20,7 +27,6 @@
 
         <!-- Custom styling plus plugins -->
         <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet">
-
     </head>
     <body class = "nav-md">
 

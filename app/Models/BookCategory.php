@@ -10,6 +10,7 @@ class BookCategory extends Model
     use HasFactory;
 
     protected $table = 'book_categories';
+    protected $fillable = ['code', 'name', 'status', 'created_at', 'updated_at'];
 
     public static function getBookCategories(){
         $data = array();
@@ -24,6 +25,10 @@ class BookCategory extends Model
         ->toArray();
 
         return $data;
+    }
+
+    public static function getDuplicate($data){
+        
     }
 
 }

@@ -1,5 +1,7 @@
 @include('partials.__header')
 
+    <link href="{{ url('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+
     <div class = "card">
         <div class = "card-body">
             <div class = "row">
@@ -24,7 +26,7 @@
 
                 <!-- right side column -->
                 <div class = "col-md-6 col-sm-3">
-                    <a href = "{{ url('admin/book-categories/add') }}" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i> &nbsp;New</a>
+                    <a href = "#" class = "btn btn-primary float-right" data-toggle = "modal" data-target = "#modalBookCategory"><i class = "fa fa-plus"></i> &nbsp;New</a>
                 </div>
             </div>
         </div>
@@ -58,7 +60,13 @@
                                 @endif
                             </td>
                             <td class = "text-center align-middle">
-                                <a href = "{{url('/admin/book-categories/edit') .'/' .  $val['id'] }}" class = "btn btn-secondary btn-sm"><i class = "fa fa-edit"></i></a>
+                                <a href = "{{url('/admin/book-categories/edit') .'/' .  $val['id'] }}" 
+                                    class = "btn btn-secondary btn-sm"
+                                    data-cat-id = "{{ $val['id'] }}"
+                                    data-code = "{{ $val['code'] }}"
+                                    data-name = "{{ $val['code'] }}"
+                                    data-status = "{{ $val['status'] }}"
+                                ><i class = "fa fa-edit"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -66,5 +74,9 @@
             </tbody>
         </table>
     </div>
+    
+    @include('elements.modals')
+
+    <script src = "{{ url('assets/js/books/book_category/book_category.js') }}" tyepe = "text/javascript"></script>
 
 @include('partials.__footer')

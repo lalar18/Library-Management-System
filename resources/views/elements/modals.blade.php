@@ -176,3 +176,54 @@
     </div>
 </div>
 <!-- transaction borrow modal -->
+
+
+@if(isset($data['books_data']))
+<!-- book categoroy modal -->
+<div class = "modal fade" id = "modalBookCategory">
+    <div class = "modal-dialog modal-md">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title"><strong>Book Category</strong></h5>
+            </div>
+            <div class = "modal-body">
+                <form id = "frmBookCategory" method  = "post">
+                    @csrf
+                    <input type = "hidden" name = "id">
+                    <div class = "row">
+                        <!-- code -->
+                        <div class = "col-md-12">
+                            <label>Code *</label>
+                            <input type = "text" class = "form-control" name = "code">
+                        </div>
+                        <!-- name -->
+                        <div class = "col-md-12">
+                            <label>Name *</label>
+                            <input type = "text" class = "form-control" name = "name">
+                        </div>
+                        <!-- status -->
+                        <div class = "col-md-12">
+                            <label>Status</label>
+                            <p>
+                                    
+                                <label for = "genderM">Enabled:</label>
+                                <input type="radio" class="flat" name="status" id="rdioEnabled" value="1"required />
+
+                                <label for = "genderF">Disabled:</label>
+                                <input type="radio" class="flat" name="status" id="rdioDisabled" value="0"  checked />
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class = "modal-footer">
+                <!-- submit button -->
+                <button type = "button" id = "btnSubmitBookCategory" class = "btn btn-success"><i class = "fa fa-save"></i>&nbsp;Save</button>
+                <button type = "button" class = "btn btn-danger" data-toggle = "modal" data-target = "#modalBookCategory"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- book categoroy modal -->
+@endif
+
