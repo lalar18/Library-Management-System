@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 define('LARAVEL_START', microtime(true));
 
 /*
+Home page.... - Riza
+
+*/
+
+/*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
 |--------------------------------------------------------------------------
