@@ -12,7 +12,7 @@
             </div>
             
             <!-- borrower filter area -->
-            <div class = "card mt-2 card-borrower">
+            <div class = "card mt-3 card-borrower">
                 <div class = "card-body">
                     <h5 class = "card-title"><strong>Borrower Information</strong></h5>
 
