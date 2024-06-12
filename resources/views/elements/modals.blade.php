@@ -229,4 +229,51 @@
 
 
 <!-- book return details -->
+<div class = "modal fade" id = "modalBookReturnDetails">
+    <div class = "modal-dialog modal-md">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title"><strong>Return Details</strong></h5>
+            </div>
+            <div class = "modal-body">
+                <div class = "row">
+                    <!-- Date returned -->
+                    <div class = "col-md-12">
+                        <label>Date Returned</label>
+                        <input type = "date" class = "form-control">
+                    </div>
+
+                    <!-- type of fine -->
+                    <div class = "col-md-12">
+                        <label>Type of Fine</label>
+                        <select class = "form-control">
+                            <option selected hidden disabled>Select</option>
+                            <option>Damaged</option>
+                            <option>Late</option>
+                        </select>
+                    </div>
+
+                    <!--  remarks -->
+                    <div class = "col-md-12">
+                        <label>Remarks</label>
+                        <textarea class = "form-control"></textarea>
+                    </div>
+
+                    <!-- is returned -->
+                    <div class = "col-md-12">
+                        <label>Is Returned</label>
+                        <input type = "checkbox">
+                    </div>
+
+         
+                </div>
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" id = "btnSubmitReturnBookDetail" class = "btn btn-success"><i class = "fa fa-save"></i>&nbsp;Save</button>
+                <button type = "button" class = "btn btn-danger" data-toggle = "modal" data-target = "#modalBookReturnDetails"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- book return details -->
 

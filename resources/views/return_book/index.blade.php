@@ -7,7 +7,7 @@
         <div class = "col-md-4 col-sm-4">
 
             <div class = "form-inline custom-form-inline">
-                <label>Issuance No.</label>
+                <label>Return No.</label>
                 <input type = "text" class = "form-control text-inline ml-2" placeholder = "IS-000001..." >
             </div>
             
@@ -28,6 +28,12 @@
                     <label>Last Name</label>
                     <input type = "text" class = "form-control" readonly>
 
+                    <!-- date return 1 -->
+                    <label>Date Returned</label>
+                    <input type = "date" class = "form-control">
+                    <!-- date return 1 -->
+
+                    <!-- date borrowed --->
                     <label>Date Borrowed</label>
                     <input type = "date" class = "form-control">
 
@@ -53,10 +59,16 @@
             <div class = "card mt-2">
                 <div class = "card-body">
                     <h5 class = "card-title"><strong>Books</strong></h5>
+
+                    <!-- issuance number -->
+                    <div class = "form-inline custom-form-inline">
+                        <label>Issuance No.</label>
+                        <input type = "text" class = "form-control text-inline ml-2" placeholder = "IS-0000001...">
+                    </div>
+                    <!-- issuance number -->
                 </div>
                 
                 <div class = "card-body">
-                    
                     <!-- books cart list -->
                     <div class="row">
                         <!-- sample book -->
@@ -142,6 +154,9 @@
         </div>
         <!-- for form controls -->
     </div>
+ 
+    @include('elements.modals')
 
+    <script src = "{{ url('/assets/js/transaction/return_books.js') }}"></script>
 
 @include('partials.__footer')
