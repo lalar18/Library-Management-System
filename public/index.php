@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 define('LARAVEL_START', microtime(true));
 
 /*
-Home page.... - Riza
-Received message. git is working fine! Hello world! harhar
-*/
-
-/*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
 |--------------------------------------------------------------------------
