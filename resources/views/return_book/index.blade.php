@@ -16,18 +16,6 @@
                 <div class = "card-body">
                     <h5 class = "card-title"><strong>Borrower Information</strong></h5>
 
-                    <!-- borrower custom buttons -->
-                    <div class = "borrower-custom-container">
-                        <button type = "button" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Register New Borrower"><i class = "fa fa-plus"></i></button>
-                        <button type = "button" 
-                            class = "btn btn-outline-secondary btn-sm" 
-                            data-toggle="tooltip" 
-                            data-placement="top" 
-                            title="Search Borrower" 
-                            id = "btnSearchBorrower"
-                        ><i class = "fa fa-search"></i></button>
-                    </div>
-
                     <!-- id no -->
                     <label>ID #</label>
                     <input type = "text" class = "form-control" readonly>
@@ -74,10 +62,6 @@
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
-                               
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
                                     <p class="card-text"><strong>Author: </strong>John Doe</p>
@@ -91,10 +75,6 @@
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
                                     <p class="card-text"><strong>Author: </strong>John Doe</p>
@@ -108,10 +88,6 @@
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
                                     <p class="card-text"><strong>Author: </strong>John Doe</p>
@@ -125,10 +101,6 @@
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
                                     <p class="card-text"><strong>Author: </strong>John Doe</p>
@@ -142,10 +114,6 @@
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
                                     <p class="card-text"><strong>Author: </strong>John Doe</p>
@@ -175,8 +143,5 @@
         <!-- for form controls -->
     </div>
 
-    @include('elements.modals')
-
-    <script src = "{{ url('assets/js/transaction/borrow_books.js') }}"></script>
 
 @include('partials.__footer')

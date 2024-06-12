@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\BorrowBookController;
+use App\Http\Controllers\ReturnBookController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +38,11 @@ Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
 Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd'));
 
 //borrowers
-Route::get('admin/settings/borrowers-list', array(BorrowerController::class, 'index'));
+Route::get('/admin/settings/borrowers-list', array(BorrowerController::class, 'index'));
 
 
 //borrow book
-Route::get('admin/transaction/borrow-book', array(BorrowBookController::class, 'index'));
+Route::get('/admin/transaction/borrow-book', array(BorrowBookController::class, 'index'));
+
+//return book
+Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 'index'));

@@ -12,6 +12,12 @@
             <!-- /footer content -->
             </div>
         </div>
+
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+        </script>
         
         <!-- FastClick -->
         <script src="{{ url('vendors/fastclick/lib/fastclick.js') }}"></script>

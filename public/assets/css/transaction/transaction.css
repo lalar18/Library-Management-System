@@ -48,8 +48,13 @@
     height: 93%;
 }
 
-.borrower-actions {
-    top: 10px;
-    right: 10px;
+.borrower-custom-container {
+    top: 15px;
+    right: 15px;
     position: absolute;
+}
+
+.custom-form-inline .text-inline {
+    flex: 1;
+    max-width: 100%;
 }
