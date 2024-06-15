@@ -12,6 +12,12 @@ class BookController extends Controller
     //
 
     public function bookEntry(){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
@@ -23,6 +29,12 @@ class BookController extends Controller
     }   
 
     public function bookEntryAdd(){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
@@ -33,6 +45,11 @@ class BookController extends Controller
     }
 
     public function bookEntryAddSubmit(Request $request){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
 
         $response = BookCategory::create(array(
                 'code' => $request['code'],
@@ -50,6 +67,12 @@ class BookController extends Controller
 
 
     public function bookCategories(){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+
         $menuDatas = $this->getCachedMenus();
 
         $bookCategories = BookCategory::getBookCategories();
@@ -66,6 +89,12 @@ class BookController extends Controller
     }
 
     public function bookCategoriesAdd(){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+        
         $menuDatas = $this->getCachedMenus();
 
         $data = array();

@@ -16,6 +16,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    protected $isLogin = false;
+
     public function __construct(){
         $this->clearCaches();
         $this->cachedMenuItems();
@@ -56,4 +58,10 @@ class Controller extends BaseController
         Cache::flush(config('const.cached_menu_2024'));
     }
 
+    public function isLogin() {
+        if(session()->has(Config('const.session_admin_key')) && session(Config('const.session_admin_key'))){
+            return true;
+        }
+        return false;
+    }
 }

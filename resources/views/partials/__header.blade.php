@@ -36,7 +36,7 @@
                 <div class="left_col scroll-view">
                   <div class="navbar nav_title" style="border: 0;">
                     {{-- <a href="{{  url('/') }}" class="site_title"><i class="fa fa-book"></i> <span>{{ config('const.system_title') }}</span></a> --}}
-                    <a href="{{  url('/') }}" class="site_title"><i class="fa fa-book"></i> <span>Library Management System</span></a>
+                    <a href="{{  url()->route('home') }}" class="site_title"><i class="fa fa-book"></i> <span>Library Management System</span></a>
                   </div>
       
                   <div class="clearfix"></div>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="profile_info">
                       <span>Welcome,</span>
-                      <h2>Riza Jean</h2>
+                      <h2>{{ session(Config('const.session_admin_name')) }}</h2>
                     </div>
                   </div>
                   <!-- /menu profile quick info -->
@@ -69,7 +69,7 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                       <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ url()->route('logout') }}">
                       <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                   </div>
@@ -87,7 +87,7 @@
                       <ul class=" navbar-right">
                         <li class="nav-item dropdown open" style="padding-left: 15px;">
                           <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ url('images/Female.png')}}" alt="">Riza Jean
+                            <img src="{{ url('images/Female.png')}}" alt="">{{ session(Config('const.session_admin_name')) }}
                           </a>
                           <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -96,7 +96,7 @@
                                 <span>Settings</span>
                               </a>
                           <a class="dropdown-item"  href="javascript:;">Help</a>
-                            <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            <a class="dropdown-item"  href="{{ url()->route('logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                           </div>
                         </li>
         

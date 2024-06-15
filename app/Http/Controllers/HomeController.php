@@ -16,6 +16,12 @@ class HomeController extends Controller
 {
     //
     public function index() {
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+        
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
@@ -25,6 +31,12 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
+
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+
         $menuDatas = $this->getCachedMenus();
 
         $data = array();
@@ -32,6 +44,5 @@ class HomeController extends Controller
 
         return view('home/dashboard', compact('data'));
     }
-
 
 }

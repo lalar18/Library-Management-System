@@ -8,6 +8,11 @@ class ReturnBookController extends Controller
 {
     //
     public function index(){
+        
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        } 
         $data = [];
 
         $menuDatas = $this->getCachedMenus();

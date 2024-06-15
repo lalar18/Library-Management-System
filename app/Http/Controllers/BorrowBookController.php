@@ -10,6 +10,11 @@ class BorrowBookController extends Controller
     public function index() {
         $data = array();
 
+        //check first user if logged in
+        if($this->isLogin() == 0){
+            return redirect('/admin/login');
+        }
+
         $menuDatas = $this->getCachedMenus();
         
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);

@@ -8,6 +8,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\ReturnBookController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -25,7 +26,13 @@ use App\Http\Controllers\ReturnBookController;
 //     redirect('/home');
 // });
 
-Route::get('/', array(HomeController::class, 'index'));
+Route::get('/admin', array(HomeController::class, 'index'))->name('home');
+
+Route::get('/admin/login', [LoginController::class, 'index'])->name('login');
+Route::post('/admin/submit-login', [LoginController::class, 'submitLogin']);
+Route::get('/admin/logout', [LoginController::class, 'submitLogout'])->name('logout');
+
+Route::get('/admin/test-hash', [LoginController::class, 'testHash']);
 
 Route::get('/admin/home/dashboard', array(HomeController::class, 'dashboard'));
 
