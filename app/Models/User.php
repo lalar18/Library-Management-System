@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type'
     ];
 
     /**
@@ -56,12 +57,14 @@ class User extends Authenticatable
         $fields = ['id','name', 'email', 'password'];
 
         $data = User::select($fields)->
-        where($conditions)->get()->first()->toArray();
+        where($conditions)->get()->first();
 
-        if(Hash::check($params['password'], $data['password'])){
-            return $data;
+        if(isset($data['password'])){
+            if(Hash::check($params['password'], $data['password'])){
+                return $data;
+            }
+        }else{
+            return [];
         }
-        
-
     }
 }

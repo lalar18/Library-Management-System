@@ -6,6 +6,7 @@
 
         'system_title' => 'Library System',
         'sytem_title_login' => 'Library System | Login',
+        'sytem_title_register' => 'Library System | Register',
         'system_footer_title' => 'Library Management System - powered by',
         'system_powered_by' => array(
             'name' => 'Ung@sSyt3ms',

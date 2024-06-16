@@ -32,12 +32,38 @@
                 <section class="login_content">
                     <form method = "POST" action = "{{ url('admin/submit-login') }}">
                         <h1>Login Form</h1>
+
+                        <!-- error message -->
+                        @if(Session::has('login_error'))
+                            <?php $prevData = session('login_error'); ?>
+                            
+                            <div class="alert alert-danger alert-dismissible " role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                {{ $prevData['message'] }}
+                              </div>
+                        @endif
+
                         @csrf
                         <div>
-                            <input type="email" class="form-control" placeholder="Email" name = "email" required="" />
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                placeholder="Email" 
+                                name = "email" 
+                                required="" 
+                                value = "{{ isset($prevData['data']['email']) ? $prevData['data']['email'] : ''}}"
+                            />
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" name = "password" required="" />
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                placeholder="Password" 
+                                name = "password" 
+                                required="" 
+                                value = "{{ isset($prevData['data']['password']) ? $prevData['data']['password'] : '' }}" 
+                            />
                         </div>
                         <div>
                             <button type = "submit" class = "btn btn-primary btn-block"><i class = "fa fa-sign-in"></i>&nbsp;Login</button>

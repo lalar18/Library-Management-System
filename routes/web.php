@@ -26,7 +26,14 @@ use App\Http\Controllers\LoginController;
 //     redirect('/home');
 // });
 
+Route::get('/', function() {
+    return redirect()->route('home');
+});
+
 Route::get('/admin', array(HomeController::class, 'index'))->name('home');
+
+Route::get('/admin/admin-register', [LoginController::class, 'register']);
+Route::post('/admin/admin-register-submit', [LoginController::class, 'registerSubmit']);
 
 Route::get('/admin/login', [LoginController::class, 'index'])->name('login');
 Route::post('/admin/submit-login', [LoginController::class, 'submitLogin']);

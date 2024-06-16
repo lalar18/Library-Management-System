@@ -20,6 +20,10 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
 
+        if(User::count() <= 0){
+            return redirect('/admin/admin-register');
+        }
+
         return view('login.index');
     }
 
@@ -34,6 +38,15 @@ class LoginController extends Controller
 
         //check if return data is empty
         if(empty($data)){
+
+            session()->flash('login_error', array(
+                'message' => 'Either email or password is incorrect!',
+                'data'=>  array(
+                    'email' => $params['email'],
+                    'password' => $params['password']
+                )
+            ));
+
             return redirect()->route('login');
         }
 
@@ -59,7 +72,31 @@ class LoginController extends Controller
         }
     }
 
+    public function register(){
+        
+        //check if already has a user
+        if(User::count() > 0){
+            return redirect()->route('home');
+        }
 
+        return view('login.register');
+    }
+
+    public function registerSubmit(Request $request){
+
+        $user = new User;
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->user_type = 1;
+    
+        $user->save();
+
+        if(User::count() > 0) { 
+            return redirect()->route('home');
+        }
+    }
 
 
 
