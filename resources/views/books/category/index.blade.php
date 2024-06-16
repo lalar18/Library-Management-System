@@ -60,13 +60,13 @@
                                 @endif
                             </td>
                             <td class = "text-center align-middle">
-                                <a href = "{{url('/admin/book-categories/edit') .'/' .  $val['id'] }}" 
-                                    class = "btn btn-secondary btn-sm"
+                                <button type = "button" 
+                                    class = "btn btn-secondary btn-sm btnEditCategory"
                                     data-cat-id = "{{ $val['id'] }}"
                                     data-code = "{{ $val['code'] }}"
-                                    data-name = "{{ $val['code'] }}"
+                                    data-name = "{{ $val['name'] }}"
                                     data-status = "{{ $val['status'] }}"
-                                ><i class = "fa fa-edit"></i></a>
+                                ><i class = "fa fa-edit"></i></button>
                             </td>
                         </tr>
                     @endforeach

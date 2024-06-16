@@ -46,21 +46,39 @@ class BookController extends Controller
 
     public function bookEntryAddSubmit(Request $request){
 
+        $error = [];
         //check first user if logged in
         if($this->isLogin() == 0){
             return redirect('/admin/login');
         }
 
-        $response = BookCategory::create(array(
+        $duplicate = BookCategory::getDuplicate([
+            'name' => $request['name']
+        ]);
+
+        // dd($duplicate);
+
+        if(!$duplicate){
+            $response = BookCategory::create(array(
                 'code' => $request['code'],
                 'name' => $request['name'],
                 'status' => $request['status']
-            )
-        );
+            ));
+        }else{
+            $error = array(
+                'message' => 'Category Name is already taken!',
+                'has_error' => true
+            );
+
+            return response()->json($error);
+        }
+
+
 
         return response()->json(
             [
-                'success' => 'Successfully Added Category'
+                'message' => 'Successfully Added Category',
+                'has_error' => false
             ]
         );
     }

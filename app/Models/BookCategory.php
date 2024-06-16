@@ -27,8 +27,30 @@ class BookCategory extends Model
         return $data;
     }
 
-    public static function getDuplicate($data){
-        
+    public static function getDuplicate($params){
+        $data = false;
+        $conditions = [];
+
+        $conditions[] = ['status', '=', 1];
+
+        if(isset($params['id'])){
+            $conditions[]  = ['id', '=', $params['id']];
+        }
+
+        if(isset($params['name'])){
+            $conditions[] = ['name', '=', $params['name']];
+        }
+
+        $data = BookCategory::select('id', 'name', 'status')
+        ->where($conditions)
+        ->get()
+        ->first();
+
+        if(!empty($data)){
+            $data = true;
+        }
+
+        return $data;
     }
 
 }

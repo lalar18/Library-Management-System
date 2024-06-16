@@ -187,6 +187,11 @@
                 <h5 class = "modal-title"><strong>Book Category</strong></h5>
             </div>
             <div class = "modal-body">
+                <!-- notification container -->
+                <div id = "notification-container">
+
+                </div>
+
                 <form id = "frmBookCategory" method  = "post">
                     @csrf
                     <input type = "hidden" name = "id">
@@ -206,11 +211,11 @@
                             <label>Status</label>
                             <p>
                                     
-                                <label for = "genderM">Enabled:</label>
-                                <input type="radio" class="flat" name="status" id="rdioEnabled" value="1"required />
+                                <label for = "bookstatuscategory1">Enabled:</label>
+                                <input type="radio" class="flat" name="status" id="bookstatuscategory1" value="1"required />
 
-                                <label for = "genderF">Disabled:</label>
-                                <input type="radio" class="flat" name="status" id="rdioDisabled" value="0"  checked />
+                                <label for = "bookstatuscategory2">Disabled:</label>
+                                <input type="radio" class="flat" name="status" id="bookstatuscategory2" value="0"  checked />
                             </p>
                         </div>
                     </div>
@@ -224,7 +229,7 @@
         </div>
     </div>
 </div>
-<!-- book categoroy modal -->
+<!-- book category modal -->
 @endif
 
 
