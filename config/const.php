@@ -15,7 +15,11 @@
         'session_admin_key' => 'admin_is_login',
         'session_admin_id' => 'admin_user_id',
         'session_admin_name' => 'admin_user_name',
-        'session_email' => 'admin_email'
+        'session_email' => 'admin_email',
+        'status_types' => array(
+            'enabled' => '1',
+            'disabled' => '0'
+        )
 
     ];
 ?>

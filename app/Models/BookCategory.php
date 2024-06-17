@@ -12,8 +12,19 @@ class BookCategory extends Model
     protected $table = 'book_categories';
     protected $fillable = ['code', 'name', 'status', 'created_at', 'updated_at'];
 
-    public static function getBookCategories(){
+    public static function getBookCategories($params){
         $data = array();
+        $conditions = [];
+        
+        //check keywords if existing
+        if(isset($params['keyword'])){
+            $conditions[] = ['name','LIKE', '%' . $params['keyword'] .'%'];
+        }
+
+        //check status if existing
+        if(isset($params['status']) && $params['status'] =='0' || $params['status'] == '1'){
+            $conditions[] = ['status', '=', $params['status']];
+        }
 
         $data = BookCategory::select(
             'id',
@@ -21,6 +32,7 @@ class BookCategory extends Model
             'name',
             'status'
         )
+        ->where($conditions)
         ->get()
         ->toArray();
 

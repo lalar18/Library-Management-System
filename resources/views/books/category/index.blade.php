@@ -9,13 +9,19 @@
                 <div class = "col-md-6 col-sm-3">
                     <form class = "form-inline" method = "GET">
                         <label for = "txtKeyword">Search:</label>
-                        <input id = "txtKeyword"  type = "text" class = "form-control ml-2 mr-2" name = "keyword" placeholder = "Keyword...">
+                        <input id = "txtKeyword"  
+                            type = "text" 
+                            class = "form-control ml-2 mr-2" 
+                            name = "keyword" 
+                            placeholder = "Keyword..."
+                            value = {{ isset($data['filter_data']['keyword']) && $data['filter_data']['keyword'] ? $data['filter_data']['keyword'] : '' }}
+                        >
 
                         <label>Status</label>
-                        <select class = "form-control ml-2 mr-2">
-                            <option value = "" selected>All</option>
-                            <option value  = "1">Enabled</option>
-                            <option value  = "0">Disabled</option>
+                        <select class = "form-control ml-2 mr-2" name = "status">
+                            <option value = "all">All</option>
+                            <option value = "enabled" {{ isset($data['filter_data']['status']) && $data['filter_data']['status'] == '1' ? 'selected' : '' }}>Enabled</option>
+                            <option value = "disabled" {{ isset($data['filter_data']['status']) && $data['filter_data']['status'] == '0' ? 'selected' : '' }}>Disabled</option>
                         </select>
 
                        <button type = "submit" class = "btn btn-success mt-1">

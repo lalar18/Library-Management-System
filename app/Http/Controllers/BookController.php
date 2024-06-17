@@ -127,21 +127,32 @@ class BookController extends Controller
     }
 
 
-    public function bookCategories(){
-
+    public function bookCategories(Request $request){
         //check first user if logged in
+        $params = [];
+
         if($this->isLogin() == 0){
             return redirect('/admin/login');
+        }
+    
+        //check keyword if existing
+        if($request->has('keyword') && $request['keyword']){
+            $params['keyword'] = $request['keyword'];
+        }
+        // //check status if existing
+        if($request->has('status') && $request['status']){
+            $params['status'] = config('const.status_types.' . $request['status']);
         }
 
         $menuDatas = $this->getCachedMenus();
 
-        $bookCategories = BookCategory::getBookCategories();
+        $bookCategories = BookCategory::getBookCategories($params);
 
         $data = array();
 
         $data = array(
-            'books_data' => $bookCategories
+            'books_data' => $bookCategories,
+            'filter_data' => $params
         );
 
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
