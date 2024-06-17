@@ -26,7 +26,7 @@
 
                 <!-- right side column -->
                 <div class = "col-md-6 col-sm-3">
-                    <a href = "#" class = "btn btn-primary float-right" data-toggle = "modal" data-target = "#modalBookCategory"><i class = "fa fa-plus"></i> &nbsp;New</a>
+                    <button type = "button" class = "btn btn-primary float-right" id = "btnNewCategoryModal"><i class = "fa fa-plus"></i> &nbsp;New</button>
                 </div>
             </div>
         </div>

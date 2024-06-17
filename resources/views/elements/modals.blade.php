@@ -192,7 +192,7 @@
 
                 </div>
 
-                <form id = "frmBookCategory" method  = "post">
+                <form id = "frmBookCategory" method  = "POST">
                     @csrf
                     <input type = "hidden" name = "id">
                     <div class = "row">
@@ -223,8 +223,8 @@
             </div>
             <div class = "modal-footer">
                 <!-- submit button -->
-                <button type = "button" id = "btnSubmitBookCategory" class = "btn btn-success"><i class = "fa fa-save"></i>&nbsp;Save</button>
-                <button type = "button" class = "btn btn-danger" data-toggle = "modal" data-target = "#modalBookCategory"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
+                <button type = "button" id = "btnSubmitBookCategoryModal" class = "btn btn-success" data-href= ""><i class = "fa fa-save"></i>&nbsp;Save</button>
+                <button type = "button" class = "btn btn-danger" id = "btnCancelBookCategoryModal"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
             </div>
         </div>
     </div>

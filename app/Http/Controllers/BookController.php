@@ -49,14 +49,15 @@ class BookController extends Controller
         $error = [];
         //check first user if logged in
         if($this->isLogin() == 0){
-            return redirect('/admin/login');
+            $error = array(
+                'message' => '<strong>Session Expired!</strong>, please reload page and try logging in.',
+                'has_error' => true
+            );
         }
 
         $duplicate = BookCategory::getDuplicate([
             'name' => $request['name']
         ]);
-
-        // dd($duplicate);
 
         if(!$duplicate){
             $response = BookCategory::create(array(
@@ -73,14 +74,56 @@ class BookController extends Controller
             return response()->json($error);
         }
 
-
-
         return response()->json(
             [
                 'message' => 'Successfully Added Category',
                 'has_error' => false
             ]
         );
+    }
+
+
+    public function bookCategoriesSubmitEdit(Request $request){
+        $error = [];
+
+        //check first if user is logged in
+        if($this->isLogin() == 0){
+            $error = array(
+                'message' => '<strong>Session Expired!</strong>, please reload page and try logging in.',
+                'has_error' => true
+            );
+        }
+
+        $duplicate = BookCategory::getDuplicate([
+            'id' => $request['id'],
+            'name' => $request['name']
+        ]);
+
+        if(empty($duplicate)){
+            $bookCategory = BookCategory::findOrFail($request['id']);
+
+            $bookCategory->update([
+                'code' => $request['code'],
+                'name' => $request['name'],
+                'status' => $request['status'],
+            ]);
+        }else{
+            $error = array(
+                'message' => 'Category Name is already taken!',
+                'has_error' => true
+            );
+
+            return response()->json($error);
+        }
+
+        
+        return response()->json(
+            [
+                'message' => '<b>Book category</b> successfully updated!',
+                'has_error' => false
+            ]
+        );
+
     }
 
 

@@ -33,11 +33,11 @@ class BookCategory extends Model
 
         $conditions[] = ['status', '=', 1];
 
-        if(isset($params['id'])){
+        if(isset($params['id']) && $params['id']){
             $conditions[]  = ['id', '=', $params['id']];
         }
 
-        if(isset($params['name'])){
+        if(isset($params['name']) && $params['name']){
             $conditions[] = ['name', '=', $params['name']];
         }
 
