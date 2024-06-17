@@ -29,32 +29,22 @@
                         <label>Genre: </label>
                         <select class = "form-control mr-2 ml-2">
                             <option value = "" selected>All</option>
-                            <option value="Fiction">Fiction</option>
-                            <option value="Non-Fiction">Non-Fiction</option>
-                            <option value="Science Fiction">Science Fiction</option>
-                            <option value="Fantasy">Fantasy</option>
-                            <option value="Historical">Historical</option>
-                            <option value="Mystery">Mystery</option>
-                            <option value="Romance">Romance</option>
-                            <option value="Thriller">Thriller</option>
-                            <option value="Biography">Biography</option>
-                            <option value="Young Adult">Young Adult</option>
+                            @if(isset($data['book_categories_data']))
+                                @foreach($data['book_categories_data'] as $key => $val1)
+                                    <option value = "{{ $val1['id'] }}">{{ $val1['name'] }}</option>
+                                @endforeach
+                            @endif
                         </select>
 
                         <!-- author -->
                         <label>Author</label>
                         <select class = "form-control ml-2 mr-2">
                             <option value = "" selected>All</option>
-                            <option value="J.K. Rowling">J.K. Rowling</option>
-                            <option value="Stephen King">Stephen King</option>
-                            <option value="Agatha Christie">Agatha Christie</option>
-                            <option value="Ernest Hemingway">Ernest Hemingway</option>
-                            <option value="J.R.R. Tolkien">J.R.R. Tolkien</option>
-                            <option value="Jane Austen">Jane Austen</option>
-                            <option value="George Orwell">George Orwell</option>
-                            <option value="Mark Twain">Mark Twain</option>
-                            <option value="Charles Dickens">Charles Dickens</option>
-                            <option value="Gabriel García Márquez">Gabriel García Márquez</option>
+                            @if(isset($data['authors_data']))
+                                @foreach($data['authors_data'] as $key => $val)
+                                    <option value = "{{ $val['id'] }}">{{ $val['name'] }}</option>
+                                @endforeach
+                            @endif
                         </select>
 
                         <!-- date published -->

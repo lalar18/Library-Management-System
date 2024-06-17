@@ -15,14 +15,15 @@ class BookCategory extends Model
     public static function getBookCategories($params){
         $data = array();
         $conditions = [];
-        
+        $order = [];
+
         //check keywords if existing
         if(isset($params['keyword'])){
             $conditions[] = ['name','LIKE', '%' . $params['keyword'] .'%'];
         }
 
         //check status if existing
-        if(isset($params['status']) && $params['status'] =='0' || $params['status'] == '1'){
+        if(isset($params['status'])){
             $conditions[] = ['status', '=', $params['status']];
         }
 
@@ -33,6 +34,7 @@ class BookCategory extends Model
             'status'
         )
         ->where($conditions)
+        ->orderBy('name', 'asc')
         ->get()
         ->toArray();
 

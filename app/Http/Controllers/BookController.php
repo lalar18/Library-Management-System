@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 
 //declare models used
 use App\Models\BookCategory;
+use App\Models\Book;
+use App\Models\Author;
 
 class BookController extends Controller
 {
     //
 
-    public function bookEntry(){
+    public function bookEntry(Request $request){
+        $params = [];
 
         //check first user if logged in
         if($this->isLogin() == 0){
@@ -20,11 +23,21 @@ class BookController extends Controller
 
         $menuDatas = $this->getCachedMenus();
 
-        $data = array();
+        $bookList = Book::getAllBooks();
+        $bookCategories = BookCategory::getBookCategories([]);
+        $authorsList = Author::getAllAuthors([
+            'order' => ['name', 'asc']
+        ]);
+
+        $data = array(
+            'books_data' => $bookList,
+            'book_categories_data' => $bookCategories,
+            'authors_data' => $authorsList
+        );
 
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
-        return view('books/books/book_list', compact('data'));
+        return view('books/books/index', compact('data'));
 
     }   
 
