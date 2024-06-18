@@ -84,7 +84,7 @@
 
                 <!-- right container -->
                 <div class = "col-md-4 col-sm-4">
-                    <a href="{{ url('admin/book-entry/add') }}" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i> &nbsp; New</a>
+                    <button type = "button" id = "btnBooksNew" class = "btn btn-primary float-right"><i class = "fa fa-plus"></i> &nbsp; New</button>
                 </div>
             </div>
            
@@ -125,4 +125,18 @@
             </tbody>
         </table>
     </div>
+    
+    <!-- datalist -->
+    @if(isset($data['authors_data']))
+    <datalist id = "authorsDataList">
+        @foreach($data['authors_data'] as $key => $val)
+            <option value= "{{ $val['name'] }}"></option>
+        @endforeach
+    </datalist>
+    @endif
+
+    @include('elements.modals')
+
+    <script src = "{{ url('/assets/js/books/books/books.js') }}"></script>
+
 @include('partials.__footer')

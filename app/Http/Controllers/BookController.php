@@ -52,21 +52,50 @@ class BookController extends Controller
 
     }   
 
-    public function bookEntryAdd(){
+    public function bookEtnrySubmitAdd(Request $request){
+        $data = [];
+        $error = [];
 
-        //check first user if logged in
-        if($this->isLogin() == 0){
-            return redirect('/admin/login');
+        $params = [
+            'book_cat_id' => $request['book_cat_id'],
+            'author_id' => 1,
+            'barcode' => $request['barcode'],
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'isbn' => $request['isbn'],
+            'publish_date' => $request['publish_date']
+
+        ];
+
+        $reponse = Book::create($params);
+
+        if(empty($reponse)){
+            return response()->json(array(
+                'message' => 'Error saving book information!',
+                'has_error' => true
+            ));
         }
 
-        $menuDatas = $this->getCachedMenus();
-
-        $data = array();
-
-        $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
-
-        return view('books/books/book_list_add', compact('data'));
+        return response()->json(array(
+            'message' => 'Successfully added new book',
+            'has_error' => false
+        ));
     }
+    // public function bookEntryAdd(){
+
+    //     //check first user if logged in
+    //     if($this->isLogin() == 0){
+    //         return redirect('/admin/login');
+    //     }
+
+    //     $menuDatas = $this->getCachedMenus();
+
+    //     $data = array();
+
+    //     $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
+
+    //     return view('books/books/book_list_add', compact('data'));
+    // }
 
     public function bookEntryAddSubmit(Request $request){
 

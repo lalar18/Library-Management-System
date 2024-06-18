@@ -9,6 +9,8 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['book_cat_id', 'author_id', 'barcode', 'title', 'description', 'isbn', 'publish_date', 'created_at', 'updated_at'];
+
     public static function getAllBooks($params){
         $data = [];
         $conditions = [];
@@ -33,6 +35,5 @@ class Book extends Model
         ->toArray();
 
         return $data;
-        
     }
 }

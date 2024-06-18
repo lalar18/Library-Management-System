@@ -282,3 +282,120 @@
 </div>
 <!-- book return details -->
 
+<!-- book entry modal -->
+@if(isset($data['books_data']))
+<div class  = "modal fade" id = "modalBooksEntry">
+    <div class = "modal-dialog modal-xl" >
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title"><strong>Book Entry</strong></h5>
+            </div>
+
+            <div class = "modal-body">
+                <form method = "POST" id = "frmBooksModal">
+                    @csrf
+                    <div class = "card">
+                        <div class = "card-body">
+                            <h6><b>Book Details</b></h6>
+                            <hr>
+
+                            <div class = "row">
+                                <!-- notification container -->
+                                <div class = "col-md-12 notification-container">
+
+                                </div>
+
+                                <!-- id -->
+                                <input type = "hidden" value = "" name = "id">
+                                
+                                <!-- barcode -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label for = "booksBarcodeModal">Barcode:</label>
+                                    <input type = "number" name = "barcode" id = "booksBarcodeModal" class = "form-control" placeholder = "Ex. 129833992771">
+                                </div>
+
+                                <!-- ISBN -->
+                                <div class = "col-md-4 col-sm-4">
+                                    <label for = "booksISBNModal">ISBN:</label>
+                                    <input type = "text" name = "isbn" id = "booksISBNModal" class = "form-control" placeholder = "Ex. 978-0-306-40615-7...">
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <!-- book genre -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label>Genre:</label>
+                                    <select name="book_cat_id" id="bookGenreModal" class = "form-control">
+                                        <option selected hidden disabled></option>
+                                        @if(isset($data['book_categories_data']))
+                                            @foreach($data['book_categories_data'] as $key => $val)
+                                                <option value = "{{ $val['id'] }}">{{ $val['name'] }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <!-- book status -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label for = "booksBookStatusModal">Book Status <span class = "required">*</span></label>
+                                    <select id = "booksBookStatusModal" class = "form-control" name = "status">
+                                        <option selected hidden disabled></option>
+                                        <option>Brand New</option>
+                                        <option>Good Condition</option>
+                                        <option>Damaged</option>
+                                        <option>Lost</option>
+                                    </select>
+                                </div>
+
+                                <!-- date published -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label for = "booksPublishDateModal">Date Published: <span class ="required">*</span></label>
+                                    <input type = "date" name = "publish_date" id = "booksPublishDateModal" class = "form-control">
+                                </div>
+
+                                <!-- book title -->
+                                <div class = "col-md-12 col-sm-12">
+                                    <label for = "booksTitleModal">Book Title: <span class ="required">*</span></label>
+                                    <input type = "text" name = "title" id = "booksTitleModal" class = "form-control" placeholder = "Ex. Tarzan...">
+                                </div>
+
+                                <!-- book description -->
+                                <div class = "col-md-12 col-sm-12">
+                                    <label for = "booksDescriptionModal">Book Description: <span class ="required">*</span></label>
+                                    <textarea id = "booksDescriptionModal" class = "form-control" name = "description" placeholder = "Ex. The quick brown fox jumps over the lazy dog..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class = "card mt-2">
+                        <div class = "card-body">
+                            <h6><b>Author</b></h6>
+                            <hr>
+                            <!-- authors container -->
+                            <div class = "row authors-container">
+                                <div class = "col-md-3">
+                                    <input type = "hidden" name = "author[]['id']" value = "">
+                                    <input type = "text" 
+                                        autocomplete = "off" 
+                                        name = "author[0][name]" 
+                                        class = "form-control" 
+                                        placeholder = "Ex. Johny Bravo..." 
+                                        list = "authorsDataList"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class = "modal-footer">
+                <button type = "button" id = "btnSubmitReturnBooksModal" class = "btn btn-success" data-href = "/admin/book-entry/submit-add"><i class = "fa fa-save"></i>&nbsp;Save</button>
+                <button type = "button" id = "btnCancelBooksModal"class = "btn btn-danger"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+<!-- book entry modal -->
+

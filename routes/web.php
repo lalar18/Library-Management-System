@@ -50,6 +50,7 @@ Route::post('/admin/book-categories/edit/submit', array(BookController::class, '
 Route::get('/admin/book-categories/edit', array(BookController::class, ''));
 
 Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
+Route::post('/admin/book-entry/submit-add', array(BookController::class, 'bookEtnrySubmitAdd'));
 Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd'));
 
 //borrowers
