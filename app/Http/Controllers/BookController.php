@@ -20,10 +20,20 @@ class BookController extends Controller
         if($this->isLogin() == 0){
             return redirect('/admin/login');
         }
+        
+        //check if keyword is existing
+        if($request->has('keyword') && $request['keyword']){
+            $params['keyword']  = $request['keyword'];
+        }
+
+        //check if genre is existing
+        if($request->has('genre') && $request['genre']){
+            $params['genre'] = $request['genre'];
+        }
 
         $menuDatas = $this->getCachedMenus();
 
-        $bookList = Book::getAllBooks();
+        $bookList = Book::getAllBooks($params);
         $bookCategories = BookCategory::getBookCategories([]);
         $authorsList = Author::getAllAuthors([
             'order' => ['name', 'asc']
@@ -32,7 +42,8 @@ class BookController extends Controller
         $data = array(
             'books_data' => $bookList,
             'book_categories_data' => $bookCategories,
-            'authors_data' => $authorsList
+            'authors_data' => $authorsList,
+            'filter_data' => $params
         );
 
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
