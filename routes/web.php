@@ -62,3 +62,6 @@ Route::get('/admin/transaction/borrow-book', array(BorrowBookController::class, 
 
 //return book
 Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 'index'));
+
+//transaction information
+Route::get('/admin/transaction/transaction-info', array(BorrowBookController::class, 'transactionInformation'));
