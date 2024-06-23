@@ -49,7 +49,7 @@
                             <input 
                                 type="email" 
                                 class="form-control" 
-                                placeholder="Email" 
+                                placeholder="Username" 
                                 name = "email" 
                                 required="" 
                                 value = "{{ isset($prevData['data']['email']) ? $prevData['data']['email'] : ''}}"

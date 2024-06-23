@@ -42,7 +42,7 @@
 
                         <!-- email -->
                         <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" name = "email" />
+                            <input type="text" class="form-control" placeholder="Username" required="" name = "email" />
                         </div>
 
                         <!-- password -->
