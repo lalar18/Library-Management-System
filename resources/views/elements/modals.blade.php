@@ -292,6 +292,10 @@
             </div>
 
             <div class = "modal-body">
+                <div class = "notification-container">
+                    
+                </div>
+
                 <form method = "POST" id = "frmBooksModal">
                     @csrf
                     <div class = "card">
@@ -300,34 +304,55 @@
                             <hr>
 
                             <div class = "row">
-                                <!-- notification container -->
-                                <div class = "col-md-12 notification-container">
-
-                                </div>
-
                                 <!-- id -->
                                 <input type = "hidden" value = "" name = "id">
                                 
                                 <!-- barcode -->
                                 <div class = "col-md-3 col-sm-3">
                                     <label for = "booksBarcodeModal">Barcode:</label>
-                                    <input type = "number" name = "barcode" id = "booksBarcodeModal" class = "form-control" placeholder = "Ex. 129833992771">
+                                    <input type = "number" 
+                                        name = "barcode" 
+                                        id = "booksBarcodeModal" 
+                                        class = "form-control" 
+                                        placeholder = "Ex. 129833992771"
+                                        required
+                                    >
                                 </div>
 
                                 <!-- ISBN -->
                                 <div class = "col-md-4 col-sm-4">
                                     <label for = "booksISBNModal">ISBN:</label>
-                                    <input type = "text" name = "isbn" id = "booksISBNModal" class = "form-control" placeholder = "Ex. 978-0-306-40615-7...">
+                                    <input type = "text" 
+                                        name = "isbn"
+                                        id = "booksISBNModal" 
+                                        class = "form-control" 
+                                        placeholder = "Ex. 978-0-306-40615-7..."
+                                        required
+                                    >
                                 </div>
                             </div>
                             <div class = "row">
+
+                                <!-- book price -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label for = "txtPriceModal">Price</label>
+                                    <input type = "number"
+                                        class = "form-control"
+                                        name = "price"
+                                        id = "txtPriceModal"
+                                        placeholder = "Ex. 250.00"
+                                        required
+                                    >
+                                </div>
+
                                 <!-- book genre -->
                                 <div class = "col-md-3 col-sm-3">
                                     <label>Genre:</label>
-                                    <select name="book_cat_id" id="bookGenreModal" class = "form-control">
+                                    <select name="book_cat_id" id="bookGenreModal" class = "form-control" required>
                                         <option selected hidden disabled></option>
                                         @if(isset($data['book_categories_data']))
                                             @foreach($data['book_categories_data'] as $key => $val)
+                                                <option selected hidden disabled>Select</option>
                                                 <option value = "{{ $val['id'] }}">{{ $val['name'] }}</option>
                                             @endforeach
                                         @endif
@@ -337,8 +362,8 @@
                                 <!-- book status -->
                                 <div class = "col-md-3 col-sm-3">
                                     <label for = "booksBookStatusModal">Book Status <span class = "required">*</span></label>
-                                    <select id = "booksBookStatusModal" class = "form-control" name = "status">
-                                        <option selected hidden disabled></option>
+                                    <select id = "booksBookStatusModal" class = "form-control" name = "status" required>
+                                        <option selected hidden disabled>Select</option>
                                         <option>Brand New</option>
                                         <option>Good Condition</option>
                                         <option>Damaged</option>
@@ -390,8 +415,8 @@
             </div>
 
             <div class = "modal-footer">
-                <button type = "button" id = "btnSubmitReturnBooksModal" class = "btn btn-success" data-href = "/admin/book-entry/submit-add"><i class = "fa fa-save"></i>&nbsp;Save</button>
-                <button type = "button" id = "btnCancelBooksModal"class = "btn btn-danger"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
+                <button type = "button" id = "btnSubmitBooksEntryModal" class = "btn btn-success" data-href = "/admin/book-entry/submit-add"><i class = "fa fa-save"></i>&nbsp;Save</button>
+                <button type = "button" id = "btnCancelBooksEntryModal"class = "btn btn-danger"><i class = "fa fa-times"></i>&nbsp;Cancel</button>
             </div>
         </div>
     </div>

@@ -63,6 +63,7 @@ class BookController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
             'isbn' => $request['isbn'],
+            'price' => $request['price'],
             'publish_date' => $request['publish_date']
 
         ];
