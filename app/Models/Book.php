@@ -16,6 +16,9 @@ class Book extends Model
         $conditions = [];
         $orConditions = [];
 
+        //default items per page 10
+        $pageItems = 10;
+
         //check keyword
         if(isset($params['keyword'])){
             $conditions[] = ['title', 'LIKE', '%' . $params['keyword'] .'%'];
@@ -30,10 +33,8 @@ class Book extends Model
         $data = Book::select('books.*')
         ->leftJoin('book_categories', 'books.book_cat_id', '=', 'book_categories.id')
         ->where($conditions)
-        ->orWhere($orConditions)
-        ->get()
-        ->toArray();
+        ->orWhere($orConditions);
 
-        return $data;
+        return $data->paginate($pageItems);
     }
 }

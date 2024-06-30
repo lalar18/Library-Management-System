@@ -399,10 +399,9 @@
                             <!-- authors container -->
                             <div class = "row authors-container">
                                 <div class = "col-md-3">
-                                    <input type = "hidden" name = "author[]['id']" value = "">
                                     <input type = "text" 
                                         autocomplete = "off" 
-                                        name = "author[0][name]" 
+                                        name = "author_name" 
                                         class = "form-control" 
                                         placeholder = "Ex. Johny Bravo..." 
                                         list = "authorsDataList"

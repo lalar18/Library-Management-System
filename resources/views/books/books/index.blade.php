@@ -125,7 +125,13 @@
             </tbody>
         </table>
     </div>
-    
+
+    <p>Page {{ $data['books_data']->currentPage() }} of {{ $data['books_data']->lastPage() }}</p>
+
+    <div class = "pagination-container">
+        @include('elements.pagination', ['paginator' => $data['books_data'], 'filter_data' => $data['filter_data']])
+    </div>
+
     <!-- datalist -->
     @if(isset($data['authors_data']))
     <datalist id = "authorsDataList">

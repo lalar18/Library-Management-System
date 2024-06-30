@@ -56,9 +56,24 @@ class BookController extends Controller
         $data = [];
         $error = [];
 
+        $checkAuthor = Author::checkAuthor(['name' => $request['author_name']]);
+        
+        $authorId = null;
+        if(empty($checkAuthor)){
+            //add new author if empty
+            $newAuthor = new Author;
+
+            $newAuthor->name = $request['author_name'];
+            $newAuthor->status = 1;
+
+            $newAuthor->save();
+
+            $authorId = $newAuthor->id;
+        }
+
         $params = [
             'book_cat_id' => $request['book_cat_id'],
-            'author_id' => 1,
+            'author_id' => $authorId,
             'barcode' => $request['barcode'],
             'title' => $request['title'],
             'description' => $request['description'],
