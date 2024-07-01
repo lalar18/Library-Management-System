@@ -30,11 +30,27 @@ class Book extends Model
             $conditions[] = ['book_cat_id', '=', $params['genre']];
         }
 
-        $data = Book::select('books.*')
+        $data = Book::select('books.*', 'authors.id AS author_id', 'authors.name AS author_name')
         ->leftJoin('book_categories', 'books.book_cat_id', '=', 'book_categories.id')
+        ->leftJoin('authors', 'authors.id', '=', 'books.author_id')
         ->where($conditions)
         ->orWhere($orConditions);
 
         return $data->paginate($pageItems);
     }
+
+    public static function getBooks($params = []){
+        $data = [];
+
+        $query = Book::select('Book.*');
+        
+        if(isset($params['id'])){
+            $query->where('id', '=', $params['id']);
+        }
+
+        $data = $query->get()->toArray();
+
+        return $data;
+    }
+
 }

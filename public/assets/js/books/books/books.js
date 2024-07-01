@@ -55,3 +55,7 @@ $("#btnSubmitBooksEntryModal").click(function (e) {
     console.log(formData);
     
 });
+
+function editBook(){
+    
+}

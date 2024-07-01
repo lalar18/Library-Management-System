@@ -45,6 +45,19 @@ class Author extends Model
         return $data;
     }
 
+    public static function getAuthor($params = []){
+        $data = [];
+
+        $queries = Author::select('Author.id', 'Authors.name');
+
+        if(isset($params['id'])){
+            $queries->where('id', '=', $params['id']);
+        }
+
+        $data = $query->get()->toArray();
+        return $data;
+    }
+
 
 
 

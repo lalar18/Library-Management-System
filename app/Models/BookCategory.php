@@ -27,6 +27,11 @@ class BookCategory extends Model
             $conditions[] = ['status', '=', $params['status']];
         }
 
+        //check id if exist
+        if(isset($params['id'])){
+            $conditions[] = ['status', '=', (int)$params['id']];
+        }
+
         $data = BookCategory::select(
             'id',
             'code',
@@ -66,5 +71,6 @@ class BookCategory extends Model
 
         return $data;
     }
+
 
 }

@@ -151,6 +151,10 @@ class BookController extends Controller
         );
     }
 
+    public function getBookInformation(){
+        
+    }
+
 
     public function bookCategoriesSubmitEdit(Request $request){
         $error = [];

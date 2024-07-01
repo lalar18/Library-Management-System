@@ -52,6 +52,7 @@ Route::get('/admin/book-categories/edit', array(BookController::class, ''));
 Route::get('/admin/book-entry', array(BookController::class, 'bookEntry'));
 Route::post('/admin/book-entry/submit-add', array(BookController::class, 'bookEtnrySubmitAdd'));
 Route::get('/admin/book-entry/add', array(BookController::class, 'bookEntryAdd'));
+Route::get('/admin/books/get-book-information', [BookController::class, 'getBookInformation']);
 
 //borrowers
 Route::get('/admin/settings/borrowers-list', array(BorrowerController::class, 'index'));

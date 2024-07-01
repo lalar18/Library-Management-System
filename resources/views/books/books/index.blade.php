@@ -115,21 +115,26 @@
                             <td>{{ $val['title'] }}</td>
                             <td>{{ $val['description'] }}</td>
                             <td>{{ $val['isbn'] }}</td>
-                            <td></td>
+                            <td>{{ $val['author_name'] }}</td>
                             <td>{{ $val['publish_date'] }}</td>
                             <td></td>
-                            <td></td>
+                            <td class = "text-center">
+                                <button type = "button" 
+                                    class = "btn btn-secondary btn-sm"
+                                    data-id = "{{ $val['id'] }}"
+                                ><i class = "fa fa-edit"></i></button>
+                            </td>
                         </tr>
                     @endforeach
                 @endif
             </tbody>
         </table>
-    </div>
 
-    <p>Page {{ $data['books_data']->currentPage() }} of {{ $data['books_data']->lastPage() }}</p>
+        <p>Page {{ $data['books_data']->currentPage() }} of {{ $data['books_data']->lastPage() }}</p>
 
-    <div class = "pagination-container">
-        @include('elements.pagination', ['paginator' => $data['books_data'], 'filter_data' => $data['filter_data']])
+        <div class = "pagination-container">
+            @include('elements.pagination', ['paginator' => $data['books_data'], 'filter_data' => $data['filter_data']])
+        </div>
     </div>
 
     <!-- datalist -->
