@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['book_cat_id', 'author_id', 'barcode', 'title', 'description', 'isbn', 'price', 'publish_date', 'created_at', 'updated_at'];
+    protected $fillable = ['book_cat_id', 'author_id', 'barcode', 'title', 'description', 'isbn', 'price', 'publish_date', 'status', 'created_at', 'updated_at'];
 
     public static function getAllBooks($params){
         $data = [];
@@ -42,13 +42,13 @@ class Book extends Model
     public static function getBooks($params = []){
         $data = [];
 
-        $query = Book::select('Book.*');
-        
-        if(isset($params['id'])){
+        $query = Book::select('books.*');
+
+        if (isset($params['id'])) {
             $query->where('id', '=', $params['id']);
         }
-
-        $data = $query->get()->toArray();
+        
+        $data = $query->get()->first()->toArray();
 
         return $data;
     }

@@ -122,6 +122,7 @@
                                 <button type = "button" 
                                     class = "btn btn-secondary btn-sm"
                                     data-id = "{{ $val['id'] }}"
+                                    onclick = "editBook(this)"
                                 ><i class = "fa fa-edit"></i></button>
                             </td>
                         </tr>

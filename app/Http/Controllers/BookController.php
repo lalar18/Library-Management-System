@@ -57,33 +57,39 @@ class BookController extends Controller
         $error = [];
 
         $checkAuthor = Author::checkAuthor(['name' => $request['author_name']]);
-        
-        $authorId = null;
-        if(empty($checkAuthor)){
-            //add new author if empty
-            $newAuthor = new Author;
 
-            $newAuthor->name = $request['author_name'];
-            $newAuthor->status = 1;
+        if($request->has('id') && $request['id']){
+            # update function
+        }else{
+            # add function
+            $authorId = null;
+            
+            if(empty($checkAuthor)){
+                //add new author if empty
+                $newAuthor = new Author;
 
-            $newAuthor->save();
+                $newAuthor->name = $request['author_name'];
+                $newAuthor->status = 1;
 
-            $authorId = $newAuthor->id;
+                $newAuthor->save();
+
+                $authorId = $newAuthor->id;
+            }
+
+            $params = [
+                'book_cat_id' => $request['book_cat_id'],
+                'author_id' => $authorId,
+                'barcode' => $request['barcode'],
+                'title' => $request['title'],
+                'description' => $request['description'],
+                'isbn' => $request['isbn'],
+                'price' => $request['price'],
+                'publish_date' => $request['publish_date'],
+                'status' => $request['status']
+            ];
+
+            $reponse = Book::create($params);
         }
-
-        $params = [
-            'book_cat_id' => $request['book_cat_id'],
-            'author_id' => $authorId,
-            'barcode' => $request['barcode'],
-            'title' => $request['title'],
-            'description' => $request['description'],
-            'isbn' => $request['isbn'],
-            'price' => $request['price'],
-            'publish_date' => $request['publish_date']
-
-        ];
-
-        $reponse = Book::create($params);
 
         if(empty($reponse)){
             return response()->json(array(
@@ -151,8 +157,25 @@ class BookController extends Controller
         );
     }
 
-    public function getBookInformation(){
-        
+    public function getBookInformation(Request $request){
+        $data = [];
+
+        $bookId = $request['book_id'];
+
+        $books = Book::getBooks(['id' => $bookId]);
+        $author = [];
+
+        if(!empty($books)){
+            $author = Author::getAuthor(['id' => $books['author_id']]);
+
+            if(isset($author) && !empty($author)){
+                unset($author['id']);
+            }
+        }
+
+        $data = array_merge($books, $author);
+
+        return response()->json($data);
     }
 
 
