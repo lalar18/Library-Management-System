@@ -58,40 +58,60 @@ class BookController extends Controller
 
         $checkAuthor = Author::checkAuthor(['name' => $request['author_name']]);
 
-        if($request->has('id') && $request['id']){
-            # update function
-        }else{
-            # add function
-            $authorId = null;
+        $authorId = null;
             
-            if(empty($checkAuthor)){
-                //add new author if empty
-                $newAuthor = new Author;
+        if(empty($checkAuthor)){
+            //add new author if empty
+            $newAuthor = new Author;
 
-                $newAuthor->name = $request['author_name'];
-                $newAuthor->status = 1;
+            $newAuthor->name = $request['author_name'];
+            $newAuthor->status = 1;
 
-                $newAuthor->save();
+            $newAuthor->save();
 
-                $authorId = $newAuthor->id;
-            }
-
-            $params = [
-                'book_cat_id' => $request['book_cat_id'],
-                'author_id' => $authorId,
-                'barcode' => $request['barcode'],
-                'title' => $request['title'],
-                'description' => $request['description'],
-                'isbn' => $request['isbn'],
-                'price' => $request['price'],
-                'publish_date' => $request['publish_date'],
-                'status' => $request['status']
-            ];
-
-            $reponse = Book::create($params);
+            $authorId = $newAuthor->id;
+        }else{
+            $authorId = $checkAuthor['id'];
         }
 
-        if(empty($reponse)){
+        # set params for books
+        $params = [
+            'book_cat_id' => $request['book_cat_id'],
+            'author_id' => $authorId,
+            'barcode' => $request['barcode'],
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'isbn' => $request['isbn'],
+            'price' => $request['price'],
+            'publish_date' => $request['publish_date'],
+            'status' => $request['status']
+        ];
+
+        #check if params had ID
+        #if ID is present its for update function
+        $response = null;
+        $responseMessage = '';
+        if($request->has('id') && $request['id']){
+            # update function
+            $book = Book::findOrFail($request['id']);
+
+            try{
+                $book->update($params);
+                $responseMessage = 'Book successfully updated!';
+            } catch (Exception $error) {
+                $response = 1;
+            }
+        }else{
+            # add function
+            try{
+                Book::create($params);
+                $responseMessage = 'Successfully added new book!';
+            } catch(Exception $error) {
+                $response = 1;
+            }
+        }
+
+        if($response){
             return response()->json(array(
                 'message' => 'Error saving book information!',
                 'has_error' => true
@@ -99,25 +119,10 @@ class BookController extends Controller
         }
 
         return response()->json(array(
-            'message' => 'Successfully added new book',
+            'message' => $responseMessage,
             'has_error' => false
         ));
     }
-    // public function bookEntryAdd(){
-
-    //     //check first user if logged in
-    //     if($this->isLogin() == 0){
-    //         return redirect('/admin/login');
-    //     }
-
-    //     $menuDatas = $this->getCachedMenus();
-
-    //     $data = array();
-
-    //     $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
-
-    //     return view('books/books/book_list_add', compact('data'));
-    // }
 
     public function bookEntryAddSubmit(Request $request){
 

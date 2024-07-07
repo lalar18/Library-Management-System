@@ -48,7 +48,8 @@ class Book extends Model
             $query->where('id', '=', $params['id']);
         }
         
-        $data = $query->get()->first()->toArray();
+        $result = $query->get()->first();
+        $data = !empty($result) ? $result->toArray() : [];
 
         return $data;
     }

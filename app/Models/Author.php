@@ -40,7 +40,8 @@ class Author extends Model
         }
         
         //execute query
-        $data = $query->get()->toArray();
+        $result = $query->get()->first();
+        $data = !empty($result) ? $result->toArray() : [];    
 
         return $data;
     }
