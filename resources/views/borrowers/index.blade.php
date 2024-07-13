@@ -2,8 +2,6 @@
 
 	<link href="{{ url('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
 
-	@dump($data['filterData'])
-
 	<!-- filter area -->
 	<div class = "card">
 		<div class = "card-body">
