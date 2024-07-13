@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//delcare models used
+use App\Models\Borrower;
+
 class BorrowerController extends Controller
 {
     //
@@ -14,6 +17,8 @@ class BorrowerController extends Controller
         }
 
         $data = array();
+       
+        $data['borrowersData'] = Borrower::getBorrowersList();
 
         $menuDatas = $this->getCachedMenus();
 

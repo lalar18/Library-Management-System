@@ -19,7 +19,11 @@
         'status_types' => array(
             'enabled' => '1',
             'disabled' => '0'
-        )
+        ),
+        'designation'=>[
+            0 => 'Student',
+            1 => 'Faculty'
+        ]
 
     ];
 ?>
