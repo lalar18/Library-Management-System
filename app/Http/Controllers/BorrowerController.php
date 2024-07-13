@@ -10,15 +10,21 @@ use App\Models\Borrower;
 class BorrowerController extends Controller
 {
     //
-    public function index(){
+    public function index(Request $request){
         //check first user if logged in
+        $filterData = [];
+
         if($this->isLogin() == 0){
             return redirect('/admin/login');
         }
 
+        //get data
+        $filterData = $request->query();
+
         $data = array();
        
-        $data['borrowersData'] = Borrower::getBorrowersList();
+        $data['borrowersData'] = Borrower::getBorrowersList($filterData);
+        $data['filterData'] = $filterData;
 
         $menuDatas = $this->getCachedMenus();
 

@@ -16,6 +16,17 @@ class Borrower extends Model
 
         $query = Borrower::select('*');
 
+        //check borrower designation
+        if(isset($params['type_id'])){
+            $query->where('type_id', '=', $params['type_id']);
+        }
+
+        //check keyword
+        if(isset($params['keyword']) && $params['keyword']){
+            $query->where('fname', 'like', '%' . $params['keyword'] . '%')
+                ->orWhere('lname', 'like', '%' . $params['keyword'] . '%')
+                ->orWhere('mname', 'like', '%' . $params['keyword'] . '%');
+        }
         $data = $query->get()->toArray();
 
         return $data;

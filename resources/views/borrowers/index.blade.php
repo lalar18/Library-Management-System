@@ -2,19 +2,26 @@
 
 	<link href="{{ url('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
 
+	@dump($data['filterData'])
+
 	<!-- filter area -->
 	<div class = "card">
 		<div class = "card-body">
 			<form class = "form-inline" method = "GET">
 
 				<label for = "txtSearch">Search:</label>
-				<input id = "txtSearch" type = "search" class = "form-control ml-2 mr-2" name = "keyword">
+				<input id = "txtSearch" type = "search" 
+					class = "form-control ml-2 mr-2" 
+					name = "keyword" 
+					placeholder="Keyword..."
+					value = "{{ isset($data['filterData']['keyword']) && $data['filterData']['keyword'] ? $data['filterData']['keyword'] : '' }}"
+				>
 
 				<label>Borrower Type:</label>
 				<select class = "form-control ml-2 mr-2" name = "type_id">
-					<option selected hidden disabled></option>
-					<option value = "1">Student</option>
-					<option value = "2">Faculty</option>
+					<option selected hidden disabled>All</option>
+					<option value = "0" {{ isset($data['filterData']['type_id']) &&  $data['filterData']['type_id'] == 0 ? 'selected' : '' }}>Student</option>
+					<option value = "1" {{ isset($data['filterData']['type_id']) &&  $data['filterData']['type_id'] == 1 ? 'selected' : '' }}>Faculty</option>
 				</select>
 
 				<button type = "submit" class = "btn btn-success mt-1"><i class = "fa fa-search"></i></button>
