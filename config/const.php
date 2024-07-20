@@ -23,7 +23,8 @@
         'designation'=>[
             0 => 'Student',
             1 => 'Faculty'
-        ]
+        ],
+        'login_required_error_msg' => 'User Login is required!'
 
     ];
 ?>

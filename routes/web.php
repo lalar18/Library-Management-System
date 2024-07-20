@@ -56,6 +56,7 @@ Route::post('/admin/books/get-book-information', [BookController::class, 'getBoo
 
 //borrowers
 Route::get('/admin/settings/borrowers-list', array(BorrowerController::class, 'index'));
+Route::post('/admin/settings/borrowers-list/submit-data', array(BorrowerController::class, 'submitBorrowersData'));
 
 
 //borrow book

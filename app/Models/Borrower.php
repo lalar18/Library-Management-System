@@ -31,4 +31,27 @@ class Borrower extends Model
 
         return $data;
     }
+
+    public static function getBorrowerInformation($params = []){
+        $data = [];
+
+        $query = Borrower::select('*');
+
+        if(isset($params['id']) && $params['id']){
+            $query->where('id', '=', '');
+        }
+
+        if(
+            (isset($params['lname']) && $params['lname']) &&
+            (isset($params['fname']) && $params['fname']) &&
+            (isset($params['mname']) && $params['mname'])
+        ){
+            $query->where('lname', $params['lname'])
+                ->where('fname', $params['fname'])
+                ->where('mname', $params['mname']);
+        }
+
+        $data = $query->get()->first()->to_array();
+        return $data;
+    }
 }
