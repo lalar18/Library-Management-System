@@ -51,7 +51,7 @@ class Borrower extends Model
                 ->where('mname', $params['mname']);
         }
 
-        $data = $query->get()->first()->to_array();
-        return $data;
+        $data = $query->get()->first();
+        return !empty($data) ? $data->toArray() : [];
     }
 }

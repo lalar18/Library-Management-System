@@ -17,7 +17,7 @@
 
 				<label>Borrower Type:</label>
 				<select class = "form-control ml-2 mr-2" name = "type_id">
-					<option selected disabled>All</option>
+					<option value = ""selected>All</option>
 					<option value = "0" {{ isset($data['filterData']['type_id']) &&  $data['filterData']['type_id'] == 0 ? 'selected' : '' }}>Student</option>
 					<option value = "1" {{ isset($data['filterData']['type_id']) &&  $data['filterData']['type_id'] == 1 ? 'selected' : '' }}>Faculty</option>
 				</select>
@@ -32,7 +32,8 @@
         <div class = "card-body">
 			<button type = "button" 
 				class = "btn btn-primary float-right" 
-				onclick = "showBorrowerEntryModal()"
+				onclick = "showBorrowerEntryModal(this)"
+				data-mode = "1"
 			><i class = "fa fa-plus"></i> New</button>
         </div>
     </div>
@@ -69,6 +70,15 @@
 								<button type = "button" 
 									class = "btn btn-secondary btn-sm"
 									data-id = "{{ $val['id'] }}"
+									data-id-no = "{{ $val['id_no'] }}"
+									data-type-id = "{{ $val['type_id'] }}"
+									data-fname = "{{ $val['fname'] }}"
+									data-lname = "{{ $val['lname'] }}"
+									data-mname = "{{ $val['mname'] }}"
+									data-contact-no = "{{ $val['contact_no'] }}"
+									data-email = "{{ $val['email'] }}"
+									data-mode = "1"
+									onclick = "showBorrowerEntryModal(this)"
 								><i class = "fa fa-edit"></i></button>
 							</td>
 						</tr>
@@ -87,23 +97,33 @@
 				</div>
 
 				<div class = "modal-body">
+					<!-- notification container -->
+					<div class = "notification-container">
+					</div>
 
 					<form method = "POST" action = "{{ url('admin/settings/borrowers-list/submit-data') }}" id = "frmModalBorrowersEntryId">
+						@csrf
+						<!-- borrower id -->
+						<input type = "hidden" name = "id" value = "">
+
 						<div class = "row">
-							@csrf
-							<!-- borrower id -->
-							<input type = "hidden" name = "id" value = "">
+							<!-- ID no -->
+							<div class = "col-md-4 col-sm-4">
+								<label>ID No.<span class = "required">*</span></label>
+								<input type = "text" class = "form-control" name = "id_no" required>
+							</div>
+						</div>
+						<div class = "row">
+							<!-- first name -->
+							<div class = "col-md-4 col-sm-4">
+								<label>Last Name <span class ="required">*</span></label>
+								<input type = "text" class = "form-control" name = "lname" required>
+							</div>
 
 							<!-- first name -->
 							<div class = "col-md-4 col-sm-4">
 								<label>First Name <span class ="required">*</span></label>
 								<input type = "text" class = "form-control" name = "fname" required>
-							</div>
-
-							<!-- first name -->
-							<div class = "col-md-4 col-sm-4">
-								<label>Last Name <span class ="required">*</span></label>
-								<input type = "text" class = "form-control" name = "lname" required>
 							</div>
 
 							<!--last name -->
@@ -140,7 +160,7 @@
 
 				<div class = "modal-footer">
 					<!-- save button -->
-					<button type = "button" class = "btn btn-success" onclick = "submitData()"><i class = "fa fa-save"></i>&nbsp; Save</button>
+					<button type = "button" class = "btn btn-success" onclick = "submitData(this)"><i class = "fa fa-save"></i>&nbsp; Save</button>
 					<button type = "button" class = "btn btn-danger" onclick = "hideBorrowersEntryModal()"><i class = "fa fa-times"></i>&nbsp; Cancel</button>
 				</div>
 			</div>
@@ -148,12 +168,12 @@
 	</div>
 
 	<script>
-		$(document).ready(function () {
-			
-		});
-
 		//show modal for adding/updating borrowers data
-		function showBorrowerEntryModal(){
+		function showBorrowerEntryModal(element){
+			if($(element).attr("data-mode") == 1){
+				loadData(element);
+			}
+
 			$("#modalBorrowersEntryId").modal("show");
 		}
 
@@ -162,8 +182,59 @@
 			$("#modalBorrowersEntryId").modal("hide");
 		}
 
-		function submitData(){
-			$("#frmModalBorrowersEntryId").submit();
+		function submitData(element){
+		
+			let formData = $("#frmModalBorrowersEntryId").serializeArray();
+			
+			$.ajax({
+				type: "POST",
+				url: "/admin/settings/borrowers-list/submit-data",
+				data: formData,
+				dataType: "JSON",
+				success: function (response) {
+					if(response.has_error == 0){
+						$(".notification-container").html("<div class = 'alert alert-success'>"+ response.message +"</div>");
+
+						$(element).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> <span class="sr-only">Loading...</span> &nbsp; Save');
+
+						setTimeout(function(){
+							if(!response.has_error){
+								$("#modalBorrowersEntryId").modal("hide");
+								location.reload();
+							}
+						
+						}, 2000)
+					}else{
+						$(".notification-container").html("<div class = 'alert alert-danger'>"+ response.message +"</div>");
+					}
+				}
+			});
+		}
+
+		function loadData(element){
+			clearForm();
+
+			$("#modalBorrowersEntryId [name='id']").val($(element).attr("data-id"));
+			$("#modalBorrowersEntryId [name='id_no']").val($(element).attr("data-id-no"));
+			$("#modalBorrowersEntryId [name='lname']").val($(element).attr("data-lname"));
+			$("#modalBorrowersEntryId [name='fname']").val($(element).attr("data-fname"));
+			$("#modalBorrowersEntryId [name='mname']").val($(element).attr("data-mname"));
+			
+			$("#modalBorrowersEntryId [name='email']").val($(element).attr("data-email"));
+			$("#modalBorrowersEntryId [name='contact_no']").val($(element).attr("data-contact-no"));
+			$("#modalBorrowersEntryId [name='type_id']").val($(element).attr("data-type-id"));
+		}
+
+		function clearForm(){
+			$("#modalBorrowersEntryId [name='id']").val("");
+			$("#modalBorrowersEntryId [name='id_no']").val("");
+			$("#modalBorrowersEntryId [name='lname']").val("");
+			$("#modalBorrowersEntryId [name='fname']").val("");
+			$("#modalBorrowersEntryId [name='mname']").val("");
+			
+			$("#modalBorrowersEntryId [name='email']").val("");
+			$("#modalBorrowersEntryId [name='contact_no']").val("");
+			$("#modalBorrowersEntryId [name='type_id']").val("");
 		}
 
 	</script>

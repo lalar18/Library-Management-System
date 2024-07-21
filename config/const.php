@@ -24,7 +24,12 @@
             0 => 'Student',
             1 => 'Faculty'
         ],
-        'login_required_error_msg' => 'User Login is required!'
+        'login_required_error_msg' => 'User Login is required!',
+        'borrower_error_entry_duplicate' => 'Duplicate Borrower Detected!',
+        'borrower_entry_message' => 'Successfully added new borrower!.',
+        'borrower_entry_error' => 'Error adding new borrower',
+        'borrower_update_error' => 'Error updateing borrower',
+        'borrower_update_message' => 'Successfully updated selected borrower'
 
     ];
 ?>
