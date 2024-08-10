@@ -15,18 +15,8 @@ class Borrower extends Model
         $data = [];
 
         $query = Borrower::select('*');
+        $query = self::getCondition($query, $params);
 
-        //check borrower designation
-        if(isset($params['type_id'])){
-            $query->where('type_id', '=', $params['type_id']);
-        }
-
-        //check keyword
-        if(isset($params['keyword']) && $params['keyword']){
-            $query->where('fname', 'like', '%' . $params['keyword'] . '%')
-                ->orWhere('lname', 'like', '%' . $params['keyword'] . '%')
-                ->orWhere('mname', 'like', '%' . $params['keyword'] . '%');
-        }
         $data = $query->get()->toArray();
 
         return $data;
@@ -53,5 +43,22 @@ class Borrower extends Model
 
         $data = $query->get()->first();
         return !empty($data) ? $data->toArray() : [];
+    }
+
+
+    public static function getCondition($query, $params = []){
+        //check borrower designation
+        if(isset($params['type_id'])){
+            $query->where('type_id', '=', $params['type_id']);
+        }
+
+        //check keyword
+        if(isset($params['keyword']) && $params['keyword']){
+            $query->where('fname', 'like', '%' . $params['keyword'] . '%')
+                ->orWhere('lname', 'like', '%' . $params['keyword'] . '%')
+                ->orWhere('mname', 'like', '%' . $params['keyword'] . '%');
+        }
+
+        return $query;
     }
 }

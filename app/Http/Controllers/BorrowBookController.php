@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//delcare models used
+use App\Models\Borrower;
+
 class BorrowBookController extends Controller
 {
     //
@@ -20,6 +23,25 @@ class BorrowBookController extends Controller
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('borrow_book/index', compact('data'));
+    }
+
+    //get borrower information
+    public function getBorrowersList(){
+        $data = [];
+
+        $hasError = 0;
+
+         //check first user if logged in
+        if($this->isLogin() == 0){
+           $hasError = 1;
+        }
+
+        $data['borrowersList'] = Borrower::getBorrowersList();
+
+        return json_encode([
+            'has_error' => $hasError,
+            'data' => $data
+        ]);
     }
 
     public function transactionInformation(){
