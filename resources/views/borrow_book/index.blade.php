@@ -159,9 +159,6 @@
                             </div>
                         </div>
                         <!-- sample book -->
-                        
-
-            
                     </div>
             
                 </div>
@@ -250,32 +247,47 @@
                 data: "",
                 success: function (response) {
 
-                   $("#modalListBorrowers").DataTable({
-                        "paging": false,           
-                        "searching": false,        
-                        "ordering": true,         
-                        "info": true,             
-                        "lengthChange": true,     
-                        "pageLength": 10,         
-                        "order": [[ 0, "asc" ]],
-                        "data" :   response.data.borrowersList,
-                        "columns": [
-                            { "data": "id" },
-                            { "data": "id_no" },
-                            { "data": "fname" },
-                            { "data": "lname" },
-                            { 
-                                "data": "type_id",
-                                "render": function(data, type, row, meta) {
-                                    if (data == 0) {
-                                        return "Student";
-                                    } else if (data == 1) {
-                                        return "Faculty";
+                    if (!$.fn.DataTable.isDataTable("#modalListBorrowers")) {
+                        // Initialize the DataTable
+                        $("#modalListBorrowers").DataTable({      
+                            "paging": false,           
+                            "searching": true,        
+                            "ordering": true,         
+                            "info": true,             
+                            "lengthChange": true,     
+                            "pageLength": 10,         
+                            "order": [[ 0, "asc" ]],
+                            "data": response.data.borrowersList,
+                            "dom": 'lrtip',
+                            "columns": [
+                                { 
+                                    "data": null,  // No actual data needed, we will render the radio button
+                                    "render": function (data, type, row, meta) {
+                                        return '<input type="radio" name="selectedBorrower" value="' + row.id + '">';
+                                    },
+                                    "orderable": false,  // Disable ordering for this column
+                                    "searchable": false  // Disable search for this column
+                                },
+                                { "data": "id_no" },
+                                { "data": "fname" },
+                                { "data": "lname" },
+                                { 
+                                    "data": "type_id",
+                                    "render": function(data, type, row, meta) {
+                                        if (data == 0) {
+                                            return "Student";
+                                        } else if (data == 1) {
+                                            return "Faculty";
+                                        }
                                     }
                                 }
-                            }
-                        ]
-                    });
+                            ]
+                        });
+                    } else {
+                        // If already initialized, just update the data
+                        let table = $("#modalListBorrowers").DataTable();
+                        table.clear().rows.add(response.data.borrowersList).draw();
+                    }
 
                     $("#modalSearchBorrower").modal("show");
                 }
@@ -284,17 +296,25 @@
 
         $("#modalSearchBorrower [name='keyword']").on("input",function() {
             let keyword = $(this).val();
-            $("#modalListBorrowers").DataTable().column(4).search(keyword).draw();
+            $("#modalListBorrowers").DataTable().search(keyword).draw();
             
             // Apply a custom search on fname and lname columns
-            $("#modalListBorrowers").DataTable().columns().every(function() {
-                this.search('');
-            });
+            // $("#modalListBorrowers").DataTable().columns().every(function() {
+            //     this.search('');
+            // });
 
-            $("#modalListBorrowers").DataTable().columns(2).search(keyword);  // Search in fname column
-            $("#modalListBorrowers").DataTable().columns(3).search(keyword);  // Search in lname column
+            // $("#modalListBorrowers").DataTable().columns(2).search(keyword);  // Search in fname column
+            // $("#modalListBorrowers").DataTable().columns(3).search(keyword);  // Search in lname column
 
-            $("#modalListBorrowers").DataTable().draw();  // Redraw the table with the new search
+            // $("#modalListBorrowers").DataTable().draw();  // Redraw the table with the new search
+        });
+
+        $("[name='type_id']").change(function (e) { 
+            e.preventDefault();
+
+            let bType = $(this).val() == 1 ? 'student' : $(this).val() == 2 ? 'faculty' : '';
+            let table = $("#modalListBorrowers").DataTable().column(4).search(bType).draw();
+            
         });
             
     </script>
