@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //delcare models used
 use App\Models\Borrower;
+use App\Models\Book;
 
 class BorrowBookController extends Controller
 {
@@ -57,6 +58,29 @@ class BorrowBookController extends Controller
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('borrow_book.transaction_information', compact('data'));
+    }
+
+    public function getBook(Request $request){
+        $data = [];
+
+        $data = $request->input();
+
+        $searchBook = Book::getBookList([
+            'barcode' => $data['barcode']
+        ]);
+
+        $html = '';
+        if(count($searchBook) > 1){
+            $html = view('borrow_book/books_data', ['booksData' => $searchBook])->render();
+        }
+
+        $data = [
+            'booksData' => $searchBook,
+            'html' => $html
+        ];
+
+        return response()->json($data);
+       
     }
 
 }

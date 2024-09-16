@@ -43,15 +43,57 @@ class Book extends Model
         $data = [];
 
         $query = Book::select('books.*');
-
+        
+        //id
         if (isset($params['id'])) {
             $query->where('id', '=', $params['id']);
         }
-        
+
+        //barcode
+        if(isset($params['barcode']) && $params['barcode']){
+            $query->where('barcode', '=', $params['barcode']);
+        }
+
         $result = $query->get()->first();
         $data = !empty($result) ? $result->toArray() : [];
 
         return $data;
     }
+
+    public static function getBookList($params = []){
+        $data = [];
+
+        $fields = [
+            'id',
+            'barcode',
+            'title',
+            'description',
+            'author_id'
+        ];
+
+        $query = Book::select($fields);
+
+        $query = Self::getCondition($query, $params);
+
+        $result = $query->get();
+
+        return !empty($result) ? $result->toArray() : [];
+    }
+
+
+    public static function getCondition($query, $params = []){
+        
+        //id
+        if(isset($params['id']) && $param['id']){
+            $query->where('id', '=', $params['id']);
+        }
+
+        //barcode
+        if(isset($params['barcode']) && $params['barcode']){
+            $query->where('barcode', '=', $params['barcode']);
+        }
+
+        return $query;
+    }   
 
 }

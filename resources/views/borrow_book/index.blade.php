@@ -61,7 +61,11 @@
         <!-- for list of books for borrow -->
         <div class = "col-md-8 col-sm-8">
             <div class = "input-group">
-                <input type = "text" class = "form-control" placeholder = "Barcode...">
+                <input type = "text" class = "form-control" 
+                    placeholder = "Barcode..." 
+                    onkeydown="if (event.key === 'Enter') searchBook(this)"
+                    data-href = "{{ url('/admin/') }}"
+                >
                 <div class = "input-group-append">
                     <button type = "button" class = "btn btn-primary">Browse</button>
                 </div>
@@ -71,10 +75,9 @@
                     <h5 class = "card-title"><strong>Books</strong></h5>
                 </div>
                 
-                <div class = "card-body">
                     
                     <!-- books cart list -->
-                    <div class="row">
+                    <div class="book-container d-flex">
                         <!-- sample book -->
                         <div class="col-md-3">
                             <div class="card book-card">
@@ -160,8 +163,6 @@
                         </div>
                         <!-- sample book -->
                     </div>
-            
-                </div>
             </div>
         </div>
 
@@ -231,6 +232,9 @@
     </div>
     <!-- transaction borrow modal -->
 
+    <!-- books list modal -->
+    @include('modals/book_list_modal');
+
     <script src = "{{ url('assets/js/transaction/borrow_books.js') }}"></script>
     
     <script>
@@ -266,7 +270,8 @@
                                         return '<input type="radio" name="selectedBorrower" value="' + row.id + '">';
                                     },
                                     "orderable": false,  // Disable ordering for this column
-                                    "searchable": false  // Disable search for this column
+                                    "searchable": false,  // Disable search for this column
+                                    "className" : "text-center"
                                 },
                                 { "data": "id_no" },
                                 { "data": "fname" },
@@ -297,16 +302,6 @@
         $("#modalSearchBorrower [name='keyword']").on("input",function() {
             let keyword = $(this).val();
             $("#modalListBorrowers").DataTable().search(keyword).draw();
-            
-            // Apply a custom search on fname and lname columns
-            // $("#modalListBorrowers").DataTable().columns().every(function() {
-            //     this.search('');
-            // });
-
-            // $("#modalListBorrowers").DataTable().columns(2).search(keyword);  // Search in fname column
-            // $("#modalListBorrowers").DataTable().columns(3).search(keyword);  // Search in lname column
-
-            // $("#modalListBorrowers").DataTable().draw();  // Redraw the table with the new search
         });
 
         $("[name='type_id']").change(function (e) { 
@@ -316,6 +311,35 @@
             let table = $("#modalListBorrowers").DataTable().column(4).search(bType).draw();
             
         });
+
+        function searchBook(e){
+            if ($(e).val() !== undefined && $(e).val() !== null && $(e).val() !== '') {
+
+                let barcode = $(e).val();
+
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                // Set up jQuery AJAX to include the CSRF token in all requests
+                $.ajax({
+                    type: "post",
+                    headers : {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')}, 
+                    url: "{{ url('/admin/transaction/borrower-book/getBook') }}",
+                    data: {
+                        'barcode' : barcode
+                    },
+                    dataType: "json",
+                    success: function (response) {
+
+                        $("#modalBooksList tbody").html(response.html);
+                        console.log(response.html);
+                        $("#modalBooksList").modal("show");
+
+
+
+                    }
+                });
+            }
+        }
             
     </script>
 
