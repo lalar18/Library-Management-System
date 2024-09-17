@@ -45,7 +45,7 @@
 
 .card-borrower{
     position: relative;
-    height: 93%;
+    height: 500px;
 }
 
 .borrower-custom-container {
@@ -57,4 +57,10 @@
 .custom-form-inline .text-inline {
     flex: 1;
     max-width: 100%;
+}
+
+.book-container {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

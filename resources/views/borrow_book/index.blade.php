@@ -70,98 +70,98 @@
                     <button type = "button" class = "btn btn-primary">Browse</button>
                 </div>
             </div>
-            <div class = "card mt-2">
+            <div class = "card mt-2 book-container">
                 <div class = "card-body">
                     <h5 class = "card-title"><strong>Books</strong></h5>
                 </div>
-                
-                    
                     <!-- books cart list -->
-                    <div class="book-container d-flex">
-                        <!-- sample book -->
-                        <div class="col-md-3">
-                            <div class="card book-card">
-                               
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                    <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                    <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                    <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- sample book -->
-
-                        <!-- sample book -->
-                        <div class="col-md-3">
-                            <div class="card book-card">
+                    <div class="d-flex justify-content-between">
+                        <div class = "row px-3">
+                            <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
                                 
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                    <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                    <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                    <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- sample book -->
+                            <!-- sample book -->
 
-                        <!-- sample book -->
-                        <div class="col-md-3">
-                            <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                    <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                    <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                    <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
+                                    
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- sample book -->
+                            <!-- sample book -->
 
-                        <!-- sample book -->
-                        <div class="col-md-3">
-                            <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                    <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                    <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                    <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
+                                    
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- sample book -->
+                            <!-- sample book -->
 
-                        <!-- sample book -->
-                        <div class="col-md-3">
-                            <div class="card book-card">
-                                
-                                <div class="remove-icon">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                    <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                    <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                    <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
+                                    
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- sample book -->
+
+                            <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
+                                    
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- sample book -->
                         </div>
-                        <!-- sample book -->
                     </div>
             </div>
         </div>
