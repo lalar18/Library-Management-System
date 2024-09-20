@@ -29,7 +29,12 @@
         'borrower_entry_message' => 'Successfully added new borrower!.',
         'borrower_entry_error' => 'Error adding new borrower',
         'borrower_update_error' => 'Error updateing borrower',
-        'borrower_update_message' => 'Successfully updated selected borrower'
+        'borrower_update_message' => 'Successfully updated selected borrower',
+        
+        'user_type' => [
+            0 => 'Staff',
+            1 => 'Admin'
+        ]
 
     ];
 ?>

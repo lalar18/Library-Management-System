@@ -47,12 +47,12 @@
                         @csrf
                         <div>
                             <input 
-                                type="email" 
+                                type="username" 
                                 class="form-control" 
                                 placeholder="Username" 
-                                name = "email" 
+                                name = "username" 
                                 required="" 
-                                value = "{{ isset($prevData['data']['email']) ? $prevData['data']['email'] : ''}}"
+                                value = "{{ isset($prevData['data']['username']) ? $prevData['data']['username'] : ''}}"
                             />
                         </div>
                         <div>
@@ -96,7 +96,7 @@
                         <input type="text" class="form-control" placeholder="Username" required="" />
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="Email" required="" />
+                        <input type="username" class="form-control" placeholder="username" required="" />
                     </div>
                     <div>
                         <input type="password" class="form-control" placeholder="Password" required="" />

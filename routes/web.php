@@ -9,7 +9,7 @@ use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\ReturnBookController;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +70,5 @@ Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 
 
 //transaction information
 Route::get('/admin/transaction/transaction-info', array(BorrowBookController::class, 'transactionInformation'));
+
+Route::get('/admin/manage-users', array(UserController::class, 'index'));

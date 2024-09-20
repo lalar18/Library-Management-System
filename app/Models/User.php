@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -20,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
         'user_type'
     ];
@@ -49,12 +50,12 @@ class User extends Authenticatable
         $data = [];
         $conditions = [];
 
-        if(isset($params['email'])){
-            $conditions[] = ['email', '=', $params['email']];
+        if(isset($params['username'])){
+            $conditions[] = ['username', '=', $params['username']];
         }
 
         // dd(Hash::make($params['password']));
-        $fields = ['id','name', 'email', 'password'];
+        $fields = ['id','name', 'username', 'password'];
 
         $data = User::select($fields)->
         where($conditions)->get()->first();
@@ -66,5 +67,25 @@ class User extends Authenticatable
         }else{
             return [];
         }
+    }
+
+
+    public static function getUser($params = []) {
+        $data = [];     
+        $query = User::select(
+            'id'
+            ,'name'
+            ,'username'    
+            ,'user_type'
+        )
+        ->orderBy('name', 'asc');
+
+        if(isset($params['user_id']) && $params['user_id']){
+            $query->where('id', '<>', $params['user_id']);
+        }
+
+        $data = $query->get()->toArray();
+    
+        return $data;
     }
 }

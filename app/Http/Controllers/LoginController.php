@@ -30,7 +30,7 @@ class LoginController extends Controller
     public function submitLogin(Request $request){
         $data = [];
         $params  = [
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => $request->password
         ];
 
@@ -40,9 +40,9 @@ class LoginController extends Controller
         if(empty($data)){
 
             session()->flash('login_error', array(
-                'message' => 'Either email or password is incorrect!',
+                'message' => 'Either username or password is incorrect!',
                 'data'=>  array(
-                    'email' => $params['email'],
+                    'username' => $params['username'],
                     'password' => $params['password']
                 )
             ));
@@ -55,7 +55,7 @@ class LoginController extends Controller
             session([Config('const.session_admin_key') => true ]);
             session([Config('const.session_admin_id') => $data['id']]);
             session([Config('const.session_admin_name') => $data['name']]);
-            session([Config('const.session_email') => $data['email']]);
+            session([Config('const.session_username') => $data['username']]);
 
             //redirect to home
             return redirect()->route('home');
@@ -87,7 +87,7 @@ class LoginController extends Controller
         $user = new User;
 
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->user_type = 1;
     

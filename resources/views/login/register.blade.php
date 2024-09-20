@@ -40,9 +40,9 @@
                             <input type="text" class="form-control" placeholder="Name" required="" name = "name" />
                         </div>
 
-                        <!-- email -->
+                        <!-- username -->
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" name = "email" />
+                            <input type="text" class="form-control" placeholder="Username" required="" name = "username" />
                         </div>
 
                         <!-- password -->
