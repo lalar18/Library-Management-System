@@ -28,11 +28,40 @@
             $userData = User::getUser([
                 'user_id' => $userId
             ]);
+
+
        
             $data['userData'] = $userData;
             $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
             // dd($menuDatas);
             return view('user/index', compact('data'));
+        }
+
+
+        public function edit($id) {
+
+            $data = array();
+
+            //check first user if logged in
+            if($this->isLogin() == 0){
+                return redirect('/admin/login');
+            }
+
+            $userId = Session::get(Config('const.session_admin_id'));
+    
+           
+            $menuDatas = $this->getCachedMenus();
+
+            $userData = User::getRowUser([
+                'id' => $id
+            ]);
+       
+            $data['userData'] = $userData;
+            $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
+
+
+            return view('user/edit', compact('data'));
+
         }
 
     

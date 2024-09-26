@@ -84,7 +84,34 @@ class User extends Authenticatable
             $query->where('id', '<>', $params['user_id']);
         }
 
+        if(isset($params['id']) && $params['id']){
+            $query->where('id', '=', $params['id']);
+        }
+
         $data = $query->get()->toArray();
+    
+        return $data;
+    }
+
+    public static function getRowUser(){
+        $data = [];     
+        $query = User::select(
+            'id'
+            ,'name'
+            ,'username'    
+            ,'user_type'
+        )
+        ->orderBy('name', 'asc');
+
+        if(isset($params['user_id']) && $params['user_id']){
+            $query->where('id', '<>', $params['user_id']);
+        }
+
+        if(isset($params['id']) && $params['id']){
+            $query->where('id', '=', $params['id']);
+        }
+
+        $data = $query->get()->first()->toArray();
     
         return $data;
     }

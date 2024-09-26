@@ -49,7 +49,7 @@
                             <td>{{ $val['username'] }}</td>
                             <td>{{ Config('const.user_type')[$val['user_type']] }}</td>
                             <td class = "text-center">
-                                <button type = "button" class = "btn btn-secondary btn-sm"><i class = "fa fa-pencil"></i></button>
+                                <a href = "{{ url('/admin/manage-users/edit/' . $val['id']) }}" class = "btn btn-secondary btn-sm"><i class = "fa fa-pencil"></i></a>
                             </td>
                         </tr>
                         @php($count += 1)
