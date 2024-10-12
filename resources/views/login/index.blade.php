@@ -55,6 +55,7 @@
                                 value = "{{ isset($prevData['data']['username']) ? $prevData['data']['username'] : ''}}"
                             />
                         </div>
+                        <br>
                         <div>
                             <input 
                                 type="password" 
