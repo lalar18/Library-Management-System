@@ -22,7 +22,8 @@
     </div>
 <style>
     .test-color{
-        background-color:darkgray;
+        background-color:#2C3E50;
+        color: white;
     }
 </style>
     <div class="card mt-2">
@@ -44,13 +45,15 @@
 
                     @foreach($data['userData'] as $key => $val)
                         <tr>
-                            <td>{{ $count }}</td>
+  
+                        </td>
+                           <td>{{ $count }}</td>
                             <td>{{ $val['name'] }}</td>
                             <td>{{ $val['username'] }}</td>
                             <td>{{ Config('const.user_type')[$val['user_type']] }}</td>
                             <td class = "text-center">
                                 <a href = "{{ url('/admin/manage-users/edit/' . $val['id']) }}" class = "btn btn-secondary btn-sm"><i class = "fa fa-pencil"></i></a>
-                            </td>
+                            </td> 
                         </tr>
                         @php($count += 1)
                     @endforeach

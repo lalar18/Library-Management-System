@@ -71,6 +71,19 @@ Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 
 //transaction information
 Route::get('/admin/transaction/transaction-info', array(BorrowBookController::class, 'transactionInformation'));
 
+// Route::get('/admin/manage-users', array(UserController::class, 'index'));
+
+// Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
+
+// // Route::get('/admin/manage-users/edit/{id}',array([UserController::class, 'edit']))->name('users.edit');
+
+// Route::put('/admin/manage-users/edit/{id}', [UserController::class, 'update'])->name('users.update');
+
 Route::get('/admin/manage-users', array(UserController::class, 'index'));
 
-Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
+//Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
+Route::get('/admin/manage-users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+
+Route::put('/admin/manage-users/edit/{id}', [UserController::class, 'update'])->name('users.update');
+
+Route::get('/admin/manage-users', [UserController::class, 'index'])->name('users.index');
