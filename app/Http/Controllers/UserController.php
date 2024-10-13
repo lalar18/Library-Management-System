@@ -43,13 +43,13 @@
         public function update(Request $request) {
 
             // Validation
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'user_type' => 'required|in:0,1',
-                'password' => 'nullable|string|min:8',
-                'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+            // $request->validate([
+            //     'name' => 'required|string|max:255',
+            //     'username' => 'required|string|max:255',
+            //     'user_type' => 'required|in:0,1',
+            //     'password' => 'nullable|string|min:8',
+            //     'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // ]);
 
             $inputData = $request->post();
 
