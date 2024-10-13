@@ -75,8 +75,8 @@
                     <h5 class = "card-title"><strong>Books</strong></h5>
                 </div>
                     <!-- books cart list -->
-                    <div class="d-flex justify-content-between">
-                        <div class = "row px-3">
+                    <div class="d-flex justify-content-between" >
+                        <div class = "row px-3" id = "bookCart">
                             <!-- sample book -->
                             <div class="col-sm-12 col-md-4 col-lg-3">
                                 <div class="card book-card">
@@ -329,10 +329,21 @@
                     },
                     dataType: "json",
                     success: function (response) {
+                        console.log("get book responded!");
+                        if(typeof response !== 'undefined'){
+                            if(response.book_count > 1){
+                                $("#modalBooksList tbody").html(response.html);
+                       
+                                $("#modalBooksList").modal("show");
+                            }else{
+                                //append books to book cart
+                                let bookItem = $(response.html).hide(); 
 
-                        $("#modalBooksList tbody").html(response.html);
-                        console.log(response.html);
-                        $("#modalBooksList").modal("show");
+                                $("#bookCart").append(bookItem);
+                                bookItem.fadeIn(300);
+                            }
+                        }
+                       
 
 
 

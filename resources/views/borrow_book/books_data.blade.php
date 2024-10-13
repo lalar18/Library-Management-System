@@ -1,10 +1,11 @@
-@if(isset($booksData) && $booksData)
-    @foreach($booksData as $key => $val)
+
+@if(isset($bookData) && $bookData)
+    @foreach($bookData as $val)
         <tr>
-            <td>
-                <input type = "checkbox" class = "checkBooks">
+            <td class="text-center">
+                <input type="checkbox" class="checkBooks">
             </td>
-            <td class = "text-center">{{ $val['id'] }}</td>
+            <td class="text-center">{{ $val['id'] }}</td>
             <td>{{ $val['barcode'] }}</td>
             <td>{{ $val['title'] }}</td>
             <td>{{ $val['description'] }}</td>

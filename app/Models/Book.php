@@ -65,11 +65,17 @@ class Book extends Model
 
         $fields = [
             'id',
+            'book_cat_id',
             'barcode',
             'title',
             'description',
             'author_id'
         ];
+
+        //all fields
+        if(isset($params['all_fields']) && $params['all_fields'] == 1){
+            $fields = ['*'];
+        }
 
         $query = Book::select($fields);
 
