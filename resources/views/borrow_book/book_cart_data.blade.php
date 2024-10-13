@@ -9,7 +9,12 @@
                 <div class="card-body">
                     <h5 class = "card-title">{{ $val['title'] }}</h5>
 
-                    <p class = "card-text"><strong>Author: </strong>{{ $authorData['author_name'] }}</p>
+                    @if(count($authorData) > 1)
+                        <p class = "card-text"><strong>Athor: </strong>{{ $authorData[$val['book_cat_id']] }}</p>
+                    @else
+                        <p class = "card-text"><strong>Author: </strong>{{ $authorData['author_name'] }}</p>
+                    @endif
+
                     <p class = "card-text"><strong>Genre: </strong>{{ $categoryData[$val['book_cat_id']] }}</p>
                     <p class = "card-text">{{ $val['description'] }}</p>
                 </div>

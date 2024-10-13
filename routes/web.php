@@ -62,6 +62,7 @@ Route::post('/admin/settings/borrowers-list/submit-data', array(BorrowerControll
 //borrow book
 Route::get('/admin/transaction/borrow-book', array(BorrowBookController::class, 'index'));
 Route::post('/admin/transaction/borrower-book/getBook', array(BorrowBookController::class, 'getBook'));
+Route::post('/admin/transaction/borrower-book/add-to-cart-books', array(BorrowBookController::class, 'addToCartSelectedBooks'));
 
 Route::post('/admin/transaction/borrow-book/get-borrowers', array(BorrowBookController::class, 'getBorrowersList'));
 
