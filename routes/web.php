@@ -84,6 +84,6 @@ Route::get('/admin/manage-users', array(UserController::class, 'index'));
 //Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
 Route::get('/admin/manage-users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 
-Route::put('/admin/manage-users/edit/{id}', [UserController::class, 'update'])->name('users.update');
+Route::put('admin/manage-users/editSubmit', [UserController::class, 'update']);
 
 Route::get('/admin/manage-users', [UserController::class, 'index'])->name('users.index');

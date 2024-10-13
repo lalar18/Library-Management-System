@@ -18,18 +18,20 @@
             @endif
         </div>
 
-        <form method="post" action="{{ route('users.update', $data['userData']['id']) }}" enctype="multipart/form-data">
-    @csrf  <!-- CSRF token for security -->
-    @method('PUT') <!-- Use PUT or PATCH for updates -->
+        <form method="post" action="{{ url('admin/manage-users/editSubmit') }}" enctype="multipart/form-data">
+            @csrf  <!-- CSRF token for security -->
+            @method('PUT') <!-- Use PUT or PATCH for updates -->
 
-    <div class="row">
-        <div class="col-sm-12 col-md-3 col-lg-4">
-            <label class="w-100">
-                Profile Image:
-                <input type="file" name="profile_image" class="form-control" accept="image/*" onchange="previewImage(event)">
-            </label>
-        </div>
-    </div>
+            <input type = "hidden" name = "id" value = "{{ $data['userData']['id'] }}">
+
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-4">
+                    <label class="w-100">
+                        Profile Image:
+                        <input type="file" name="profile_image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                    </label>
+                </div>
+            </div>
 
 
                 <div class = "row">

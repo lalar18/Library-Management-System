@@ -95,7 +95,7 @@ class User extends Authenticatable
         return $data;
     }
 
-    public static function getRowUser(){
+    public static function getRowUser($params = []){
         $data = [];     
     
         $query = User::select(
@@ -107,27 +107,13 @@ class User extends Authenticatable
             ,'profile_image'
         )
         ->orderBy('name', 'asc');
+        
+        if (isset($params['id']) && $params['id']) {
+            $query->where('id', '=', $params['id']);
+        }
 
-        // If 'id' is provided in $params, add the filter to the query
-    if (isset($params['id']) && $params['id']) {
-        $query->where('id', '=', $params['id']);
-    }
+        $data = $query->first();
 
-    // Fetch the first matching record and convert it to an array
-    $data = $query->first();  // 'first()' retrieves a single record
-
-    // Return the data as an array, or return an empty array if no match is found
-    return $data ? $data->toArray() : [];
-        // if(isset($params['user_id']) && $params['user_id']){
-        //     $query->where('id', '<>', $params['user_id']);
-        // }
-
-        // if(isset($params['id']) && $params['id']){
-        //     $query->where('id', '=', $params['id']);
-        // }
-
-        // $data = $query->get()->first()->toArray();
-    
-        // return $data;
+        return $data ? $data->toArray() : [];
     }
 }

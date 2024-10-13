@@ -40,57 +40,50 @@
         }
 
 
-        public function update(Request $request, $id) {
-             // Validation
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'username' => 'required|string|max:255',
-        'user_type' => 'required|in:0,1',
-        'password' => 'nullable|string|min:8',
-        'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+        public function update(Request $request) {
 
-    try {
-        // Find user by ID
-        $user = User::findOrFail($id);
+            // Validation
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|max:255',
+                'user_type' => 'required|in:0,1',
+                'password' => 'nullable|string|min:8',
+                'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        // Update user details
-        $user->name = $request->input('name');
-        $user->username = $request->input('username');
-        $user->user_type = $request->input('user_type');
+            $inputData = $request->post();
 
-        // Update password if provided
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
+            $user = User::findOrFail($inputData['id']);
 
-        // Handle profile image upload
-        if ($request->hasFile('profile_image')) {
-            // Delete the old image if it exists
-            if ($user->profile_image) {
-                Storage::delete('public/images/' . $user->profile_image);
+            $user->name = $inputData['name'];
+            $user->username = $inputData['username'];
+            $user->user_type = $inputData['user_type'];
+            $user->save();
+
+            $distPath = 'uploads/user/' . $inputData['id'];
+
+            if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+                $tempPath = $_FILES['profile_image']['tmp_name'];
+                $fileName = $_FILES['profile_image']['name'];
+                $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                $newFileName = date('YmdHis'). '.' . $fileExtension;
+
+                $user->profile_image = $newFileName; 
+                $user->save();
+
+                //transfer file
+                if(!file_exists($distPath)){
+                    if(mkdir($distPath, 0755, true)) {
+                        move_uploaded_file($tempPath, $distPath . '/' . $newFileName);
+                    }
+                }else{
+                    move_uploaded_file($tempPath, $distPath . '/' . $newFileName);
+                }
             }
 
-            // Handle file upload
-            $imageName = time() . '.' . $request->file('profile_image')->getClientOriginalExtension();
-            $request->file('profile_image')->storeAs('public/images', $imageName);
-
-            // Save the new image name to the database
-            $user->profile_image = $imageName;
+            return redirect('/admin/manage-users');
         }
-
-        // Save changes to database
-        $user->save();
-
-        // Redirect with success message
-        return redirect()->route('users.index')->with('success', 'User updated successfully!');
-
-    } catch (\Exception $e) {
-        // Log the exception message
-        Log::error('User update failed: ' . $e->getMessage());
-        return back()->withErrors('An error occurred while updating the user.')->withInput();
-    }
-}
 
         public function edit($id) {
 
@@ -103,20 +96,8 @@
             $userId = $id; //Session::get(Config('const.session_admin_id'));
             $menuDatas = $this->getCachedMenus();
 
-
-
-            var_dump($userId);
-            die;
-
             $params = ['id' => $id];
             $userData = User::getRowUser($params);  
-
-
-           // Get user data from the database
-            // $userData = User::getRowUser([
-            //     'user_id' => $id
-            // ]);
-
    
             $data['userData'] = $userData;
             $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
