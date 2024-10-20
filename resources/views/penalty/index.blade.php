@@ -6,41 +6,52 @@
     }
 </style>
 
-<!-- Add button -->
-<div class="card mt-2">
-    <div class="mb-3">
-        <a href="{{ url('/admin/manage-penalty/create') }}" class="btn btn-primary">Add Penalty</a>
-        <h2>Penalty View</h2>
+<section class = "content">
+    <div class = "container-fluid">
+        
+        <!-- button filter -->
+        <div class = "card">
+            <div class = "card-body">
+                <a href = "{{ url('/admin/manage-penalty/create') }}" class = "btn btn-primary float-right">New</a>
+            </div>
+        </div>
+
+        <!-- data container -->
+        <div class = "card mt-2">
+            <div class = "card-body">
+                <div class = "table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="test-color" scope="col">No.</th>
+                                <th class="test-color" scope="col">Penalty Name</th>
+                                <th class="test-color" scope="col">Penalty Charge</th>
+                                <th width="50" class="test-color text-center" scope="col"><i class="fa fa-cog"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php($count = 1)
+                            @foreach($data['penaltyData'] as $key => $val)
+                                <tr>
+                                    <td style="width: 50px;">{{ $count }}</td>
+                                    <td style="width: 400px;">{{ $val['penalty_name'] }}</td>
+                                    <td style="width: 150px;">{{ $val['penalty_charge'] }}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editModal" data-id="{{ $val['penalty_id'] }}" data-name="{{ $val['penalty_name'] }}" data-charge="{{ $val['penalty_charge'] }}">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @php($count += 1)
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="card-body">
-        <table class="table table-hover table-bordered" style="width: 800px;">
-            <thead>
-                <tr>
-                    <th class="test-color" scope="col">No.</th>
-                    <th class="test-color" scope="col">Penalty Name</th>
-                    <th class="test-color" scope="col">Penalty Charge</th>
-                    <th width="50" class="test-color text-center" scope="col"><i class="fa fa-cog"></i></th>
-                </tr>
-            </thead>
-            <tbody>
-                @php($count = 1)
-                @foreach($data['penaltyData'] as $key => $val)
-                    <tr>
-                        <td style="width: 50px;">{{ $count }}</td>
-                        <td style="width: 400px;">{{ $val['penalty_name'] }}</td>
-                        <td style="width: 150px;">{{ $val['penalty_charge'] }}</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editModal" data-id="{{ $val['penalty_id'] }}" data-name="{{ $val['penalty_name'] }}" data-charge="{{ $val['penalty_charge'] }}">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    @php($count += 1)
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+</section>
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -72,7 +83,7 @@
             </form>
         </div>
     </div>
-</div>//
+</div>
 
 <script>
     $('#editModal').on('show.bs.modal', function (event) {

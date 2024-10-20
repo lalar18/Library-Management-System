@@ -40,6 +40,9 @@
 
         <!-- Custom styling plus plugins -->
         <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet">
+
+        <!-- common css -->
+        <link href = "{{ url('assets/css/common.css') }}"  rel="stylesheet">
     </head>
     <body class = "nav-md">
 

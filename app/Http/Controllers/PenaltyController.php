@@ -52,25 +52,21 @@ class PenaltyController extends Controller
 
 
     public function add(Request $request)  { 
-                  
-       // dd($request);
-        // Validate the input      
-                                                 
-             try {                         
-                    // Insert data into penalty_tab         
-                    PenaltyTab::create($request->only(['penalty_name', 'penalty_charge']));
+                           
+            try {                         
+                // Insert data into penalty_tab         
+                PenaltyTab::create($request->only(['penalty_name', 'penalty_charge']));
 
-                    // Redirect to index page with success message                 
-                    return redirect()->route('penalty.index')->with('success', 'Penalty has been added successfully.');            
-         
-             } catch (\Exception $e) {
-                    // Log the exception or handle it accordingly
-                    return redirect()->back()->with('error', 'Failed to add penalty: ' . $e->getMessage());
-            }
+                // Redirect to index page with success message                 
+                return redirect()->route('penalty.index')->with('success', 'Penalty has been added successfully.');            
+        
+            } catch (\Exception $e) {
+                // Log the exception or handle it accordingly
+                return redirect()->back()->with('error', 'Failed to add penalty: ' . $e->getMessage());
+        }
     }
 
-    public function create()
-    {
+    public function create(){
         $data = [];
     
         // Fetch cached menus (if any)
@@ -82,7 +78,7 @@ class PenaltyController extends Controller
         }
         
         // Pass the $data array to the view
-        return view('penalty.create_penalty', compact('data'));      
+        return view('penalty.add', compact('data'));      
     }
 
 
