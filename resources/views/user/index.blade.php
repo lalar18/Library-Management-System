@@ -1,8 +1,14 @@
 @include('partials.__header')
+
+    <?php
+        $notification = session('test');
+    ?>
+    @if(isset($notification) && $notification)
+        <div class = "alert alert-success">{{$notification}}</div>
+    @endif
     
     <div class="card">
         <div class="card-body">
-        
             <div class = "row">
                 <div class = "col-sm-12 col-md-3 col-lg-3">
                     <input type = "text" class = "form-control" placeholder="Search...">
@@ -26,7 +32,14 @@
         color: white;
     }
 </style>
+<!-- Add button -->
+
+
     <div class="card mt-2">
+
+    <div class="mb-3">
+    <a href="{{ url('/admin/manage-users/add') }}" class="btn btn-primary">Add User</a>
+     </div>
         <div class="card-body">
             <table class="table table-hover table-bordered">
                 <thead>

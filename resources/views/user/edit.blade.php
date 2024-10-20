@@ -9,8 +9,8 @@
 
           <!-- Display Profile Image -->
           <div class="mb-3">
-            @if ($data['userData']['profile_image'])
-            <img id="profileImage" src="{{ asset('storage/images/' . $data['userData']['profile_image']) }}" 
+            @if (isset($data['userData']['profile_image']) && $data['userData']['profile_image'])
+            <img id="profileImage" src="<?=url('uploads/user/' . $data['userData']['id'] . '/' . $data['userData']['profile_image'] ); ?>" 
             alt="Profile Image" class="img-thumbnail" style="width: 150px; height: auto;">
                <!-- <img src="{{ asset('storage/images/' . $data['userData']['profile_image']) }}" alt="Profile Image" class="img-thumbnail" style="width: 150px; height: auto;"> -->
             @else
@@ -90,12 +90,20 @@
                     <button type="submit" class="btn btn-primary">Update User</button>
                 </div>
             </div>
+             <!-- Submit Buttons -->
+    <!-- <div class="row mt-3">
+        <div class="col-sm-12 col-md-3 col-lg-4">
+            <button type="submit" class="btn btn-primary">
+                {{ isset($data['userData']['id']) ? 'Update User' : 'Add User' }}
+            </button>
+        </div>
+    </div> -->
 
             </form>
         </div>
     </div>
 
-    <script>
+<script>
     function previewImage(event) {
         const image = document.getElementById('profileImage');
         const file = event.target.files[0];

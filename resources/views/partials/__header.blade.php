@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+
+
+    <style>
+       .form-group.row label {
+        margin-bottom: 0px; /* Reduce space below label */
+        padding-right: 5px; /* Decrease space between label and input */
+        /* Decrease space between label and input */
+    }
+    </style>
+    
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Meta, title, CSS, favicons, etc. -->
         <meta charset="utf-8">

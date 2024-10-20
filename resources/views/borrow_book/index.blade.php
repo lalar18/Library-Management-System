@@ -5,6 +5,7 @@
     <link href = "{{ url('assets/css/transaction/transaction.css') }}" rel = "stylesheet">
 
     <div class = "row">
+        
         <!-- for list of borrowers -->
         <div class = "col-md-4 col-sm-4">
 

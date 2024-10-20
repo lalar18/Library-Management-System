@@ -10,6 +10,8 @@ use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\ReturnBookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PenaltyController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -71,19 +73,20 @@ Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 
 //transaction information
 Route::get('/admin/transaction/transaction-info', array(BorrowBookController::class, 'transactionInformation'));
 
-// Route::get('/admin/manage-users', array(UserController::class, 'index'));
 
-// Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
+Route::get('/admin/manage-users', array(UserController::class, 'index'))->name('users.index');;
 
-// // Route::get('/admin/manage-users/edit/{id}',array([UserController::class, 'edit']))->name('users.edit');
+Route::any('/admin/manage-users/add', array(UserController::class, 'add'));
 
-// Route::put('/admin/manage-users/edit/{id}', [UserController::class, 'update'])->name('users.update');
-
-Route::get('/admin/manage-users', array(UserController::class, 'index'));
-
-//Route::get('/admin/manage-users/edit/{id}', array(UserController::class, 'edit'));
 Route::get('/admin/manage-users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 
 Route::put('admin/manage-users/editSubmit', [UserController::class, 'update']);
 
-Route::get('/admin/manage-users', [UserController::class, 'index'])->name('users.index');
+// Route::post('/admin/manage-penalty/add', [PenaltyController::class, 'add'])->name('penalty.add');
+Route::post('/admin/manage-penalty/add', [PenaltyController::class, 'add'])->name('penalty.add');
+
+Route::any('/admin/manage-penalty', [PenaltyController::class, 'index'])->name('penalty.index');
+
+Route::any('/admin/manage-penalty/create', [PenaltyController::class, 'create'])->name('penalty.create');
+
+Route::post('/admin/manage-penalty/update', [PenaltyController::class, 'update']);
