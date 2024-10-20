@@ -64,4 +64,19 @@ class Controller extends BaseController
         }
         return false;
     }
+
+    public function userData() {
+        $data = [];
+
+        if($this->isLogin()){
+            $data = [
+                'admin_is_login' => session(config('const.session_admin_key')),
+                'admin_user_id' => session(config('const.session_admin_id')),
+                'admin_user_name' => session(config('const.session_admin_name')),
+                'admin_username' => session(config('const.session_username')),
+            ];
+        }
+
+        return $data;        
+    }
 }

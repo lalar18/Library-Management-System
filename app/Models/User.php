@@ -55,7 +55,6 @@ class User extends Authenticatable
             $conditions[] = ['username', '=', $params['username']];
         }
 
-        // dd(Hash::make($params['password']));
         $fields = ['id','name', 'username', 'password'];
 
         $data = User::select($fields)->
@@ -63,7 +62,7 @@ class User extends Authenticatable
 
         if(isset($data['password'])){
             if(Hash::check($params['password'], $data['password'])){
-                return $data;
+                return $data->toArray();
             }
         }else{
             return [];

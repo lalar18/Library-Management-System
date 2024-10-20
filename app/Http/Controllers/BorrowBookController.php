@@ -66,6 +66,8 @@ class BorrowBookController extends Controller
     public function getBook(Request $request){
         $data = [];
 
+        $userData = $this->userData(); 
+
         $data = $request->input();
 
         $searchBook = Book::getBookList([
@@ -90,18 +92,33 @@ class BorrowBookController extends Controller
                 'id' => $searchBook[0]['id']
             ]); 
 
-            $bookCart = new BookCart;
-            $bookCart->book_id = $searchBook[0]['id'];
-            $bookCart->save();
+            //check cart duplicate
+            $checkCartDuplicate = BookCart::getRowBookCartItem([
+                'book_id' => $searchBook[0]['id']
+            ]);
 
-            //compile data
-            $compiledData = [
-                'bookData' => $searchBook,
-                'authorData' => $authorData,
-                'categoryData' => $bookCategoriesArr
-            ];
-
-            $html = view('borrow_book/book_cart_data', $compiledData)->render(); 
+            if(!$checkCartDuplicate){
+                
+                //add new record to book_cart
+                $bookCart = new BookCart;
+                $bookCart->book_id = $searchBook[0]['id'];
+                $bookCart->user_id = $userData['admin_user_id'];
+                $bookCart->save();
+    
+                //get cart book items
+                $bookCartItems = BookCart::getCartItems([
+                    'user_id' => $userData['admin_user_id']
+                ]);
+    
+                //compile data
+                $compiledData = [
+                    'bookData' => $searchBook,
+                    'authorData' => $authorData,
+                    'categoryData' => $bookCategoriesArr
+                ];
+    
+                $html = view('borrow_book/book_cart_data', $compiledData)->render(); 
+            }            
         }
 
         $data = [
@@ -112,6 +129,57 @@ class BorrowBookController extends Controller
 
         return response()->json($data);
        
+    }
+
+    public function addToCartSelectedBooks(Request $request) {
+        $data = [];
+        $html = '';
+
+        $inputData = $request->post();
+
+        $userData = $this->userData();
+
+        $bookCategoriesData = BookCategory::getBookCategories([]);
+        $bookCategoriesArr = collect($bookCategoriesData)->pluck('name', 'id');
+
+        //get author
+        $authorData = Author::getAuthorsList();
+        $authorArr = collect($authorData)->pluck('author_name', 'id');
+
+        //check if books_id exist then proceed to adding to cart]
+        if(isset($inputData['books_id']) && $inputData['books_id']){
+            foreach($inputData['books_id'] as $val){
+                //add to books_cart
+                $bookCart = new BookCart;
+
+                $bookCart->book_id = $val;
+                $bookCart->user_id = $userData['admin_user_id'];
+                $bookCart->save();
+
+            }
+
+            //get updated cart items
+            $cartBooksData = BookCart::getCartItems([
+                'user_id' => $userData['admin_user_id']
+            ]);
+
+            //compileData
+            $compiledData = [
+                'bookData' => $cartBooksData,
+                'authorData' => $authorArr,
+                'categoryData' => $bookCategoriesArr
+            ];
+
+            $html = view('borrow_book/book_cart_data', $compiledData)->render(); 
+          
+            $data = [
+                'has_error' => 0,
+                'html' => $html
+            ];
+        }
+
+        return response()->json($data);
+
     }
 
 }

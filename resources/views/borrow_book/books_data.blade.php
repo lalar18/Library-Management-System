@@ -3,7 +3,10 @@
     @foreach($bookData as $val)
         <tr>
             <td class="text-center">
-                <input type="checkbox" class="checkBooks">
+                <input type="checkbox" 
+                    class="checkBooks"
+                    data-book-id = "{{ $val['id'] }}"
+                >
             </td>
             <td class="text-center">{{ $val['id'] }}</td>
             <td>{{ $val['barcode'] }}</td>

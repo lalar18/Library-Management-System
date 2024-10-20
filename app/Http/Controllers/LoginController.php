@@ -52,11 +52,11 @@ class LoginController extends Controller
 
         //proceed to logging in user
         if(!empty($data)){
-            session([Config('const.session_admin_key') => true ]);
-            session([Config('const.session_admin_id') => $data['id']]);
-            session([Config('const.session_admin_name') => $data['name']]);
-            session([Config('const.session_username') => $data['username']]);
-
+            session([config('const.session_admin_key') => true ]);
+            session([config('const.session_admin_id') => (int)($data['id'])]);
+            session([config('const.session_admin_name') => $data['name']]);
+            session([config('const.session_username') => $data['username']]);
+            
             //redirect to home
             return redirect()->route('home');
         }   

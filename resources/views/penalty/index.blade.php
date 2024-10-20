@@ -72,7 +72,7 @@
             </form>
         </div>
     </div>
-</div>
+</div>//
 
 <script>
     $('#editModal').on('show.bs.modal', function (event) {

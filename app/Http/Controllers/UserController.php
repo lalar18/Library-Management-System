@@ -32,8 +32,6 @@
             $userData = User::getUser([
                 'user_id' => $userId
             ]);
-
-
        
             $data['userData'] = $userData;
             $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
@@ -110,69 +108,6 @@
 
 
     
-
-
-    // public function AddUser(Request $request){
-
-    //     $user = new User;
-
-
-
-    //     $user->name = $request->name;
-    //     $user->username = $request->username;
-    //     $user->password = Hash::make($request->password);
-    //     $user->user_type =  $request->user_type;
-    //     $user->user_type =  $request->user_type;           
-    //     $user->save();
-
-    //     $lastId = $user->id;
-
-    //     $user = User::findOrFail($lastId);
-    //     $distPath = 'uploads/user/' . $lastId; 
-
-
-
-    //     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-    //         $tempPath = $_FILES['profile_image']['tmp_name'];
-    //         $fileName = $_FILES['profile_image']['name'];
-    //         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-
-    //         $newFileName = date('YmdHis'). '.' . $fileExtension;
-
-    //         $user->profile_image = $newFileName; 
-    //         $user->save();
-    //         if (!file_exists($distPath)) {
-    //             mkdir($distPath, 0755, true);
-    //         }
-    
-    //         // Path to the new file
-    //         $newFilePath = $distPath . '/' . $newFileName;
-    
-    //         // Check if the file already exists and delete it
-    //         if (file_exists($newFilePath)) {
-    //             unlink($newFilePath); // Delete the existing file
-    //         }
-    
-    //         // Move the uploaded file
-    //         move_uploaded_file($tempPath, $newFilePath);
-                    
-    //                 // //transfer file
-    //                 // if(!file_exists($distPath)){
-    //                 //     if(mkdir($distPath, 0755, true)) {
-    //                 //         move_uploaded_file($tempPath, $distPath . '/' . $newFileName);
-    //                 //     }
-    //                 // }else{
-    //                 //     move_uploaded_file($tempPath, $distPath . '/' . $newFileName);
-    //                 // }
-    //             }
-    
-    //             return redirect('/admin/manage-users');
-
-    //     // if(User::count() > 0) { 
-    //     //     return redirect()->route('home');
-    //     // }
-    //         }
-    // }
 
 
 
