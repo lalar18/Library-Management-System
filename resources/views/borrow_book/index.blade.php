@@ -5,177 +5,199 @@
     <link href = "{{ url('assets/css/transaction/transaction.css') }}" rel = "stylesheet">
 
     <div class = "row">
-        
-        <!-- for list of borrowers -->
-        <div class = "col-md-4 col-sm-4">
+        <form method = "post" action = "{{ url()->current() }}">
 
-            <div class = "form-inline custom-form-inline">
-                <label>Issuance No.</label>
-                <input type = "text" class = "form-control text-inline ml-2" placeholder = "IS-000001..." >
+            @csrf
+            <!-- for list of borrowers -->
+            <div class = "col-md-4 col-sm-4">
+
+                <div class = "form-inline custom-form-inline">
+                    <label>Issuance No.</label>
+                    <input type = "text" class = "form-control text-inline ml-2" placeholder = "IS-000001..." >
+                </div>
+                
+                <!-- borrower filter area -->
+                <div class = "card mt-3 card-borrower">
+                    <div class = "card-body">
+                        <h5 class = "card-title"><strong>Borrower Information</strong></h5>
+
+                        <!-- borrower id -->
+                        <input type = "hidden" name = "borrower_id" value = "">
+
+                        <!-- user id -->
+                        <input type = "hidden"
+                            name = "user_id"
+                            value = "{{ $userData['admin_user_id'] ?? '' }}"
+                        >
+
+                        <!-- borrower custom buttons -->
+                        <div class = "borrower-custom-container">
+                            <button type = "button" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Register New Borrower"><i class = "fa fa-plus"></i></button>
+                            <button type = "button" 
+                                class = "btn btn-outline-secondary btn-sm" 
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Search Borrower" 
+                                id = "btnSearchBorrower"
+                                onclick = "showBorrowersModal(this)"
+                                data-target-url = "{{ url('/admin/transaction/borrow-book/get-borrowers') }}"
+                            ><i class = "fa fa-search"></i></button>
+                        </div>
+
+                        <!-- id no -->
+                        <label>ID #</label>
+                        <input type = "text" class = "form-control" readonly>
+                        
+                        <!-- first name -->
+                        <label>First Name</label>
+                        <input type = "text" class = "form-control" readonly>
+
+                        <!-- last name -->
+                        <label>Last Name</label>
+                        <input type = "text" class = "form-control" readonly>
+
+                        <label>Date Borrowed</label>
+                        <input type = "date" 
+                            class = "form-control" 
+                            name = ""
+                            value = ""
+                            required
+                        >
+
+                        <!-- date return -->
+                        <label>Expected Date of Return</label>
+                        <input type = "date" 
+                            class = "form-control"
+                            name = "date_return"
+                            value = ""
+                            required
+                        >
+                        
+                        <!-- prepared by -->
+                        <label>Prepared By</label>
+                        <input type = "text" class = "form-control" value = "{{ $userData['admin_user_name'] ?? '' }}" readonly>
+                    </div>
+                </div>
             </div>
             
-            <!-- borrower filter area -->
-            <div class = "card mt-3 card-borrower">
-                <div class = "card-body">
-                    <h5 class = "card-title"><strong>Borrower Information</strong></h5>
-
-                    <!-- borrower custom buttons -->
-                    <div class = "borrower-custom-container">
-                        <button type = "button" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Register New Borrower"><i class = "fa fa-plus"></i></button>
-                        <button type = "button" 
-                            class = "btn btn-outline-secondary btn-sm" 
-                            data-toggle="tooltip" 
-                            data-placement="top" 
-                            title="Search Borrower" 
-                            id = "btnSearchBorrower"
-                            onclick = "showBorrowersModal(this)"
-                            data-target-url = "{{ url('/admin/transaction/borrow-book/get-borrowers') }}"
-                        ><i class = "fa fa-search"></i></button>
+            <!-- for list of books for borrow -->
+            <div class = "col-md-8 col-sm-8">
+                <div class = "input-group">
+                    <input type = "text" class = "form-control" 
+                        placeholder = "Barcode..." 
+                        onkeydown="if (event.key === 'Enter') searchBook(this)"
+                        data-href = "{{ url('/admin/') }}"
+                    >
+                    <div class = "input-group-append">
+                        <button type = "button" class = "btn btn-primary">Browse</button>
                     </div>
-
-                    <!-- id no -->
-                    <label>ID #</label>
-                    <input type = "text" class = "form-control" readonly>
-                    
-                    <!-- first name -->
-                    <label>First Name</label>
-                    <input type = "text" class = "form-control" readonly>
-
-                    <!-- last name -->
-                    <label>Last Name</label>
-                    <input type = "text" class = "form-control" readonly>
-
-                    <label>Date Borrowed</label>
-                    <input type = "date" class = "form-control">
-
-                    <!-- date return -->
-                    <label>Expected Date of Return</label>
-                    <input type = "date" class = "form-control">
-                    
-                    <!-- prepared by -->
-                    <label>Prepared By</label>
-                    <input type = "text" class = "form-control" value = "Riza Jean" readonly>
                 </div>
-            </div>
-        </div>
-        
-        <!-- for list of books for borrow -->
-        <div class = "col-md-8 col-sm-8">
-            <div class = "input-group">
-                <input type = "text" class = "form-control" 
-                    placeholder = "Barcode..." 
-                    onkeydown="if (event.key === 'Enter') searchBook(this)"
-                    data-href = "{{ url('/admin/') }}"
-                >
-                <div class = "input-group-append">
-                    <button type = "button" class = "btn btn-primary">Browse</button>
-                </div>
-            </div>
-            <div class = "card mt-2 book-container">
-                <div class = "card-body">
-                    <h5 class = "card-title"><strong>Books</strong></h5>
-                </div>
-                    <!-- books cart list -->
-                    <div class="d-flex justify-content-between" >
-                        <div class = "row px-3" id = "bookCart">
-                            <!-- sample book -->
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <div class="card book-card">
-                                
-                                    <div class="remove-icon">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- sample book -->
-
-                            <!-- sample book -->
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <div class="card book-card">
+                <div class = "card mt-2 book-container">
+                    <div class = "card-body">
+                        <h5 class = "card-title"><strong>Books</strong></h5>
+                    </div>
+                        <!-- books cart list -->
+                        <div class="d-flex justify-content-between" >
+                            <div class = "row px-3" id = "bookCart">
+                                <!-- sample book -->
+                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                    <div class="card book-card">
                                     
-                                    <div class="remove-icon">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        <div class="remove-icon">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- sample book -->
+                                <!-- sample book -->
 
-                            <!-- sample book -->
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <div class="card book-card">
-                                    
-                                    <div class="remove-icon">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <!-- sample book -->
+                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                    <div class="card book-card">
+                                        
+                                        <div class="remove-icon">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- sample book -->
+                                <!-- sample book -->
 
-                            <!-- sample book -->
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <div class="card book-card">
-                                    
-                                    <div class="remove-icon">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <!-- sample book -->
+                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                    <div class="card book-card">
+                                        
+                                        <div class="remove-icon">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- sample book -->
+                                <!-- sample book -->
 
-                            <!-- sample book -->
-                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                <div class="card book-card">
-                                    
-                                    <div class="remove-icon">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <!-- sample book -->
+                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                    <div class="card book-card">
+                                        
+                                        <div class="remove-icon">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- sample book -->
+
+                                <!-- sample book -->
+                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                    <div class="card book-card">
+                                        
+                                        <div class="remove-icon">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- sample book -->
                             </div>
-                            <!-- sample book -->
                         </div>
-                    </div>
-            </div>
-        </div>
-
-        <!-- for form controls -->
-        <div class = "col-md-12 col-sm-12 mt-2">
-            <div class = "card">
-                <div class = "card-body">
-                    <button class = "btn btn-success float-right"><i class = "fa fa-save"></i>&nbsp; Save Transaction</button>
                 </div>
             </div>
-        </div>
-        <!-- for form controls -->
+
+            <!-- for form controls -->
+            <div class = "col-md-12 col-sm-12 mt-2">
+                <div class = "card">
+                    <div class = "card-body">
+                        <button type = "submit" class = "btn btn-success float-right"><i class = "fa fa-save"></i>&nbsp; Save Transaction</button>
+                    </div>
+                </div>
+            </div>
+            <!-- for form controls -->
+        </form>
     </div>
 
     <!-- transaction borrow modal -->
@@ -206,17 +228,19 @@
                     <div class="card mt-2">
                         <div class="card-body">
                             <div class = "table-responsive">
-                                <table class = "table table-bordered table-hover" id = "modalListBorrowers" style = "width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th width = "30"></th>
-                                            <th>ID #</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Type</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <form id = "frmBorrowersModal">
+                                    <table class = "table table-bordered table-hover" id = "modalListBorrowers" style = "width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th width = "30"></th>
+                                                <th>ID #</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Type</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -224,7 +248,7 @@
                 </div>
         
                 <div class = "modal-footer">
-                    <button type = "button" class = "btn btn-success"><i class = "fa fa-search"></i>&nbsp; Search</button>
+                    <button type = "button" class = "btn btn-success" id = "btnModalSelectBorrower"><i class = "fa fa-search"></i>&nbsp; Search</button>
                     <button type = "button" class = "btn btn-danger" data-toggle = "modal" data-target = "#modalSearchBorrower"><i class = "fa fa-times"></i> Cancel</button>
                 </div>
             </div>
@@ -268,7 +292,7 @@
                                 { 
                                     "data": null,  // No actual data needed, we will render the radio button
                                     "render": function (data, type, row, meta) {
-                                        return '<input type="radio" name="selectedBorrower" value="' + row.id + '">';
+                                        return '<input type="radio" name="borrower_id" value="' + row.id + '">';
                                     },
                                     "orderable": false,  // Disable ordering for this column
                                     "searchable": false,  // Disable search for this column
@@ -352,6 +376,15 @@
                 });
             }
         }
+
+        $("#btnModalSelectBorrower").click(function (e) { 
+            e.preventDefault();
+            let formBorrowerModal = $("#frmBorrowersModal").serializeArray();
+
+            
+
+
+        });
             
     </script>
 

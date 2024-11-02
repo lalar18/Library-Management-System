@@ -68,14 +68,14 @@ class Controller extends BaseController
     public function userData() {
         $data = [];
 
-        if($this->isLogin()){
+        if ($this->isLogin()) {
             $data = [
-                'admin_is_login' => session(config('const.session_admin_key')),
-                'admin_user_id' => session(config('const.session_admin_id')),
-                'admin_user_name' => session(config('const.session_admin_name')),
-                'admin_username' => session(config('const.session_username')),
+                'admin_is_login' => session()->has(config('const.session_admin_key')) ? session(config('const.session_admin_key')) : null,
+                'admin_user_id' => session()->has(config('const.session_admin_id')) ? session(config('const.session_admin_id')) : null,
+                'admin_user_name' => session()->has(config('const.session_admin_name')) ? session(config('const.session_admin_name')) : null,
+                'admin_username' => session()->has(config('const.session_username')) ? session(config('const.session_username')) : null,
             ];
-        }
+        }        
 
         return $data;        
     }

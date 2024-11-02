@@ -11,10 +11,13 @@ use App\Models\BookCart;
 use App\Models\BookCategory;
 use App\Models\Author;
 
-class BorrowBookController extends Controller
-{
-    //
-    public function index() {
+class BorrowBookController extends Controller{
+    
+    public function __construct(){
+        parent::__construct();
+    }
+
+    public function index(Request $request) {
         $data = array();
 
         //check first user if logged in
@@ -23,10 +26,20 @@ class BorrowBookController extends Controller
         }
 
         $menuDatas = $this->getCachedMenus();
+
+        $data = [
+            'userData' => $this->userData()
+        ];
         
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
-        return view('borrow_book/index', compact('data'));
+        if($request->isMethod('post')){
+            $inputData = $request->post();
+
+            dd($inputData);
+        }
+
+        return view('borrow_book/index', $data);
     }
 
     //get borrower information
