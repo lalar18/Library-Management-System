@@ -38,7 +38,12 @@
     <div class="card mt-2">
 
     <div class="mb-3">
-    <a href="{{ url('/admin/manage-users/add') }}" class="btn btn-primary">Add User</a>
+    <form action="{{ url('admin/manage-users/add') }}" method="POST" style="display:inline;">
+    @csrf
+
+    <button type="submit" class="btn btn-primary">Add User</button>
+<!--     
+    <a href="{{ url('admin/manage-users/add') }}" class="btn btn-primary">Add User</a> -->
      </div>
         <div class="card-body">
             <table class="table table-hover table-bordered">
@@ -77,5 +82,7 @@
     </div>
 
     <input type = "password" class = "form-control">
+
+    </form>
 
 @include('partials.__footer')

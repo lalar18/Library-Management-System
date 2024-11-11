@@ -108,7 +108,23 @@
 
 
     
+        public function showAddUserForm() {
+            $data = array();
+                 //check first user if logged in
+                 if($this->isLogin() == 0){
+                    return redirect('/admin/login');
+                }
+    
+                $userId = Session::get(Config('const.session_admin_id'));
+               //
+                
+                $menuDatas = $this->getCachedMenus();
+    
+       
+                $data = array_merge( isset($menuDatas) ? $menuDatas : []);
 
+            return view('user.add', compact('data'));
+        }
 
 
 

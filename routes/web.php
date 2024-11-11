@@ -78,6 +78,11 @@ Route::get('/admin/manage-users', array(UserController::class, 'index'));
 Route::get('/admin/manage-users/edit/{id}', [UserController::class, 'edit']);
 Route::put('admin/manage-users/editSubmit', [UserController::class, 'update']);
 
+// Display the add user form
+Route::get('admin/manage-users/add', [UserController::class, 'showAddUserForm']);
+
+Route::post('admin/manage-users/add', [UserController::class, 'add']);
+
 Route::get('/admin/manage-users', [UserController::class, 'index']);
 
 Route::any('/admin/manage-penalty', [PenaltyController::class, 'index'])->name('penalty.index');
