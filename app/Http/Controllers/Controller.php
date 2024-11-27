@@ -21,8 +21,6 @@ class Controller extends BaseController
     public function __construct(){
         $this->clearCaches();
         $this->cachedMenuItems();
-
-        
     }
 
     public function cachedMenuItems() {
@@ -78,8 +76,6 @@ class Controller extends BaseController
                 'admin_username' => session()->has(config('const.session_username')) ? session(config('const.session_username')) : null,
             ];
         }        
-
-        dd($data);
 
         return $data;        
     }

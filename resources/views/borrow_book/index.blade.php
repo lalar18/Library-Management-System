@@ -1,6 +1,6 @@
 @include('partials.__header')
 
-    <script src = "/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src = "{{url('/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 
     <link href = "{{ url('assets/css/transaction/transaction.css') }}" rel = "stylesheet">
 
