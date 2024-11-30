@@ -35,11 +35,8 @@ class BorrowBookController extends Controller{
 
         if($request->isMethod('post')){
             $inputData = $request->post();
-
-            dd($inputData);
         }
-
-        return view('borrow_book/index', $data);
+        return view('borrow_book/index', compact('data'));
     }
 
     //get borrower information
