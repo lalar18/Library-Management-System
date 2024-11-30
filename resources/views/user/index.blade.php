@@ -40,7 +40,6 @@
     <div class="mb-3">
     <form action="{{ url('admin/manage-users/add') }}" method="POST" style="display:inline;">
     @csrf
-
     <button type="submit" class="btn btn-primary">Add User</button>
 <!--     
     <a href="{{ url('admin/manage-users/add') }}" class="btn btn-primary">Add User</a> -->

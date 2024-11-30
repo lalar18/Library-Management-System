@@ -83,10 +83,10 @@
     
                     $user->profile_image = $newFileName; 
                     $user->save();
-    
+                   
                     //transfer file
                     if(!file_exists($distPath)){
-                        if(mkdir($distPath, 0755, true)) {
+                        if(mkdir(directory: $distPath, permissions: 0755, recursive: true)) {
                             move_uploaded_file($tempPath, $distPath . '/' . $newFileName);
                         }
                     }else{
@@ -99,6 +99,7 @@
 
                 return redirect('/admin/manage-users');
                 exit;
+                
             }
        
             $data['userData'] = $userData;
