@@ -31,10 +31,10 @@ class Book extends Model
         }
 
         $data = Book::select('books.*', 'authors.id AS author_id', 'authors.name AS author_name')
-        ->leftJoin('book_categories', 'books.book_cat_id', '=', 'book_categories.id')
-        ->leftJoin('authors', 'authors.id', '=', 'books.author_id')
-        ->where($conditions)
-        ->orWhere($orConditions);
+                ->leftJoin('book_categories', 'books.book_cat_id', '=', 'book_categories.id')
+                ->leftJoin('authors', 'authors.id', '=', 'books.author_id')
+                ->where($conditions)
+                ->orWhere($orConditions);
 
         return $data->paginate($pageItems);
     }

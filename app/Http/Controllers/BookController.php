@@ -12,7 +12,6 @@ use App\Models\Author;
 class BookController extends Controller
 {
     //
-
     public function bookEntry(Request $request){
         $params = [];
 
@@ -23,17 +22,21 @@ class BookController extends Controller
         
         //check if keyword is existing
         if($request->has('keyword') && $request['keyword']){
-            $params['keyword']  = $request['keyword'];
+            $params['keyword']  = $request['keyword'];            
         }
 
         //check if genre is existing
         if($request->has('genre') && $request['genre']){
-            $params['genre'] = $request['genre'];
+            $params['genre'] = $request['genre'];           
         }
 
+        //To get sidebar design and menu ------------------------------
         $menuDatas = $this->getCachedMenus();
 
         $bookList = Book::getAllBooks($params);
+
+    //  dd( $bookList);
+        
         $bookCategories = BookCategory::getBookCategories([]);
         $authorsList = Author::getAllAuthors([
             'order' => ['name', 'asc']
@@ -45,7 +48,7 @@ class BookController extends Controller
             'authors_data' => $authorsList,
             'filter_data' => $params
         );
-
+    
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         return view('books/books/index', compact('data'));
@@ -169,6 +172,8 @@ class BookController extends Controller
 
         $books = Book::getBooks(['id' => $bookId]);
         $author = [];
+
+       
 
         if(!empty($books)){
             $author = Author::getAuthor(['id' => $books['author_id']]);
