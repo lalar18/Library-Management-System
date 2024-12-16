@@ -9,6 +9,8 @@
 
         <title>{{ Config('const.sytem_title_login') }}</title>
 
+        <link rel="icon" type="image/png" sizes="32x32" href="{{url('images/logo.png')}}">
+
         <!-- Bootstrap -->
         <link href="{{ url('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Font Awesome -->
@@ -20,7 +22,28 @@
 
         <!-- Custom Theme Style -->
         <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet">
+
+        <!-- sweetalert2 -->
+        <link href = "{{url('vendors/sweetalert2/sweetalert2.min.css')}}">
+        <script src = "{{url('vendors/sweetalert2/sweetalert2.all.min.js')}}"></script>
     </head>
+
+    <style>
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('{{ url("images/login-background.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect to the background image only */
+            z-index: -1; /* Ensure the background is behind the content */
+        }
+
+    </style>
 
     <body class="login">
         <div>
@@ -29,6 +52,18 @@
 
         <div class="login_wrapper">
             <div class="animate form login_form">
+
+                <div class = "logo-container d-flex justify-content-center">
+                    <a href = "{{url()->current()}}">
+                        <img src = "{{url('images/logo.png')}}" 
+                            height = "150"
+                            width = "150"
+                            loading = "lazy" 
+                            alt = "logo"
+                        >
+                    </a>
+                </div>
+
                 <section class="login_content">
                     <form method = "POST" action = "{{ url('admin/submit-login') }}">
                         <h1>Login Form</h1>
@@ -77,13 +112,13 @@
                             <a href="#signup" class="to_register"> 
                             </p> --}}
 
-                            <div class="clearfix"></div>
+                            {{-- <div class="clearfix"></div>
                             <br />
 
                             <div>
                             <h1><i class="fa fa-book"></i> &nbsp; {{ config('const.system_title') }}</h1>
                             <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4 template. Privacy and Terms</p>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
                 </section>

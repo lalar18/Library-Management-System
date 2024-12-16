@@ -22,6 +22,8 @@
 
         <title>Libary System</title>
 
+        <link rel="icon" type="image/png" sizes="32x32" href="{{url('images/logo.png')}}">
+
         <!-- jQuery -->
         <script src="{{ url('vendors/jquery/dist/jquery.min.js') }}"></script>
 
@@ -43,6 +45,10 @@
 
         <!-- common css -->
         <link href = "{{ url('assets/css/common.css') }}"  rel="stylesheet">
+
+        <!-- sweetalert2 -->
+        <link href = "{{url('vendors/sweetalert2/sweetalert2.min.css')}}">
+        <script src = "{{url('vendors/sweetalert2/sweetalert2.all.min.js')}}"></script>
     </head>
     <body class = "nav-md">
 
