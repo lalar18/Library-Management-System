@@ -26,9 +26,9 @@
                         <input id = "txtKeyword"  
                             type = "text" 
                             class = "form-control ml-2 mr-2" 
-                            name = "keyword" 
+                            name = "keywords" 
                             placeholder = "Keyword..."
-                            value = "{{ isset($data['filter_data']['keyword']) ? $data['filter_data']['keyword'] : '' }}"
+                            value = "{{ isset($data['filter_data']['keywords']) ? $data['filter_data']['keywords'] : '' }}"
                         >
 
                         <!-- Genre -->

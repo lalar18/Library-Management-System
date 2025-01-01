@@ -13,27 +13,19 @@ class BookController extends Controller
 {
     //
     public function bookEntry(Request $request){
-        $params = [];
+        $filterData = $request->all();
 
         //check first user if logged in
         if($this->isLogin() == 0){
             return redirect('/admin/login');
         }
         
-        //check if keyword is existing
-        if($request->has('keyword') && $request['keyword']){
-            $params['keyword']  = $request['keyword'];            
-        }
-
-        //check if genre is existing
-        if($request->has('genre') && $request['genre']){
-            $params['genre'] = $request['genre'];           
-        }
+       
 
         //To get sidebar design and menu ------------------------------
         $menuDatas = $this->getCachedMenus();
 
-        $bookList = Book::getAllBooks($params);
+        $bookList = Book::getAllBooks($filterData);
 
     //  dd( $bookList);
         
@@ -46,7 +38,7 @@ class BookController extends Controller
             'books_data' => $bookList,
             'book_categories_data' => $bookCategories,
             'authors_data' => $authorsList,
-            'filter_data' => $params
+            'filter_data' => $filterData
         );
     
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
