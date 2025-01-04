@@ -53,6 +53,11 @@ class Book extends Model
             $query->where('status', $params['status']);
         }
 
+        //barcode
+        if(isset($params['barcode']) && $params['barcode']) {
+            $query->where('barcode', $params['barcode']);
+        }
+
         return $query;
     }
 
@@ -123,27 +128,11 @@ class Book extends Model
 
         $query = Book::select($fields);
 
-        $query = Self::getCondition($query, $params);
+        $query = Self::getConditions($query, $params);
 
         $result = $query->get();
 
         return !empty($result) ? $result->toArray() : [];
     }
-
-
-    public static function getCondition($query, $params = []){
-        
-        //id
-        if(isset($params['id']) && $param['id']){
-            $query->where('id', '=', $params['id']);
-        }
-
-        //barcode
-        if(isset($params['barcode']) && $params['barcode']){
-            $query->where('barcode', '=', $params['barcode']);
-        }
-
-        return $query;
-    }   
 
 }

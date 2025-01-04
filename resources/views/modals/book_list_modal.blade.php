@@ -57,6 +57,7 @@
                     $("#bookCart").append(bookItem);
                     bookItem.fadeIn(300);
                 }
+                exitModal();
             }
         });
     }

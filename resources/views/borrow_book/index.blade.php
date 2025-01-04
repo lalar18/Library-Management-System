@@ -4,31 +4,68 @@
 
     <link href = "{{ url('assets/css/transaction/transaction.css') }}" rel = "stylesheet">
 
+    
+    <!-- search books -->
     <div class = "row">
-        <form method = "post" action = "{{ url()->current() }}">
+
+        <!-- for notifiction section -->
+        @php $notification = session('book_transaction_notification') @endphp
+
+        @if(isset($notification) && $notification)
+        <div class = "col-12">
+            <div class = "alert {{ $notification['type'] }}">
+                <h5>{{$notification['title']}}</h5>
+                <span>{{$notification['message']}}</span>
+            </div>
+        </div>
+        @endif
+
+        <div class = "col-12">
+            <div class = "input-group">
+                <input type = "text" class = "form-control" 
+                    placeholder = "Barcode..." 
+                    onkeydown="if (event.key === 'Enter') searchBook(this)"
+                    data-href = "{{ url('/admin/') }}"
+                >
+                <div class = "input-group-append">
+                    <button type = "button" class = "btn btn-primary">Browse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method = "post" action = "{{ url()->current() }}">
+        <div class = "row">
+       
 
             @csrf
             <!-- for list of borrowers -->
-            <div class = "col-md-4 col-sm-4">
-
-                <div class = "form-inline custom-form-inline">
-                    <label>Issuance No.</label>
-                    <input type = "text" class = "form-control text-inline ml-2" placeholder = "IS-000001..." >
-                </div>
+            <div class = "col-sm-12 col-md-4 col-lg-4">
                 
                 <!-- borrower filter area -->
-                <div class = "card mt-3 card-borrower">
+                <div class = "card card-borrower">
                     <div class = "card-body">
                         <h5 class = "card-title"><strong>Borrower Information</strong></h5>
 
+                        <label>Issuance No.</label>
+                        <input type = "text" 
+                            class = "form-control text-inline" 
+                            name = "trans_issuance_tab[is_no]"
+                            placeholder = "IS-000001..." 
+                            value = "{{isset($data['tempIssuanceNo']) && $data['tempIssuanceNo'] ? $data['tempIssuanceNo'] : ''}}"
+                            readonly
+                        >
+                            
                         <!-- borrower id -->
-                        <input type = "hidden" name = "borrower_id" value = "">
+                        <input type = "hidden" id = "borrower_id" name = "trans_issuance_tab[borrower_id]" value = "">
 
                         <!-- user id -->
                         <input type = "hidden"
-                            name = "user_id"
-                            value = "{{ $userData['admin_user_id'] ?? '' }}"
+                            name = "trans_issuance_tab[preparedBy]"
+                            value = "{{ session(config('const.session_admin_id')) }}"
                         >
+
+                        <!-- prepared by -->
+                        <input type = "hidden" name = "trans_issuance_tab[preparedBy]" value = "{{ session(config('const.session_admin_id')) }}">
 
                         <!-- borrower custom buttons -->
                         <div class = "borrower-custom-container">
@@ -46,20 +83,20 @@
 
                         <!-- id no -->
                         <label>ID #</label>
-                        <input type = "text" class = "form-control" readonly>
+                        <input type = "text" id = "id_no" class = "form-control" readonly>
                         
                         <!-- first name -->
                         <label>First Name</label>
-                        <input type = "text" class = "form-control" readonly>
+                        <input type = "text" id = "fname" class = "form-control" readonly>
 
                         <!-- last name -->
                         <label>Last Name</label>
-                        <input type = "text" class = "form-control" readonly>
+                        <input type = "text" id = "lname" class = "form-control" readonly>
 
                         <label>Date Borrowed</label>
                         <input type = "date" 
-                            class = "form-control" 
-                            name = ""
+                            class = "form-control"
+                            name = "trans_issuance_tab[date_borrowed]"
                             value = ""
                             required
                         >
@@ -68,123 +105,45 @@
                         <label>Expected Date of Return</label>
                         <input type = "date" 
                             class = "form-control"
-                            name = "date_return"
+                            name = "trans_issuance_tab[date_expected_return]"
                             value = ""
                             required
                         >
                         
                         <!-- prepared by -->
                         <label>Prepared By</label>
-                        <input type = "text" class = "form-control" value = "{{ $userData['admin_user_name'] ?? '' }}" readonly>
+                        <input type = "text" class = "form-control" value = "{{session(config('const.session_admin_name'))}}" readonly>
                     </div>
                 </div>
             </div>
             
             <!-- for list of books for borrow -->
-            <div class = "col-md-8 col-sm-8">
-                <div class = "input-group">
-                    <input type = "text" class = "form-control" 
-                        placeholder = "Barcode..." 
-                        onkeydown="if (event.key === 'Enter') searchBook(this)"
-                        data-href = "{{ url('/admin/') }}"
-                    >
-                    <div class = "input-group-append">
-                        <button type = "button" class = "btn btn-primary">Browse</button>
-                    </div>
-                </div>
-                <div class = "card mt-2 book-container">
+            <div class = "col-sm-12 col-md-8 col-lg-8">
+
+                <div class = "card book-container">
                     <div class = "card-body">
                         <h5 class = "card-title"><strong>Books</strong></h5>
-                    </div>
-                        <!-- books cart list -->
-                        <div class="d-flex justify-content-between" >
-                            <div class = "row px-3" id = "bookCart">
-                                <!-- sample book -->
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <div class="card book-card">
+
+                        <div class = "row px-3 d-flex justify-content-start" id = "bookCart">
+                            {{-- <!-- sample book -->
+                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                <div class="card book-card">
                                     
-                                        <div class="remove-icon">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                        </div>
+                                    <div class="remove-icon">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
+                                        <p class="card-text"><strong>Author: </strong>John Doe</p>
+                                        <p class="card-text"><strong>Genre: </strong>Fiction</p>
+                                        <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
                                     </div>
                                 </div>
-                                <!-- sample book -->
-
-                                <!-- sample book -->
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <div class="card book-card">
-                                        
-                                        <div class="remove-icon">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- sample book -->
-
-                                <!-- sample book -->
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <div class="card book-card">
-                                        
-                                        <div class="remove-icon">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- sample book -->
-
-                                <!-- sample book -->
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <div class="card book-card">
-                                        
-                                        <div class="remove-icon">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- sample book -->
-
-                                <!-- sample book -->
-                                <div class="col-sm-12 col-md-4 col-lg-3">
-                                    <div class="card book-card">
-                                        
-                                        <div class="remove-icon">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Harry Potter and the Prisoner of Azcaban</h5>
-                                            <p class="card-text"><strong>Author: </strong>John Doe</p>
-                                            <p class="card-text"><strong>Genre: </strong>Fiction</p>
-                                            <p class="card-text">Summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- sample book -->
                             </div>
+                            <!-- sample book --> --}}
+                            
                         </div>
+                    </div>
                 </div>
             </div>
 
@@ -197,8 +156,8 @@
                 </div>
             </div>
             <!-- for form controls -->
-        </form>
-    </div>
+        </div>
+    </form>
 
     <!-- transaction borrow modal -->
     <div class = "modal fade" id = "modalSearchBorrower">
@@ -342,6 +301,13 @@
 
                 let barcode = $(e).val();
 
+                let bookIds = [];
+
+                //get all book ids in cart
+                $(".book-card-container").each(function(){
+                    bookIds.push($(this).data("book-id"));
+                })
+
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 // Set up jQuery AJAX to include the CSRF token in all requests
@@ -350,7 +316,8 @@
                     headers : {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')}, 
                     url: "{{ url('/admin/transaction/borrower-book/getBook') }}",
                     data: {
-                        'barcode' : barcode
+                        'barcode' : barcode,
+                        'book_id' : bookIds
                     },
                     dataType: "json",
                     success: function (response) {
@@ -368,9 +335,6 @@
                                 bookItem.fadeIn(300);
                             }
                         }
-                       
-
-
 
                     }
                 });
@@ -379,11 +343,34 @@
 
         $("#btnModalSelectBorrower").click(function (e) { 
             e.preventDefault();
+
             let formBorrowerModal = $("#frmBorrowersModal").serializeArray();
 
-            
+            let table  = $("#modalListBorrowers").DataTable();
+            let selectedBorrower = formBorrowerModal.find(input => input.name === 'borrower_id');
 
+            if (selectedBorrower) {
+                let borrowerData = table.row($("input[name='borrower_id']:checked").closest('tr')).data();
 
+                //populate hidden input
+                $("#borrower_id").val(borrowerData.id);
+
+                $("#id_no").val(borrowerData.id_no);
+                $("#fname").val(borrowerData.fname);
+                $("#lname").val(borrowerData.lname);
+
+                $("#modalSearchBorrower").modal("hide");
+            } else {
+                alert("Please select a borrower.");
+            }
+        });
+
+        $("#bookCart").on("click", ".book-card-remove", function(e){
+            e.preventDefault();
+
+            $(this).closest(".book-card-container").fadeOut(300, function(){
+                $(this).remove();
+            });
         });
             
     </script>

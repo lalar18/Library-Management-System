@@ -45,7 +45,7 @@
 
 .card-borrower{
     position: relative;
-    height: 500px;
+    height: 35rem;
 }
 
 .borrower-custom-container {
@@ -60,7 +60,7 @@
 }
 
 .book-container {
-    height: 500px;
+    height: 35rem;
     overflow-y: auto;
     overflow-x: hidden;
 }

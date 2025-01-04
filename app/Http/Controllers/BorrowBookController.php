@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 //delcare models used
 use App\Models\Borrower;
@@ -10,6 +11,8 @@ use App\Models\Book;
 use App\Models\BookCart;
 use App\Models\BookCategory;
 use App\Models\Author;
+use App\Models\TransIssuance;
+use App\Models\TransIssuanceDetails;
 
 class BorrowBookController extends Controller{
     
@@ -20,6 +23,12 @@ class BorrowBookController extends Controller{
     public function index(Request $request) {
         $data = array();
 
+        //get latest id
+        $latestId = (int)TransIssuance::latest()->value('id') + 1;
+
+        //generate issuance number
+        $issuanceNo = 'IS-' . str_pad($latestId, 6, '0', STR_PAD_LEFT);
+
         //check first user if logged in
         if($this->isLogin() == 0){
             return redirect('/admin/login');
@@ -28,13 +37,53 @@ class BorrowBookController extends Controller{
         $menuDatas = $this->getCachedMenus();
 
         $data = [
-            'userData' => $this->userData()
+            'userData' => $this->userData(),
+            'tempIssuanceNo' => $issuanceNo
         ];
         
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
         if($request->isMethod('post')){
             $inputData = $request->post();
+
+            $transIssuanceTab = isset($inputData['trans_issuance_tab']) && $inputData['trans_issuance_tab'] ? $inputData['trans_issuance_tab'] : [];
+            $transIssuanceTabDet = isset($inputData['trans_issuance_tab_det']) && $inputData['trans_issuance_tab_det'] ? $inputData['trans_issuance_tab_det'] : [];
+
+            $booksIdList = array_column($transIssuanceTabDet, 'book_id');
+            // dd($booksIdList);
+
+            //proceed saving to table
+            if($transIssuanceTab && $transIssuanceTabDet){
+                TransIssuance::create($transIssuanceTab);
+
+                //get latest issuance id
+                $isId = TransIssuance::latest()->value('id');
+
+                $transDetails = [];
+                foreach($transIssuanceTabDet as $key => $val){
+                    $transDetails[]  = [
+                        'is_id' => $isId,
+                        'book_id' => $val['book_id'],
+                        'created_at' => Carbon::now()
+                    ];
+                }
+
+                //insert all details
+                TransIssuanceDetails::insert($transDetails);
+
+                //update books borrowed status to borrowed
+                $booksIdList = array_column($transDetails, 'book_id');
+                Book::whereIn('id', $booksIdList)->update(['status' => 2, 'updated_at' => Carbon::now()]);
+
+                // Set flash data for transaction notification
+                session()->flash('book_transaction_notification', [
+                    'has_error' => 0,
+                    'title' => 'Transaction Success',
+                    'message' => 'Books successfully borrowed!',
+                    'type' => 'alert-success'
+                ]);
+            }
+            
         }
         return view('borrow_book/index', compact('data'));
     }
@@ -81,7 +130,9 @@ class BorrowBookController extends Controller{
         $data = $request->input();
 
         $searchBook = Book::getBookList([
-            'barcode' => $data['barcode']
+            'barcode' => $data['barcode'],
+            'not_id' => isset($data['book_id']) && $data['book_id'] ? $data['book_id'] : [],
+            'status' => 1
         ]);
 
         $html = '';
@@ -91,8 +142,7 @@ class BorrowBookController extends Controller{
           
             $bookCount = count($searchBook);
             $html = view('borrow_book/books_data', ['bookData' => $searchBook])->render();
-        }else{
-            //if only one book is seen automatically add to cart
+        }elseif(count($searchBook) == 1){
             //get book categories
             $bookCategoriesData = BookCategory::getBookCategories([]);
             $bookCategoriesArr = collect($bookCategoriesData)->pluck('name', 'id');
@@ -100,35 +150,16 @@ class BorrowBookController extends Controller{
             //get author
             $authorData = Author::getAuthor([
                 'id' => $searchBook[0]['id']
-            ]); 
+            ]);            
 
-            //check cart duplicate
-            $checkCartDuplicate = BookCart::getRowBookCartItem([
-                'book_id' => $searchBook[0]['id']
-            ]);
+            //compile data
+            $compiledData = [
+                'bookData' => $searchBook,
+                'authorData' => $authorData,
+                'categoryData' => $bookCategoriesArr
+            ];
 
-            if(!$checkCartDuplicate){
-                
-                //add new record to book_cart
-                $bookCart = new BookCart;
-                $bookCart->book_id = $searchBook[0]['id'];
-                $bookCart->user_id = $userData['admin_user_id'];
-                $bookCart->save();
-    
-                //get cart book items
-                $bookCartItems = BookCart::getCartItems([
-                    'user_id' => $userData['admin_user_id']
-                ]);
-    
-                //compile data
-                $compiledData = [
-                    'bookData' => $searchBook,
-                    'authorData' => $authorData,
-                    'categoryData' => $bookCategoriesArr
-                ];
-    
-                $html = view('borrow_book/book_cart_data', $compiledData)->render(); 
-            }            
+            $html = view('borrow_book/book_cart_data', $compiledData)->render(); 
         }
 
         $data = [
@@ -136,7 +167,7 @@ class BorrowBookController extends Controller{
             'html' => $html,
             'book_count' => $bookCount
         ];
-
+        // dd($data);
         return response()->json($data);
        
     }
@@ -158,24 +189,15 @@ class BorrowBookController extends Controller{
 
         //check if books_id exist then proceed to adding to cart]
         if(isset($inputData['books_id']) && $inputData['books_id']){
-            foreach($inputData['books_id'] as $val){
-                //add to books_cart
-                $bookCart = new BookCart;
-
-                $bookCart->book_id = $val;
-                $bookCart->user_id = $userData['admin_user_id'];
-                $bookCart->save();
-
-            }
-
-            //get updated cart items
-            $cartBooksData = BookCart::getCartItems([
-                'user_id' => $userData['admin_user_id']
+            //get book information
+            $searchBook = Book::getBookList([
+                'id' => $inputData['books_id'],
+                'status' => 1
             ]);
 
             //compileData
             $compiledData = [
-                'bookData' => $cartBooksData,
+                'bookData' => $searchBook,
                 'authorData' => $authorArr,
                 'categoryData' => $bookCategoriesArr
             ];
