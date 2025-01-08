@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransIssuance extends Model {
+class TransReturn extends Model {
     use HasFactory;
 
-    protected $table = 'trans_issuance_tab';
+    protected $table = 'trans_return_tab';
     protected $fillable = [
-        'is_no',
-        'borrower_id',
-        'date_borrowed',
-        'date_expected_return',
+        'id_no',
+        'is_id',
+        'date_returned',
         'preparedBy',
         'created_at',
         'updated_at'
     ];
 
     public static function getConditions($query, $params = []) {
+
         //id
-        if(isset($params['id']) && $params['id']){
+        if(isset($params['id']) && $$params['id']){
             if(is_array($params['id'])){
                 $query->whereIn('id', $params['id']);
             }else{
@@ -38,35 +38,42 @@ class TransIssuance extends Model {
             }
         }
 
-        //is_no
-        if(isset($params['is_no']) && $params['is_no']){
-            $query->where('is_no', $params['is_no']);
-        }
-
         //id_no
         if(isset($params['id_no']) && $params['id_no']){
             $query->where('id_no', $params['id_no']);
         }
 
+        //is_id
+        if(isset($params['is_id']) && $params['is_id']){
+            if(is_array($params['is_id'])){
+                $query->whereIn('is_id', $params['is_id']);
+            }else{
+                $query->where('is_id', $params['is_id']);
+            }
+        }
+
+        //preparedBy
+        if(isset($params['preparedBy']) && $params['preparedBy']){
+            $query->where('preparedBy', $params['preparedBy']);
+        }
+
         return $query;
     }
 
-    public static function getTransIssuance($params = []){
+    public static function getTransReturn($params = []) {
         $data = [];
 
         //default fields
         $fields = isset($params['all_fields']) && $params['all_fields'] ? ['*'] : [
             'id',
-            'is_no',
-            'borrower_id',
-            'date_borrowed',
-            'date_expected_return',
-            'preparedBy',
+            'id_no',
+            'is_id',
+            'date_returned',
+            'preparedBy'
         ];
 
-        $query = Self::select($fields);
-
-        $query = Self::getConditions($query, $params);
+        $query = self::select($fields);
+        $query = self::getConditions($query, $params);
 
         //is_multiple
         if(isset($params['is_multiple']) && $params['is_multiple']){
@@ -79,13 +86,6 @@ class TransIssuance extends Model {
         $data = $query->first();
         return $data ? $data->toArray() : [];
     }
-    
-    public function issuanceDetails() {
-        return $this->hasMany(TransIssuanceDetails::class, 'is_id');
-    }
 
-    public function borrower() {
-        return $this->hasOne(Borrower::class, 'borrower_id');
-    }
 
 }

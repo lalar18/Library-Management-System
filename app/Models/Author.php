@@ -68,6 +68,12 @@ class Author extends Model
             $query->where('id', '=', $params['id']);
         }
 
+        //status
+        if(isset($params['status']) && $params['status']){
+            $query->where('status', $params);
+        }
+
+
         $data = $query->get();
 
         return $data ? $data->toArray() : [];

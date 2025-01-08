@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransIssuanceDetails extends Model {
+class TransReturnDetails extends Model {
+
     use HasFactory;
 
-    protected $table = 'trans_issuance_tab_det';
+    protected $table = 'trans_return_det';
     protected $fillable = [
-        'is_id',
+        'rt_id',
         'book_id',
+        'penalty_id',
         'is_returned',
+        'item_remarks',
+        'preparedBy',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 
     public static function getConditions($query, $params = []) {
-
         //id
         if(isset($params['id']) && $params['id']){
             if(is_array($params['id'])){
@@ -37,12 +40,12 @@ class TransIssuanceDetails extends Model {
             }
         }
 
-        //is_id
-        if(isset($params['is_id']) && $params['is_id']){
-            if(is_array($params['is_id'])){
-                $query->whereIn('is_id', $params['is_id']);
+        //rt_id
+        if(isset($params['rt_id']) && $params['rt_id']){
+            if(is_array($params['rt_id'])){
+                $query->whereIn('rt_id', $params['rt_id']);
             }else{
-                $query->where('is_id', $params['is_id']);
+                $query->where('rt_id', $params['rt_id']);
             }
         }
 
@@ -55,26 +58,47 @@ class TransIssuanceDetails extends Model {
             }
         }
 
+        //penalty_id
+        if(isset($params['penalty_id']) && $params['penalty_id']){
+            if(is_array($params['penalty_id'])){
+                $query->whereIn('penalty_id', $params['penalty_id']);
+            }else{
+                $query->where('penalty_id', $params['penalty_id']);
+            }
+        }
+
         //is_returned
         if(isset($params['is_returned'])){
             $query->where('is_returned', $params['is_returned']);
         }
 
-        return $query; 
+        //preparedBy
+        if(isset($params['preparedBy']) && $params['preparedBy']){
+            if(is_array($params['preparedBy'])){
+                $query->whereIn('preparedBy', $params['preparedBy']);
+            }else{
+                $query->where('preparedBy', $params['preparedBy']);
+            }
+        }
+
+        return $query;
     }
 
-    public static function getTransIssuanceDetails($params){
+    public static function getTransReturnDetails($params = []){
         $data = [];
-        
+
         //default fields
         $fields = isset($params['all_fields']) && $params['all_fields'] ? ['*'] : [
             'id',
-            'is_id',
+            'rt_id',
             'book_id',
-            'is_returned'
+            'penalty_id',
+            'is_returned',
+            'item_remarks',
+            'preparedBy'
         ];
 
-        $query = self::select($fields);
+        $query = self::self($fields);
         $query = self::getConditions($query, $params);
 
         //is_multiple
@@ -87,10 +111,6 @@ class TransIssuanceDetails extends Model {
         //return single row
         $data = $query->first();
         return $data ? $data->toArray() : [];
-    }
-
-    public function transIssuance() {
-        return $this->belongsTo(TransIssuance::class, 'is_id');
     }
 
 }
