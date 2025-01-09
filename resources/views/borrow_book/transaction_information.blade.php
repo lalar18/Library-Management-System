@@ -51,77 +51,27 @@
         </thead>
 
         <tbody>
-            <!-- sample data-->
-            <tr>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle">ISS-001</td>
-                <td class="align-middle">RET-001</td>
-                <td class="align-middle">2023-06-01</td>
-                <td class="align-middle">2023-06-10</td>
-                <td class="align-middle text-center">3</td>
-                <td class="align-middle text-center">3</td>
-                <td class="align-middle">Student</td>
-                <td class="align-middle">John Doe</td>
-                <td class="align-middle">2023-06-09</td>
-                <td class="align-middle">Completed</td>
-                <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">2</td>
-                <td class="align-middle">ISS-002</td>
-                <td class="align-middle">RET-002</td>
-                <td class="align-middle">2023-06-05</td>
-                <td class="align-middle">2023-06-15</td>
-                <td class="align-middle text-center">2</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle">Faculty</td>
-                <td class="align-middle">Jane Smith</td>
-                <td class="align-middle">2023-06-14</td>
-                <td class="align-middle">Partially Returned</td>
-                <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">3</td>
-                <td class="align-middle">ISS-003</td>
-                <td class="align-middle">RET-003</td>
-                <td class="align-middle">2023-06-10</td>
-                <td class="align-middle">2023-06-20</td>
-                <td class="align-middle text-center">5</td>
-                <td class="align-middle text-center">5</td>
-                <td class="align-middle">Student</td>
-                <td class="align-middle">Michael Brown</td>
-                <td class="align-middle">2023-06-19</td>
-                <td class="align-middle">Completed</td>
-                <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">4</td>
-                <td class="align-middle">ISS-004</td>
-                <td class="align-middle">RET-004</td>
-                <td class="align-middle">2023-06-12</td>
-                <td class="align-middle">2023-06-22</td>
-                <td class="align-middle text-center">4</td>
-                <td class="align-middle text-center">4</td>
-                <td class="align-middle">Staff</td>
-                <td class="align-middle">Emily White</td>
-                <td class="align-middle">2023-06-21</td>
-                <td class="align-middle">Completed</td>
-                <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">5</td>
-                <td class="align-middle">ISS-005</td>
-                <td class="align-middle">RET-005</td>
-                <td class="align-middle">2023-06-15</td>
-                <td class="align-middle">2023-06-25</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">0</td>
-                <td class="align-middle">Visitor</td>
-                <td class="align-middle">Sarah Johnson</td>
-                <td class="align-middle">N/A</td>
-                <td class="align-middle">Overdue</td>
-                <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
-            </tr>
+            @php $count = 1; @endphp
+            @if(isset($data['book_transactions']) && $data['book_transactions'])
+                @foreach($data['book_transactions'] as $key => $val)
+                    <tr>
+                        <td class="align-middle text-center">{{$count}}</td>
+                        <td class="align-middle">{{$val['is_no']}}</td>
+                        <td class="align-middle">{{$val['ir_no'] ?? 'N/A'; }}</td>
+                        <td class="align-middle">{{$val['date_borrowed'] ?? '';}}</td>
+                        <td class="align-middle">{{$val['date_expected_return'] ?? '';}}</td>
+                        <td class="align-middle text-center">{{$val['borrowed_books'] ?? '0'}}</td>
+                        <td class="align-middle text-center">{{$val['returned_books'] ?? '0'}}</td>
+                        <td class="align-middle">{{$val['borrower_type'] ?? 'N/A'}}</td>
+                        <td class="align-middle">{{$val['fname'] . ' ' . $val['lname']}}</td>
+                        <td class="align-middle">{{$val['date_returned'] ?? 'N/A';}}</td>
+                        <td class="align-middle">TBD</td>
+                        <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
+                    </tr>
+                @endforeach
+                @php $count++; @endphp
+            @endif
+
         </tbody>
         
     </table>

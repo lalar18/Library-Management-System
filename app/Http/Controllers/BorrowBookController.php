@@ -107,8 +107,65 @@ class BorrowBookController extends Controller{
         ]);
     }
 
-    public function transactionInformation(){
+    public function transactionInformation(Request $request){
         $data = [];
+        $leftJoins = [];
+
+        $leftJoins[] = [
+           
+        ];
+        $leftJoins = [
+            1 => [
+                'trans_return_tab', 
+                'trans_return_tab.is_id', '=', 
+                'trans_issuance_tab.id'
+            ],
+            2 => [
+                'borrowers',
+                'borrowers.id', '=',
+                'trans_issuance_tab.borrower_id'
+            ],
+            3 => [
+                'borrower_type',
+                'borrower_type.id', '=',
+                'borrowers.type_id'
+            ]
+        ];
+
+
+        $filterData = $request->post();
+
+        $fields = [
+            'trans_issuance_tab.id AS issuance_id',
+            'trans_issuance_tab.is_no',
+            'trans_issuance_tab.borrower_id',
+            'trans_issuance_tab.date_borrowed',
+            'trans_issuance_tab.date_expected_return',
+            'trans_issuance_tab.preparedBy',
+            'trans_return_tab.id AS issuance_return_id',
+            'trans_return_tab.ir_id AS ir_no',
+            'trans_return_tab.date_returned',
+            'borrowers.id_no',
+            'borrowers.type_id',
+            'borrower_type.name AS borrower_type',
+            'borrowers.fname',
+            'borrowers.lname',
+            'borrowers.mname',
+            'borrowers.email',
+            \DB::raw('(SELECT COUNT(*) FROM trans_issuance_tab_det WHERE trans_issuance_tab_det.is_id = trans_issuance_tab.id) AS borrowed_books'),
+            \DB::raw('(SELECT COUNT(*) FROM trans_return_det WHERE trans_return_det.rt_id = trans_return_tab.id AND trans_return_det.is_returned = 1) AS returned_books')
+        ];
+
+        $query = TransIssuance::select($fields);
+
+        foreach($leftJoins as $key => $val){
+            $query->leftJoin($val[0], $val[1], $val[2], $val[3]);
+        }
+
+        $bookTransactions = $query->get()->toArray();
+
+
+
 
         //check first user if logged in
         if($this->isLogin() == 0){
@@ -118,6 +175,8 @@ class BorrowBookController extends Controller{
         $menuDatas = $this->getCachedMenus();
         
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
+
+        $data['book_transactions'] = $bookTransactions;
 
         return view('borrow_book.transaction_information', compact('data'));
     }
