@@ -8,12 +8,12 @@
 			<div class="tile_count">
 				<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-user"></i> Total Borrowed Students</span>
-					<div class="count">0</div>
-					<span class="count_bottom"><i class="green">4% </i> From last Week</span>
+					<div class="count">{{$data['count_student'] ?? '0'}}</div>
+					<span class="count_bottom"><i class="green">0% </i> From last Week</span>
 				</div>
 				<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-clock-o"></i> Total Borrowed Books</span>
-					<div class="count">0</div>
+					<div class="count">{{$data['count_borrowed_books'] ?? '0'}}</div>
 					<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> From last Week</span>
 				</div>
 				<div class="col-md-3 col-sm-3  tile_stats_count">
@@ -23,7 +23,7 @@
 				</div>
 					<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-user"></i> Total Borrowed Faculty</span>
-					<div class="count">0</div>
+					<div class="count">{{$data['count_faculty']}}</div>
 					<span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>0% </i> From last Week</span>
 				</div>
 			</div>
