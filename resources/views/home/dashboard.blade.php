@@ -8,23 +8,23 @@
 			<div class="tile_count">
 				<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-user"></i> Total Borrowed Students</span>
-					<div class="count">2500</div>
+					<div class="count">0</div>
 					<span class="count_bottom"><i class="green">4% </i> From last Week</span>
 				</div>
 				<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-clock-o"></i> Total Borrowed Books</span>
-					<div class="count">123.50</div>
-					<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+					<div class="count">0</div>
+					<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> From last Week</span>
 				</div>
 				<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-user"></i> Total Damaged Books</span>
-					<div class="count green">2,500</div>
-					<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+					<div class="count green">0</div>
+					<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> From last Week</span>
 				</div>
 					<div class="col-md-3 col-sm-3  tile_stats_count">
 					<span class="count_top"><i class="fa fa-user"></i> Total Borrowed Faculty</span>
-					<div class="count">4,567</div>
-					<span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+					<div class="count">0</div>
+					<span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>0% </i> From last Week</span>
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="col-md-9 col-sm-9 ">
-                  <div id="chart_plot_01" class="demo-placeholder"></div>
+                  {{-- <div id="chart_plot_01" class="demo-placeholder"></div> --}}
                 </div>
                 <div class="col-md-3 col-sm-3  bg-white">
                   <div class="x_title">
@@ -55,7 +55,7 @@
                     <div class="clearfix"></div>
                   </div>
 
-                  <div class="col-md-12 col-sm-12 ">
+                  {{-- <div class="col-md-12 col-sm-12 ">
                     <div>
                       <p>The Book of Tarzan</p>
                       <div class="">
@@ -90,7 +90,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
                 </div>
 
@@ -123,7 +123,7 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                {{-- <div class="x_content">
                   <h4>List of books</h4>
                   <div class="widget_summary">
                     <div class="w_left w_25">
@@ -207,7 +207,7 @@
                     <div class="clearfix"></div>
                   </div>
 
-                </div>
+                </div> --}}
               </div>
             </div>
 
@@ -230,7 +230,7 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
+                {{-- <div class="x_content">
                   <table class="" style="width:100%">
                     <tr>
                       <th style="width:37%;">
@@ -285,7 +285,7 @@
                       </td>
                     </tr>
                   </table>
-                </div>
+                </div> --}}
               </div>
             </div>
           </div>
