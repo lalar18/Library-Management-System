@@ -12,16 +12,17 @@
                     id = "txtTransactionKeyword"
                     name = "keyword" 
                     placeholder = "Keyword..."
+                    value = "{{$data['filter_data']['keyword'] ?? ''}}"
                 >
 
                 <!-- borrow type -->
-                <lable for = "">Borrow Type:</lable>
+                <lable for = "">Borrower Type:</lable>
                 <select class = "form-control ml-2"
-                    name = "borrow_type"
+                    name = "borrower_type"
                 >
-                    <option>All</option>
-                    <option>Borrow</option>
-                    <option>Return</option>
+                    <option value = "">All</option>
+                    <option value = "2" {{isset($data['filter_data']['borrower_type']) && $data['filter_data']['borrower_type'] == 2 ? 'selected' : ''; }}>Faculty</option>
+                    <option value = "1" {{isset($data['filter_data']['borrower_type']) && $data['filter_data']['borrower_type'] == 1 ? 'selected' : ''; }}>Student</option>
                 </select>
 
                 <!-- submit button -->
@@ -68,13 +69,18 @@
                         <td class="align-middle">TBD</td>
                         {{-- <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td> --}}
                     </tr>
+                    @php $count++; @endphp
                 @endforeach
-                @php $count++; @endphp
+             
             @endif
 
         </tbody>
         
     </table>
+
+    <div class = "pagination-container float-right">
+        {{ $data['book_transactions']->links('pagination::bootstrap-4') }}
+    </div>
 </div>
 
 @include('partials.__footer')

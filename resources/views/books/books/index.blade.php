@@ -117,7 +117,7 @@
                             <td>{{ $val['isbn'] }}</td>
                             <td>{{ $val['author_name'] }}</td>
                             <td>{{ $val['publish_date'] }}</td>
-                            <td></td>
+                            <td>{{Config('const.status_types2')[$val['status']]}}</td>
                             <td class = "text-center">
                                 <button type = "button" 
                                     class = "btn btn-secondary btn-sm"

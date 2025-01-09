@@ -270,10 +270,8 @@
                                     <label for = "booksBookStatusModal">Book Status <span class = "required">*</span></label>
                                     <select id = "booksBookStatusModal" class = "form-control" name = "status" required>
                                         <option selected hidden disabled>Select</option>
-                                        <option value = "1">Brand New</option>
-                                        <option value = "2">Good Condition</option>
-                                        <option value = "3">Damaged</option>
-                                        <option value = "4">Lost</option>
+                                        <option value = "1">Enabled</option>
+                                        <option value = "0">Disabled</option>
                                     </select>
                                 </div>
 

@@ -17,8 +17,12 @@
         'session_admin_name' => 'admin_user_name',
         'session_username' => 'admin_username',
         'status_types' => array(
-            'enabled' => '1',
-            'disabled' => '0'
+            'Enabled' => '1',
+            'Disabled' => '0'
+        ),
+        'status_types2' => array(
+            0 => 'Disabled',
+            1 => 'Enabled',
         ),
         'designation'=>[
             0 => 'Student',
@@ -28,7 +32,7 @@
         'borrower_error_entry_duplicate' => 'Duplicate Borrower Detected!',
         'borrower_entry_message' => 'Successfully added new borrower!.',
         'borrower_entry_error' => 'Error adding new borrower',
-        'borrower_update_error' => 'Error updateing borrower',
+        'borrower_update_error' => 'Error updating borrower',
         'borrower_update_message' => 'Successfully updated selected borrower',
         
         'user_type' => [

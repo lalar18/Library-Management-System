@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 //delcare models used
-use App\Models\Borrower;
+use App\Models\Borrower;    
 use App\Models\Book;
 use App\Models\BookCart;
 use App\Models\BookCategory;
@@ -132,8 +132,7 @@ class BorrowBookController extends Controller{
             ]
         ];
 
-
-        $filterData = $request->post();
+        $filterData = $request->query();
 
         $fields = [
             'trans_issuance_tab.id AS issuance_id',
@@ -162,10 +161,20 @@ class BorrowBookController extends Controller{
             $query->leftJoin($val[0], $val[1], $val[2], $val[3]);
         }
 
-        $bookTransactions = $query->get()->toArray();
+        //keyword
+        if(isset($filterData['keyword']) && $filterData['keyword']){
+            $query->where('trans_issuance_tab.is_no', 'LIKE', '%'. $filterData['keyword'] .'%')
+                ->orWhere('trans_return_tab.ir_id', 'LIKE', '%'. $filterData['keyword'] .'%')
+                ->orWhere(\DB::raw('CONCAT(borrowers.fname, " ", borrowers.lname)'), 'LIKE', '%' . $filterData['keyword'] . '%');
+        }
 
+        //borrower_type
+        if(isset($filterData['borrower_type']) && $filterData['borrower_type']){
+            $query->where('type_id', $filterData['borrower_type']);
+        }
 
-
+        $bookTransactions = $query->paginate(10);
+        $bookTransactions->appends($filterData);
 
         //check first user if logged in
         if($this->isLogin() == 0){
@@ -176,6 +185,7 @@ class BorrowBookController extends Controller{
         
         $data = array_merge($data, isset($menuDatas) ? $menuDatas : []);
 
+        $data['filter_data'] = $filterData;
         $data['book_transactions'] = $bookTransactions;
 
         return view('borrow_book.transaction_information', compact('data'));
