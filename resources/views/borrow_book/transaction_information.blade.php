@@ -46,7 +46,7 @@
                 <th class = "align-middle">Borrower Name</th>
                 <th class = "align-middle">Date Returned</th>
                 <th class = "align-middle">Transaction Status</th>
-                <th class = "align-middle text-center"><i class = "fa fa-cog"></i></th>
+                {{-- <th class = "align-middle text-center"><i class = "fa fa-cog"></i></th> --}}
             </tr>
         </thead>
 
@@ -66,7 +66,7 @@
                         <td class="align-middle">{{$val['fname'] . ' ' . $val['lname']}}</td>
                         <td class="align-middle">{{$val['date_returned'] ?? 'N/A';}}</td>
                         <td class="align-middle">TBD</td>
-                        <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td>
+                        {{-- <td class = "align-middle text-center"><button class = "btn btn-sm"><i class = "fa fa-ellipsis-v"></i></button></td> --}}
                     </tr>
                 @endforeach
                 @php $count++; @endphp
