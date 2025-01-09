@@ -23,6 +23,7 @@
         <div class = "col-12">
             <div class = "input-group">
                 <input type = "text" class = "form-control" 
+                    id = "textbarcode"
                     placeholder = "Barcode..." 
                     onkeydown="if (event.key === 'Enter') searchBook(this)"
                     data-href = "{{ url('/admin/') }}"
@@ -333,6 +334,9 @@
 
                                 $("#bookCart").append(bookItem);
                                 bookItem.fadeIn(300);
+
+                                $("#textbarcode").val("");
+                                $("#textbarcode").focus();
                             }
                         }
 
