@@ -22,7 +22,7 @@
         <div class = "col-md-4 col-sm-4">
 
             <!-- borrower filter area -->
-            <div class = "card mt-2 card-borrower">
+            <div class = "card card-borrower">
                 <div class = "card-body">
                     <h5 class = "card-title"><strong>Borrower Information</strong></h5>
 
