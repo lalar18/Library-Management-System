@@ -27,9 +27,9 @@
                     onkeydown="if (event.key === 'Enter') searchBook(this)"
                     data-href = "{{ url('/admin/') }}"
                 >
-                <div class = "input-group-append">
+                {{-- <div class = "input-group-append">
                     <button type = "button" class = "btn btn-primary">Browse</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
 
                         <!-- borrower custom buttons -->
                         <div class = "borrower-custom-container">
-                            <button type = "button" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Register New Borrower"><i class = "fa fa-plus"></i></button>
+                            {{-- <button type = "button" class = "btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Register New Borrower"><i class = "fa fa-plus"></i></button> --}}
                             <button type = "button" 
                                 class = "btn btn-outline-secondary btn-sm" 
                                 data-toggle="tooltip" 
