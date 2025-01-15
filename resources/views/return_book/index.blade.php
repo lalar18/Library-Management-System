@@ -9,7 +9,7 @@
             <div class = "input-group">
                 <input type = "text" class = "form-control text-inline" placeholder = "IS-0000001..." id = "txtIssuanceNo">
                 <div class = "input-group-prepend">
-                    <button class = "btn btn-primary"><i class = "fa fa-search"></i>&nbsp; Search</button>
+                    <button class = "btn btn-primary" id = "btnSearch"><i class = "fa fa-search"></i>&nbsp; Search</button>
                 </div>
             </div>
 
@@ -173,6 +173,35 @@
                 }
             });
         });
+
+        $("#btnSearch").click(function() {
+            let isNo = $(this).val();
+
+                     $.ajax({
+                        type: "POST",
+                        url: "{{url('/admin/transaction/get-transaction-info')}}",
+                        headers : {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')}, 
+                        data: {
+                            is_no : isNo
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            if(typeof response !== 'undefined' && response){
+                                $("#borrower_id").val(response.borrower_information.borrower_id);
+                                $("#id_no").val(response.borrower_information.id_no);
+                                $("#fname").val(response.borrower_information.fname);
+                                $("#lname").val(response.borrower_information.lname);
+                                $("#date_expected_return").val(response.borrower_information.date_expected_return);
+
+
+                                //append html layout
+                                if(typeof response.html !== 'undefined' && response.html){
+                                    $("#bookCart").html(response.html);
+                                }
+                            }
+                        }
+                   });
+        })
     </script>
 
 @include('partials.__footer')
