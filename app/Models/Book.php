@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['book_cat_id', 'author_id', 'barcode', 'title', 'description', 'isbn', 'price', 'publish_date', 'status', 'created_at', 'updated_at'];
+    protected $fillable = ['book_cat_id', 'author_id', 'barcode', 'title', 'description', 'isbn', 'price', 'publish_date', 'publisher_id', 'status', 'created_at', 'updated_at'];
 
     public static function getConditions($query, $params = []) {
         //id
@@ -80,8 +80,9 @@ class Book extends Model
         //     $conditions[] = ['book_cat_id', '=', $params['genre']];
         // }
 
-        $data = Book::select('books.*', 'authors.id AS author_id', 'authors.name AS author_name')
+        $data = Book::select('books.*', 'authors.id AS author_id', 'authors.name AS author_name', 'publishers_tab.publisher_name')
                 ->leftJoin('book_categories', 'books.book_cat_id', '=', 'book_categories.id')
+                ->leftJoin('publishers_tab', 'books.publisher_id', '=', 'publishers_tab.id')
                 ->leftJoin('authors', 'authors.id', '=', 'books.author_id');
         $data = self::getConditions($data, $params);
 
@@ -118,6 +119,7 @@ class Book extends Model
             'barcode',
             'title',
             'description',
+            'publisher_id',
             'author_id'
         ];
 

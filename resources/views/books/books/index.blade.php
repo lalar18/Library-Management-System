@@ -102,6 +102,7 @@
                     <th class = "align-middle">ISBN</th>
                     <th class = "align-middle">Author</th>
                     <th class = "align-middle">Publish Date</th>
+                    <th class = "align-middle">Publisher</th>
                     <th class = "align-middle">Status</th>
                     <th class = "text-center" width = "50"><i class = "fa fa-cog"></i></th>
                 </tr>
@@ -117,6 +118,7 @@
                             <td>{{ $val['isbn'] }}</td>
                             <td>{{ $val['author_name'] }}</td>
                             <td>{{ $val['publish_date'] }}</td>
+                            <td>{{ $val['publisher_name'] }}</td>
                             <td>{{Config('const.status_types2')[$val['status']]}}</td>
                             <td class = "text-center">
                                 <button type = "button" 

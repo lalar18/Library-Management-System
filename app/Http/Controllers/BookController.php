@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //declare models used
 use App\Models\BookCategory;
 use App\Models\Book;
+use App\Models\BookPublisher;
 use App\Models\Author;
 
 class BookController extends Controller
@@ -27,6 +28,12 @@ class BookController extends Controller
 
         $bookList = Book::getAllBooks($filterData);
 
+
+        //PublishersList 
+        $bookPublishers = BookPublisher::getBookPublishers([]);
+     
+
+
     //  dd( $bookList);
         
         $bookCategories = BookCategory::getBookCategories([]);
@@ -37,6 +44,7 @@ class BookController extends Controller
         $data = array(
             'books_data' => $bookList,
             'book_categories_data' => $bookCategories,
+            'book_publishers_data' => $bookPublishers,
             'authors_data' => $authorsList,
             'filter_data' => $filterData
         );
@@ -77,8 +85,9 @@ class BookController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
             'isbn' => $request['isbn'],
-            'price' => $request['price'],
+            'price' => $request['price'],            
             'publish_date' => $request['publish_date'],
+            'publisher_id' => $request['publisher_id'],
             'status' => $request['status']
         ];
 

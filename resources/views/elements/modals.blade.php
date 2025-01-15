@@ -236,9 +236,8 @@
                                         required
                                     >
                                 </div>
-                            </div>
-                            <div class = "row">
 
+                                
                                 <!-- book price -->
                                 <div class = "col-md-3 col-sm-3">
                                     <label for = "txtPriceModal">Price</label>
@@ -250,6 +249,8 @@
                                         required
                                     >
                                 </div>
+                            </div>
+                            <div class = "row">
 
                                 <!-- book genre -->
                                 <div class = "col-md-3 col-sm-3">
@@ -279,6 +280,20 @@
                                 <div class = "col-md-3 col-sm-3">
                                     <label for = "booksPublishDateModal">Date Published: <span class ="required">*</span></label>
                                     <input type = "date" name = "publish_date" id = "booksPublishDateModal" class = "form-control">
+                                </div>
+
+                                <!-- book publisher -->
+                                <div class = "col-md-3 col-sm-3">
+                                    <label>Publisher:</label>
+                                    <select name="publisher_id" id="bookPublisherModal" class = "form-control" required>
+                                        <option selected hidden disabled></option>
+                                        @if(isset($data['book_publishers_data']))
+                                            @foreach($data['book_publishers_data'] as $key => $val)
+                                                <option selected hidden disabled>Select</option>
+                                                <option value = "{{ $val['id'] }}">{{ $val['publisher_name'] }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
 
                                 <!-- book title -->
