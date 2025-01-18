@@ -4,8 +4,8 @@
         <div class="col-sm-12 col-md-4 col-lg-3 book-card-container" data-book-id = "{{$val['book_id']}}">
             <!-- book id data -->
             <input type = "hidden"
-                value = ""
-                name = ""
+                value = "{{$val['book_id']}}"
+                name = "trans_return_det[{{$val['book_id']}}][book_id]"
             >
 
             <div class="card book-card">
@@ -21,6 +21,42 @@
 
                     <p class = "card-text"><strong>Genre: </strong>{{ $categories_data[$val['book_cat_id']] }}</p>
                     <p class = "card-text">{{ $val['description'] }}</p>
+
+                    <div class = "row">
+                        
+                        <!-- status -->
+                        <div class = "col-12 mb-2">
+                            <select name = "trans_return_det[{{$val['book_id']}}][is_returned]" class = "form-control">
+                                <option value = "" selected hidden disabled>Select Status</option>
+                                @foreach(config('const.penalty_status') as $key3 => $valPenaltyType)
+                                    <option value = "{{$key3}}">{{$valPenaltyType}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <!-- penalty -->
+                        <div class = "col-12">
+                            <label class = "w-100">
+                                <select name = "trans_return_det[{{$val['book_id']}}][penalty_id]" class = "form-control">
+                                    <option value = "" selected hidden disabled>Select Penalty</option>
+                                    @if(isset($penalty_data) && $penalty_data)
+                                        @foreach($penalty_data as $key => $valPenalty)
+                                            <option value = "{{$valPenalty['penalty_id']}}">{{$valPenalty['penalty_name']}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </label>
+                        </div>
+
+                        <!-- remarks -->
+                        <div class = "col-12">
+                            <textarea 
+                                class = "form-control"
+                                name = "trans_return_det[{{$val['book_id']}}][item_remarks]"
+                                placeholder = "Remarks..."
+                            ></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ use App\Models\BookCategory;
 use App\Models\Author;
 use App\Models\TransIssuance;
 use App\Models\TransIssuanceDetails;
+use App\Models\Penalty;
 
 class BorrowBookController extends Controller{
     
@@ -287,6 +288,11 @@ class BorrowBookController extends Controller{
         $data = [];
         $html = "";
 
+        //get penalties list
+        $penaltyData = Penalty::getPenalty([
+            'is_multiple' => 1
+        ]);
+
         $inputData = $request->post();
 
         $query = TransIssuance::select([
@@ -296,47 +302,53 @@ class BorrowBookController extends Controller{
             'borrowers.fname',
             'borrowers.mname',
             'borrowers.lname',
-        ]);
-        $query->leftJoin('borrowers', 'borrowers.id' , '=', 'trans_issuance_tab.borrower_id');
-        $transData = $query->first()->toArray();
-       
-        $query = TransIssuanceDetails::select([
-            'trans_issuance_tab_det.id',
-            'trans_issuance_tab_det.book_id',
-            'books.book_cat_id',
-            'books.author_id',
-            'books.barcode',
-            'books.title',
-            'books.description',
-            'books.isbn',
-            'books.price',
-            'books.publish_date',
-        ]);
-        $query->leftJoin('books', 'books.id',  '=', 'trans_issuance_tab_det.book_id');
-        $query = TransIssuanceDetails::getConditions($query, [
-            'is_id' => $transData['id']
-        ]);
+        ])
+        ->leftJoin('borrowers', 'borrowers.id', '=', 'trans_issuance_tab.borrower_id')
+        ->where('trans_issuance_tab.is_no', $inputData['is_no']);
 
-        $booksData = $query->get()->toArray();
-
-        $bookCategoriesData = BookCategory::getBookCategories([]);
-        $bookCategoriesArr = collect($bookCategoriesData)->pluck('name', 'id');
-
-        $authorData = array_column(Author::getAuthorsList([
-            'status' => 1
-        ]), 'author_name',  'id');
-
-        //compile data
-        $data = [
-            'borrower_information' => $transData,
-            'books_data' => $booksData,
-            'authors_data' => $authorData,
-            'categories_data' => $bookCategoriesArr
-        ];
-
-        $html = view('return_book.return_book_cart_data', $data)->render();
+        $transData = $query->first();
+        $transData = $transData ? $transData->toArray() : [];
         
-        $data['html'] = $html;
+        if($transData) {
+            $query = TransIssuanceDetails::select([
+                'trans_issuance_tab_det.id',
+                'trans_issuance_tab_det.book_id',
+                'books.book_cat_id',
+                'books.author_id',
+                'books.barcode',
+                'books.title',
+                'books.description',
+                'books.isbn',
+                'books.price',
+                'books.publish_date',
+            ]);
+            $query->leftJoin('books', 'books.id',  '=', 'trans_issuance_tab_det.book_id');
+            $query = TransIssuanceDetails::getConditions($query, [
+                'is_id' => $transData['id']
+            ]);
+
+            $booksData = $query->get()->toArray();
+
+            $bookCategoriesData = BookCategory::getBookCategories([]);
+            $bookCategoriesArr = collect($bookCategoriesData)->pluck('name', 'id');
+
+            $authorData = array_column(Author::getAuthorsList([
+                'status' => 1
+            ]), 'author_name',  'id');
+
+            //compile data
+            $data = [
+                'borrower_information' => $transData,
+                'books_data' => $booksData,
+                'authors_data' => $authorData,
+                'categories_data' => $bookCategoriesArr,
+                'penalty_data' => $penaltyData
+            ];
+
+            $html = view('return_book.return_book_cart_data', $data)->render();
+            
+            $data['html'] = $html;
+        }
         
         return response()->json($data);
     }

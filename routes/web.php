@@ -70,7 +70,7 @@ Route::any('/admin/transaction/get-transaction-info', [BorrowBookController::cla
 Route::post('/admin/transaction/borrow-book/get-borrowers', array(BorrowBookController::class, 'getBorrowersList'));
 
 //return book
-Route::get('/admin/transaction/return-book', array(ReturnBookController::class, 'index'));
+Route::any('/admin/transaction/return-book', array(ReturnBookController::class, 'index'));
 
 //transaction information
 Route::get('/admin/transaction/transaction-info', array(BorrowBookController::class, 'transactionInformation'));

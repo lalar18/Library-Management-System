@@ -38,6 +38,10 @@
         'user_type' => [
             0 => 'Staff',
             1 => 'Admin'
+        ],
+        'penalty_status' => [
+            0 => 'Not Returned',
+            1 => 'Returned'
         ]
 
     ];
