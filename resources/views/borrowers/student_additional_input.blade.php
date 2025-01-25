@@ -18,7 +18,7 @@
             name = "year_level"
         >   <option value = "" selected hidden disabled>Select Grade Level</option>
             @foreach(config('const.grade_levels') as $key => $val)
-                <option value = "{{$key}}" {{isset($data['borrowersData']['year_level']) && $data['borrowersData']['year_level'] == $val ? 'selected' : ''}}>{{$val}}</option>
+                <option value = "{{$val}}" {{isset($data['borrowersData']['year_level']) && $data['borrowersData']['year_level'] == $val ? 'selected' : ''}}>{{$val}}</option>
             @endforeach
         </select>
     </label>

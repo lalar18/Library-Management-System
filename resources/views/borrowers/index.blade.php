@@ -100,6 +100,10 @@
 									data-contact-no = "{{ $val['contact_no'] }}"
 									data-email = "{{ $val['email'] }}"
 									data-mode = "1"
+									data-address = "{{$val['address'] ?? ''}}"
+									data-year-level = "{{$val['year_level'] ?? ''}}"
+									data-section = "{{$val['section'] ?? ''}}"
+									data-strand = "{{$val['strand'] ?? ''}}"
 									onclick = "showBorrowerEntryModal(this)"
 								><i class = "fa fa-edit"></i></button>
 							</td>
@@ -178,9 +182,6 @@
 						</div>
 
 						<div class = "row additional_dev">
-							@if(isset($data['borrowersData']['type_id']) && $data['borrowersData']['type_id'] == 0)
-								@include('borrowers.student_additional_input')
-							@endif
 						</div>
 					</form>
 				</div>
@@ -250,6 +251,17 @@
 			$("#modalBorrowersEntryId [name='email']").val($(element).attr("data-email"));
 			$("#modalBorrowersEntryId [name='contact_no']").val($(element).attr("data-contact-no"));
 			$("#modalBorrowersEntryId [name='type_id']").val($(element).attr("data-type-id"));
+
+			if($(element).attr("data-type-id") == 0){
+				$(".additional_dev").html(`@include('borrowers.student_additional_input')`);
+
+				$("#modalBorrowersEntryId [name='address']").val($(element).attr("data-address"));
+				$("#modalBorrowersEntryId [name='year_level']").val($(element).attr("data-year-level"));
+				$("#modalBorrowersEntryId [name='section']").val($(element).attr("data-section"));
+				$("#modalBorrowersEntryId [name='strand']").val($(element).attr("data-strand"));
+			}else{
+				$(".additional_dev").html("");
+			}
 		}
 
 		function clearForm(){
