@@ -42,6 +42,7 @@
     <label class = "w-100">
         Strand
         <select class = "form-control" name = "strand">
+            <option value = "" selected hidden disabled>Select Strand</option>
             @foreach(config('const.strands') as $key => $val)
                 <optgroup label = {{$key}}></optgroup>
                 @foreach($val as $valStrand)
