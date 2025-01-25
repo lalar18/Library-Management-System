@@ -42,6 +42,34 @@
         'penalty_status' => [
             0 => 'Not Returned',
             1 => 'Returned'
+        ],
+        'grade_levels' => [
+            1 => 'Grade 7',
+            2 => 'Grade 8',
+            3 => 'Grade 9',
+            4 => 'Grade 10',
+            5 => 'Grade 11',
+            6 => 'Grade 12'
+        ],
+        'strands' => [
+           "Academic Track" => [
+                ["strand" => "STEM", "description" => "Science, Technology, Engineering, and Mathematics"],
+                ["strand" => "ABM", "description" => "Accountancy, Business, and Management"],
+                ["strand" => "HUMSS", "description" => "Humanities and Social Sciences"],
+                ["strand" => "GAS", "description" => "General Academic Strand"]
+            ],
+            "Technical-Vocational-Livelihood (TVL) Track" => [
+                ["strand" => "Home Economics", "description" => "Includes Bread and Pastry, Caregiving, Cooking, etc."],
+                ["strand" => "ICT", "description" => "Information and Communications Technology (e.g., Computer Programming, Animation)"],
+                ["strand" => "Industrial Arts", "description" => "Carpentry, Welding, Automotive Servicing, etc."],
+                ["strand" => "Agri-Fishery Arts", "description" => "Agriculture, Aquaculture, Crop Production, etc."]
+            ],
+            "Sports Track" => [
+                ["strand" => "Sports", "description" => "Physical Education, Sports Sciences, and Fitness"]
+            ],
+            "Arts and Design Track" => [
+                ["strand" => "Arts", "description" => "Visual Arts, Performing Arts, and Design"]
+            ]
         ]
 
     ];

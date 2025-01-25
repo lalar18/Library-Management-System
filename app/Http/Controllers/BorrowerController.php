@@ -130,4 +130,17 @@ class BorrowerController extends Controller
         return json_encode($data);
     }
 
+    public function getStudentFields() {
+        $data = [];
+
+        $html  = view('borrowers/student_fields')->render();
+
+        //compile data
+        $data = [
+            'html' => $html
+        ];
+
+        return response()->json($data);
+    }
+
 }

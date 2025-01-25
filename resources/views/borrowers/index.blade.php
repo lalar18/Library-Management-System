@@ -59,9 +59,31 @@
 							<td class = "text-center align-middle">{{ $val['id'] }}</td>
 							<td class = "align-middle">{{ $val['id_no'] }}</td>
 							<td class = "align-middle">
-								{{ isset($val['fname']) && $val['fname'] ? $val['fname'] : '' }} 
-								{{ isset($val['lname']) && $val['lname'] ? $val['lname'] : '' }} 
-								{{ isset($val['mname']) && $val['mname'] ? $val['mname'] : '' }} 
+								<dl>
+									<dd>
+										<strong>Name: </strong>	
+										{{ isset($val['fname']) && $val['fname'] ? $val['fname'] : '' }} 
+										{{ isset($val['lname']) && $val['lname'] ? $val['lname'] : '' }} 
+										{{ isset($val['mname']) && $val['mname'] ? $val['mname'] : '' }}
+									</dd>
+									@if(isset($val['type_id']) && $val['type_id'] == 0)
+										@if(isset($val['address']) && $val['address'])
+											<dd><b>Address : </b>{{ $val['address'] }}</dd>
+										@endif
+
+										@if(isset($val['year_level']) && $val['year_level'])
+											<dd><b>Year Level : </b>{{ $val['year_level'] }}</dd>
+										@endif
+
+										@if(isset($val['section']) && $val['section'])
+											<dd><b>Section : </b>{{ $val['section'] }}</dd>
+										@endif
+
+										@if(isset($val['strand']) && $val['strand'])
+											<dd><b>Strand : </b>{{ $val['strand'] }}</dd>
+										@endif
+									@endif
+								</dl>
 							</td>
 							<td class = "align-middle">{{ isset($val['contact_no']) && $val['contact_no'] ? $val['contact_no'] : '' }}</td>
 							<td class = "align-middle">{{ isset($val['email']) && $val['email'] ? $val['email'] : '' }}</td>
@@ -148,12 +170,17 @@
 							<div class = "col-md-4 col-sm-4">
 								<label>Designation <span class = "required">*</span></label>
 								<select class = "form-control" name = "type_id" required>
-									<option value = "" selected hidden disabled></option>
+									<option value = "" selected hidden disabled>Select Designation</option>
 									<option value = "0">Student</option>
 									<option value = "1">Faculty</option>
 								</select>
 							</div>
+						</div>
 
+						<div class = "row additional_dev">
+							@if(isset($data['borrowersData']['type_id']) && $data['borrowersData']['type_id'] == 0)
+								@include('borrowers.student_additional_input')
+							@endif
 						</div>
 					</form>
 				</div>
@@ -237,6 +264,15 @@
 			$("#modalBorrowersEntryId [name='type_id']").val("");
 		}
 
+		$("[name='type_id']").change(function() {
+			let type_id = $(this).val();
+
+			if(type_id == 0){
+				$(".additional_dev").html(`@include('borrowers.student_additional_input')`);
+			}else{
+				$(".additional_dev").html("");
+			}
+		})
 	</script>
 
 @include('partials.__footer')

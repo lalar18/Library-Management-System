@@ -9,7 +9,19 @@ class Borrower extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_no', 'type_id', 'fname', 'mname','lname', 'contact_no', 'email'];
+    protected $fillable = [
+        'id_no', 
+        'type_id', 
+        'fname', 
+        'mname',
+        'lname', 
+        'contact_no', 
+        'email',
+        'address',
+        'year_level',
+        'section',
+        'strand'
+    ];
 
     public static function getBorrowersList($params = []){
         $data = [];
@@ -59,6 +71,24 @@ class Borrower extends Model
                 ->orWhere('mname', 'like', '%' . $params['keyword'] . '%');
         }
 
+        //year_level
+        if(isset($params['year_level']) && $params['year_level']){
+            if(is_array('year_level')){
+                $query->whereIn('year_level', $params['year_level']);
+            }else{
+                $query->where('year_level', '=', $params['year_level']);
+            }
+        }
+
+        //section
+        if(isset($params['section']) && $params['section']){
+            $query->where('section', '=', $params['section']);
+        }
+
+        //strand
+        if(isset($params['strand']) && $params['strand']){
+            $query->where('strand', '=', $params['strand']);
+        }
         return $query;
     }
 }
