@@ -15,6 +15,7 @@ class TransIssuance extends Model {
         'date_borrowed',
         'date_expected_return',
         'preparedBy',
+        'is_returned',
         'created_at',
         'updated_at'
     ];
@@ -62,6 +63,7 @@ class TransIssuance extends Model {
             'date_borrowed',
             'date_expected_return',
             'preparedBy',
+            'is_returned', 
         ];
 
         $query = Self::select($fields);

@@ -9,6 +9,8 @@ class TransReturnDetails extends Model {
 
     use HasFactory;
 
+    public $timestamps = true;  
+
     protected $table = 'trans_return_det';
     protected $fillable = [
         'rt_id',
@@ -98,7 +100,7 @@ class TransReturnDetails extends Model {
             'preparedBy'
         ];
 
-        $query = self::self($fields);
+        $query = self::select($fields);
         $query = self::getConditions($query, $params);
 
         //is_multiple

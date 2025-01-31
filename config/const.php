@@ -70,7 +70,8 @@
             "Arts and Design Track" => [
                 ["strand" => "Arts", "description" => "Visual Arts, Performing Arts, and Design"]
             ]
-        ]
+        ],
+        'default_currenty_symbol' => '₱',
 
     ];
 ?>

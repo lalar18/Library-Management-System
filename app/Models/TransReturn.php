@@ -10,7 +10,7 @@ class TransReturn extends Model {
 
     protected $table = 'trans_return_tab';
     protected $fillable = [
-        'id_no',
+        'ir_id',
         'is_id',
         'date_returned',
         'preparedBy',
@@ -66,7 +66,7 @@ class TransReturn extends Model {
         //default fields
         $fields = isset($params['all_fields']) && $params['all_fields'] ? ['*'] : [
             'id',
-            'id_no',
+            'ir_id',
             'is_id',
             'date_returned',
             'preparedBy'

@@ -23,39 +23,60 @@
                     <p class = "card-text">{{ $val['description'] }}</p>
 
                     <div class = "row">
-                        
-                        <!-- status -->
-                        <div class = "col-12 mb-2">
-                            <select name = "trans_return_det[{{$val['book_id']}}][is_returned]" class = "form-control">
-                                <option value = "" selected hidden disabled>Select Status</option>
-                                @foreach(config('const.penalty_status') as $key3 => $valPenaltyType)
-                                    <option value = "{{$key3}}">{{$valPenaltyType}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <!-- penalty -->
-                        <div class = "col-12">
-                            <label class = "w-100">
-                                <select name = "trans_return_det[{{$val['book_id']}}][penalty_id]" class = "form-control">
-                                    <option value = "" selected hidden disabled>Select Penalty</option>
-                                    @if(isset($penalty_data) && $penalty_data)
-                                        @foreach($penalty_data as $key => $valPenalty)
-                                            <option value = "{{$valPenalty['penalty_id']}}">{{$valPenalty['penalty_name']}}</option>
-                                        @endforeach
-                                    @endif
+                        @if(isset($val['is_returned']) && $val['is_returned'])
+                            <input type = "hidden"
+                                 name = "trans_return_det[{{$val['book_id']}}][exclude]"
+                                 value = "1"
+                            >
+                            <div class = "col-12">
+                                <p class = "card-text"><strong>Status: </strong>{{config('const.penalty_status')[$val['is_returned']]}}</p>
+                            </div>
+                            <div class = "col-12">
+                                @if(isset($penalty_data) && $penalty_data)
+                                    @foreach($penalty_data as $key => $valPenalty)
+                                        @if(isset($val['penalty_id']) && $val['penalty_id'] == $valPenalty['penalty_id'])
+                                        <p class = "card-text"><strong>Penalty: </strong> {{$valPenalty['penalty_name']}}  ({{ config('const.default_currenty_symbol') }}{{$valPenalty['penalty_charge']}})</p>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class = "col-12">
+                                <p class = "card-text"><strong>Remarks: </strong>{{ $val['item_remarks'] }}</p>
+                            </div>
+                        @else
+                            <!-- status -->
+                            <div class = "col-12 mb-2">
+                                <select name = "trans_return_det[{{$val['book_id']}}][is_returned]" class = "form-control">
+                                    <option value = "" selected hidden disabled>Select Status</option>
+                                    @foreach(config('const.penalty_status') as $key3 => $valPenaltyType)
+                                        <option value = "{{$key3}}">{{$valPenaltyType}}</option>
+                                    @endforeach
                                 </select>
-                            </label>
-                        </div>
+                            </div>
+                            
+                            <!-- penalty -->
+                            <div class = "col-12">
+                                <label class = "w-100">
+                                    <select name = "trans_return_det[{{$val['book_id']}}][penalty_id]" class = "form-control">
+                                        <option value = "" selected hidden disabled>Select Penalty</option>
+                                        @if(isset($penalty_data) && $penalty_data)
+                                            @foreach($penalty_data as $key => $valPenalty)
+                                                <option value = "{{$valPenalty['penalty_id']}}">{{$valPenalty['penalty_name']}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </label>
+                            </div>
 
-                        <!-- remarks -->
-                        <div class = "col-12">
-                            <textarea 
-                                class = "form-control"
-                                name = "trans_return_det[{{$val['book_id']}}][item_remarks]"
-                                placeholder = "Remarks..."
-                            ></textarea>
-                        </div>
+                            <!-- remarks -->
+                            <div class = "col-12">
+                                <textarea 
+                                    class = "form-control"
+                                    name = "trans_return_det[{{$val['book_id']}}][item_remarks]"
+                                    placeholder = "Remarks..."
+                                ></textarea>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

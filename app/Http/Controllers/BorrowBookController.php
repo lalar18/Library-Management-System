@@ -13,6 +13,8 @@ use App\Models\BookCategory;
 use App\Models\Author;
 use App\Models\TransIssuance;
 use App\Models\TransIssuanceDetails;
+use App\Models\TransReturn;
+use App\Models\TransReturnDetails;
 use App\Models\Penalty;
 
 class BorrowBookController extends Controller{
@@ -304,28 +306,60 @@ class BorrowBookController extends Controller{
             'borrowers.lname',
         ])
         ->leftJoin('borrowers', 'borrowers.id', '=', 'trans_issuance_tab.borrower_id')
-        ->where('trans_issuance_tab.is_no', $inputData['is_no']);
+        ->where('trans_issuance_tab.is_no', $inputData['is_no'])
+        ->where('trans_issuance_tab.is_returned', 0);
 
         $transData = $query->first();
         $transData = $transData ? $transData->toArray() : [];
         
         if($transData) {
-            $query = TransIssuanceDetails::select([
-                'trans_issuance_tab_det.id',
-                'trans_issuance_tab_det.book_id',
-                'books.book_cat_id',
-                'books.author_id',
-                'books.barcode',
-                'books.title',
-                'books.description',
-                'books.isbn',
-                'books.price',
-                'books.publish_date',
-            ]);
-            $query->leftJoin('books', 'books.id',  '=', 'trans_issuance_tab_det.book_id');
-            $query = TransIssuanceDetails::getConditions($query, [
+            //check if has already a return record
+            $transReturnData = TransReturn::getTransReturn([
                 'is_id' => $transData['id']
             ]);
+
+            if($transReturnData){
+                //use return data details
+                $query = TransReturnDetails::select([
+                    'trans_return_det.id',
+                    'trans_return_det.rt_id',
+                    'trans_return_det.book_id',
+                    'trans_return_det.penalty_id',
+                    'trans_return_det.is_returned',
+                    'trans_return_det.item_remarks',
+                    'trans_return_det.preparedBy',
+                    'books.book_cat_id',
+                    'books.author_id',
+                    'books.barcode',
+                    'books.title',
+                    'books.description',
+                    'books.isbn',
+                    'books.price',
+                    'books.publish_date',
+                ]);
+                $query->leftJoin('books', 'books.id',  '=', 'trans_return_det.book_id');
+                $query = TransReturnDetails::getConditions($query, [
+                    'rt_id' => $transReturnData['id']
+                ]);
+            }else{
+                //use issuance data details
+                $query = TransIssuanceDetails::select([
+                    'trans_issuance_tab_det.id',
+                    'trans_issuance_tab_det.book_id',
+                    'books.book_cat_id',
+                    'books.author_id',
+                    'books.barcode',
+                    'books.title',
+                    'books.description',
+                    'books.isbn',
+                    'books.price',
+                    'books.publish_date',
+                ]);
+                $query->leftJoin('books', 'books.id',  '=', 'trans_issuance_tab_det.book_id');
+                $query = TransIssuanceDetails::getConditions($query, [
+                    'is_id' => $transData['id']
+                ]);
+            }
 
             $booksData = $query->get()->toArray();
 

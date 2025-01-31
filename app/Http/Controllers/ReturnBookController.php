@@ -39,38 +39,83 @@ class ReturnBookController extends Controller {
         if($request->isMethod('post')){
             $inputData = $request->post();
 
-            $returnData = [
-                'ir_id' => $irNo ?? '',
-                'is_id' => $inputData['trans_return_tab']['is_id'] ?? '',
-                'date_returned' => $inputData['trans_return_tab']['date_returned'] ?? '',
-                'prepared_by' => $inputData['trans_return_tab']['prepared_by'],
-                'created_at' => Carbon::now()->toDateTimeString()
-            ];
+            //check if ir_id exists
+            $checkReturnData = TransReturn::getTransReturn([
+                'ir_id' => $inputData['ir_id'] ?? ''
+            ]);
 
-            TransReturn::create($returnData);
-            $lastId = TransReturn::latest()->value('id');
+            if($checkReturnData){
+                //existing return record
+                $returnDetailsData = [];
+                $booksUpdate = [];
 
-            $returnDetailsData = [];
-            $booksUpdate = [];
+                foreach($inputData['trans_return_det']  as $key => $val){
+                    if(isset($val['exclude']) && $val['exclude']){
+                        continue;
+                    }
 
-            foreach($inputData['trans_return_det'] as $key => $val){
-                $returnDetailsData[] = [
-                    'rt_id' => $lastId,
-                    'book_id' => $val['book_id'] ?? '',
-                    'penalty_id' => $val['penalty_id'] ?? '',
-                    'is_returned' => $val['is_returned'] ?? '',
-                    'item_remarks' => $val['item_remarks'] ?? '',
-                    'preparedBy' => session(config('const.session_admin_id'))
-                ];
-
-                //git books_id to set status to 1
-                if(isset($val['is_returned']) && $val['is_returned']) {
-                    $booksUpdate[] = $val['book_id'];
+                    $returnDetailsData[] = [
+                        'rt_id' => $inputData['trans_return_tab']['ir_id'] ,
+                        'book_id' => $val['book_id'],
+                        'penalty_id' => isset($val['penalty_id']) && $val['penalty_id'] ? $val['penalty_id'] : 0,
+                        'is_returned' => isset($val['is_returned']) && $val['is_returned'] ? $val['is_returned'] : 0,
+                        'item_remarks' => $val['item_remarks'],
+                        'preparedBy' => session(config('const.session_admin_id'))
+                    ];
+                    //git books_id to set status to 1
+                    if(isset($val['is_returned']) && $val['is_returned']) {
+                        $booksUpdate[] = $val['book_id'];
+                    }
                 }
-            }
 
-            //insert to database
-            TransReturnDetails::insert($returnDetailsData);
+                TransReturnDetails::insert($returnDetailsData);                
+
+                $checkReturned = TransReturnDetails::where('rt_id', $inputData['trans_return_tab']['ir_id'])->where('is_returned', 1)->count();
+
+                //check if all books are returned
+                if(count($inputData['trans_return_det']) == $checkReturned){
+                    //update trans_return_tab set to returned
+                    TransReturn::where('ir_id', $inputData['trans_return_tab']['ir_id'])->update(['is_returned' => 1]);
+                }
+
+            }else{
+                //not yet existing return record
+                $returnData = [
+                    'ir_id' => $irNo ?? '',
+                    'is_id' => $inputData['trans_return_tab']['is_id'] ?? '',
+                    'date_returned' => $inputData['trans_return_tab']['date_returned'] ?? '',
+                    'prepared_by' => $inputData['trans_return_tab']['prepared_by'],
+                    'created_at' => Carbon::now()->toDateTimeString()
+                ];
+    
+                TransReturn::create($returnData);
+                $lastId = TransReturn::latest()->value('id');
+    
+                $returnDetailsData = [];
+                $booksUpdate = [];
+    
+                foreach($inputData['trans_return_det'] as $key => $val){
+                    if(isset($val['exclude']) && $val['exclude']){
+                        continue;
+                    }
+    
+                    $returnDetailsData[] = [
+                        'rt_id' => $lastId,
+                        'book_id' => $val['book_id'],
+                        'penalty_id' => isset($val['penalty_id']) && $val['penalty_id'] ? $val['penalty_id'] : 0,
+                        'is_returned' => isset($val['is_returned']) && $val['is_returned'] ? $val['is_returned'] : 0,
+                        'item_remarks' => $val['item_remarks'],
+                        'preparedBy' => session(config('const.session_admin_id'))
+                    ];
+                    //git books_id to set status to 1
+                    if(isset($val['is_returned']) && $val['is_returned']) {
+                        $booksUpdate[] = $val['book_id'];
+                    }
+                }
+    
+                //insert to database
+                TransReturnDetails::insert($returnDetailsData);                
+            }
 
             //update book status
             Book::whereIn('id', $booksUpdate)->update(['status' => 1]);

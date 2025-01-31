@@ -71,7 +71,9 @@
                         >
 
                         <label>Return No.</label>
-                        <input type = "text" class = "form-control" 
+                        <input type = "text" class = "form-control"
+                            name = "trans_return_tab[ir_id]"
+                            id = "ir_id"
                             placeholder = "IR-000001..."
                             value = "{{$data['ir_no']}}"
                             readonly
@@ -206,6 +208,10 @@
                             $("#lname").val(info.lname);
                             $("#date_borrowed").val(info.date_borrowed);
                             $("#date_expected_return").val(info.date_expected_return);
+                        }
+
+                        if (typeof response.trans_return_data !== 'undefined' && response.trans_return_data !== null) {
+                            $("#ir_id").val(response.trans_return_data.ir_id);
                         }
     
                         // Append HTML layout if provided
